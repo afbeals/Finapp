@@ -1,0 +1,12 @@
+{
+  "name": "finapp",
+  "version": "1.0.0",
+  "description": "track your finance's more effectively",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["react","redux","mysql","webpack","babel"],
+  "author": "Allan Beals-Gibson, Haley Elder",
+  "license": "ISC"
+}
