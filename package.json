@@ -4,9 +4,54 @@
   "description": "track your finance's more effectively",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build",
+    "build": "rm -r dist/* && webpack -d && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback --port 3000",
+    "build:prod": "webpack -p && cp client/index.html dist/index.html",
+    "build:dev": "node server.js"
   },
-  "keywords": ["react","redux","mysql","webpack","babel"],
+  "keywords": [
+    "react",
+    "redux",
+    "mysql",
+    "webpack",
+    "babel"
+  ],
   "author": "Allan Beals-Gibson, Haley Elder",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "express": "^4.13.4",
+    "jquery": "^3.2.1",
+    "mysql": "^2.13.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "react-router": "3.0.2",
+    "react-router-dom": "^4.1.1",
+    "react-router-redux": "^4.0.8",
+    "redux": "^3.3.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.0.0",
+    "babel-polyfill": "^6.5.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.4",
+    "extract-text-webpack-plugin": "^2.1.2",
+    "file-loader": "^0.11.2",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.28.0",
+    "mocha": "^3.4.2",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "webpack": "^2.6.1",
+    "webpack-dev-middleware": "^1.5.1",
+    "webpack-dev-server": "^2.7.1",
+    "webpack-hot-middleware": "^2.7.1"
+  }
 }
