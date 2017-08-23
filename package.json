@@ -7,7 +7,7 @@
     "start": "npm run build",
     "build": "rm -r dist/* && webpack -d && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback --port 3000",
     "build:prod": "webpack -p && cp client/index.html dist/index.html",
-    "build:dev": "node server.js"
+    "build:dev": "node appServer.js"
   },
   "keywords": [
     "react",
