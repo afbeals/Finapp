@@ -5,16 +5,34 @@ import { browserHistory, hashHistory } from 'react-router';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/combinedReducer';
 
-//--- Create Store w/ default state ---//
+//--- Create Store w/ default state (should match reducers) ---//
 const defaultState = {
-  propName: "value"
-};
+  user: {},
+  expenses: [
+  	{
+  		"name": "name",
+  		"due_day": 1,
+  		"amount_due": 0,
+  		"amount_paid": 0,
+  		"note": "notes"
+  	}
+  ],
+  incomes: [
+  	{
+  		"name": "name",
+  		"due_day": 1,
+  		"amount_paid": 0,
+  		"note": "notes"
+  	}
+  ]
 
-const enhancers = compose(
-  window.devToolsExtension ? window.devToolsExtension() : f => f
-);
 
-const store = createStore(rootReducer, defaultState, applyMiddleware(thunk), enhancers);
+}
+// const enhancers = compose(
+//   window.devToolsExtension ? window.devToolsExtension() : f => f
+// );
+const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, defaultState, enhancers(applyMiddleware(thunk)));
 
 export const history = syncHistoryWithStore( hashHistory, store);
 

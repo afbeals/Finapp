@@ -9,7 +9,7 @@ module.exports = {
 		host 			: 'localhost',
 		user 			: 'root',
 		password 		: Prvt.pass,
-//database 		: 'world',
+		database 		: 'finapp',
 		debug 			: false
 	})
 }

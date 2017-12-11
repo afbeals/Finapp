@@ -6,8 +6,13 @@ import { combineReducers } from 'redux';
 //--- Needed for react-router ---//
 import { routerReducer } from 'react-router-redux'; 
 
-//--- Import reducer ---//
+//--- Import reducers ---//
 import basicReducer from './basicReducer';
-const rootReducer = combineReducers({ basicReducer, routing: routerReducer });
+import userRegisteringReducer from './userRegisteringReducer';
+import {default as user} from './userReducer';
+import {default as expenses} from './expensesReducer';
+
+
+const rootReducer = combineReducers({ user, userRegisteringReducer, expenses, routing: routerReducer });
 
 export default rootReducer;

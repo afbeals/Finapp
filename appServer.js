@@ -5,6 +5,9 @@ var config = require('./webpack.config');
 
 var app = express();
 
+var bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
 var router = require('./server/config/routes');
 router(app);
 

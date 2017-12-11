@@ -1,24 +1,27 @@
 //--- Import Dependencies for binding actions ---//
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from '../actions/actionCreators';
+import * as userActionCreators from '../actions/userActionCreators';
+import * as expensesActionCreators from '../actions/expensesActionCreators';
 
 //--- Components: Everything is in Main - so we import that one ---//
 
 import Main from './Main';
  
 //--- Mapping: make state and 'dispatch' functions available to the <Main /> component in props ---//
-//--- Specify which state needs to be made available to the components ---//
+//--- Specify which state properties needs to be made available to the components props ---//
 
 function mapStateToProps(state) {
-  return {
-    propName: state.propKey
-  };
+	console.log('mapstatetoprops',state);
+	return {
+		user: state.user,
+		expenses: state.expenses
+	};
 }
 
-//--- Bind actions to dispatch, and make actions availbe to props ---//
+//--- Bind actions to dispatch, and make actions available to props ---//
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch);
+  return bindActionCreators({...userActionCreators,...expensesActionCreators}, dispatch);
 }
 
 //--- Create <App/> to display <Main/> with populated props. connect() it all together ---//
