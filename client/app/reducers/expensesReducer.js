@@ -17,9 +17,6 @@ export default function expensesReducer(state = [], action){
 						]
 					};
 		case 'ADD_EXPENSE':
-			console.log('state',state);
-				console.log('action',action);
-					console.log('newstate',[...state,action.data]);
 			return [...state,action.data];
 		case 'REQUESTING_EXPENSE':
 			return state;
