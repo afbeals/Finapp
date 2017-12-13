@@ -209,6 +209,41 @@ export function addExpensesInQuery(query){
     };
 }
 
+
+//--- tester for chai ---//
+function fetchTodosRequest() {
+  return {
+    type: "FETCH_TODOS_REQUEST"
+  }
+}
+
+function fetchTodosSuccess(body) {
+  return {
+    type: "FETCH_TODOS_SUCCESS",
+    body
+  }
+}
+
+function fetchTodosFailure(ex) {
+  return {
+    type: "FETCH_TODOS_FAILURE",
+    ex
+  }
+}
+
+export function fetchTodos() {
+  return dispatch => {
+    dispatch(fetchingExpensesSuccess(true))
+    return fetch('/add_expenses_in_query')
+      .then(res => res.json())
+      .then(body => dispatch(fetchTodosSuccess(body)))
+      .catch(ex => dispatch(fetchTodosFailure(ex)))
+  }
+}
+
+
+
+
 //--- Action Creators ---//
 //--- Requesting Data ---//
 export function fetchingExpenses(bool){
