@@ -1,7 +1,7 @@
 export default function expensesReducer(state = [], action){
 	switch (action.type){
 		case 'GET_ALL_EXPENSES':
-			return {...state,expenses:action.data};
+			return action.data;
 		case 'GET_ALL_EXPENSES_IN_MONTH':
 			return {...state,expenses:action.data};
 		case 'GET_ALL_EXPENSES_IN_RANGE':

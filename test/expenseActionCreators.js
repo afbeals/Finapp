@@ -3,41 +3,114 @@ import {expensesConstants} from '../client/app/constants/expensesConstants';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import axios from 'axios';
-import fetchMock from 'fetch-mock';
 import {assert,expect} from 'chai';
-import jest from 'jest';
+import moxios from 'moxios';
+import { spy } from 'sinon';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 
 //--- AJAX Requests ---//
-
 describe('async actions', () => {
-  it('creates FETCH_TODOS_SUCCESS when fetching todos has been done', () => {
+	beforeEach(() => {
+		moxios.install();
+	});
+	afterEach(() => {
+		moxios.uninstall();
+	});
 
-  	let expectedQuery = {users_id: 1,name: "test name2",due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!"};
-	const expectedActions = [
-      { type: expensesConstants.REQUESTING_EXPENSE,isRegistering: true },
-      { type: expensesConstants.REQUESTING_EXPENSE,isRegistering: false },
-      { type: expensesConstants.REQUESTING_EXPENSE_SUCCESS,isSuccessful: true },
-      { type: expensesConstants.ADD_EXPENSE,data: expectedQuery }
-    ]
+	it(`should return GET_ALL_EXPENSES_IN_RANGE when fetching expenses in range has been done`, () => {
+	    moxios.wait(() => {
+	    	const request = moxios.requests.mostRecent();
+	    	request.respondWith({
+	    		status: 200,
+	        	response: [{users_id: 1,name: "test name2",due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!",month: "march"},{users_id: 1,name: "test name2",due_day: 15,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!",month: "may"}],
+	      	});
+	    });
+	    let passedQueryBeginningMonth = 3;
+	    let passedQueryBeginningDay = 4;
+	    let passedQueryEndingMonth = 5;
+	    let passedQueryEndingDay = 3;
+	    let passedQueryId = 1;
+    	let expectedResponse = [{users_id: 1,name: "test name2",due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!",month: "march"},{users_id: 1,name: "test name2",due_day: 15,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!",month: "may"}];
+    	const expectedActions = [
+	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: true },
+	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: false },
+	    	{ type: expensesConstants.REQUESTING_EXPENSE_SUCCESS,isSuccessful: true },
+	    	{ type: expensesConstants.GET_ALL_EXPENSES_IN_RANGE,data: expectedResponse }
+    	];
+   		const store = mockStore({ expenses: [] });
+    	return store.dispatch(expenseAC.getAllExpensesInMonth(passedQueryId,passedQueryBeginningMonth,passedQueryBeginningDay,passedQueryEndingMonth,passedQueryEndingDay)).then(() => {
+    		expect(store.getActions()).to.eql(expectedActions);
+    	});
+  	});
 
-    // mock the axios.post method, so it will just resolve the Promise.
-    axios.post = jest.fn((url) => {
-        return Promise.resolve();
-    });
-    // mock the dispatch and getState functions from Redux thunk.
-    const dispatch = jest.fn(),
-        getState = jest.fn(() => {url: '/add_expenses_in_query'});
+	it(`should return GET_ALL_EXPENSES_IN_MONTH when fetching monthly expenses has been done`, () => {
+	    moxios.wait(() => {
+	    	const request = moxios.requests.mostRecent();
+	    	request.respondWith({
+	    		status: 200,
+	        	response: [{users_id: 1,name: "test name2",due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!",month: "january"}],
+	      	});
+	    });
+	    let passedQueryMonth = "january";
+	    let passedQueryId = 1;
+    	let expectedResponse = [{users_id: 1,name: "test name2",due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!",month: "january"}];
+    	const expectedActions = [
+	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: true },
+	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: false },
+	    	{ type: expensesConstants.REQUESTING_EXPENSE_SUCCESS,isSuccessful: true },
+	    	{ type: expensesConstants.GET_ALL_EXPENSES_IN_MONTH,data: expectedResponse }
+    	];
+   		const store = mockStore({ expenses: [] });
+    	return store.dispatch(expenseAC.getAllExpensesInMonth(passedQueryId,passedQueryMonth)).then(() => {
+    		expect(store.getActions()).to.eql(expectedActions);
+    	});
+  	});
 
-    // execute
-    expenseAC.addExpensesInQuery(expectedQuery)(dispatch, getState);
+	it(`should return GET_ALL_EXPENSES when fetching all expenses has been done`, () => {
+	    moxios.wait(() => {
+	    	const request = moxios.requests.mostRecent();
+	    	request.respondWith({
+	    		status: 200,
+	        	response: [{users_id: 1,name: "test name2",due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!"}],
+	      	});
+	    });
+	    let passedQuery = 1;
+    	let expectedResponse = [{users_id: 1,name: "test name2",due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!"}];
+    	const expectedActions = [
+	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: true },
+	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: false },
+	    	{ type: expensesConstants.REQUESTING_EXPENSE_SUCCESS,isSuccessful: true },
+	    	{ type: expensesConstants.GET_ALL_EXPENSES,data: expectedResponse }
+    	];
+   		const store = mockStore({ expenses: [] });
+    	return store.dispatch(expenseAC.getAllExpenses(passedQuery)).then(() => {
+    		expect(store.getActions()).to.eql(expectedActions);
+    	});
+  	});
 
-    // verify
-    expect(dispatch.mock.calls[0][0]).to.deep.equal(expectedActions[0])
-  })
-})
+	it(`should return ADD_EXPENSE when fetching expenses has been done`, () => {
+	    moxios.wait(() => {
+	    	const request = moxios.requests.mostRecent();
+	    	request.respondWith({
+	    		status: 200,
+	        	response: { message: 'success', status: '220' },
+	      	});
+	    });
+    	let expectedResponse = {users_id: 1,name: "test name2",due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!"}
+    	const expectedActions = [
+	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: true },
+	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: false },
+	    	{ type: expensesConstants.REQUESTING_EXPENSE_SUCCESS,isSuccessful: true },
+	    	{ type: expensesConstants.ADD_EXPENSE,data: expectedResponse }
+    	];
+   		const store = mockStore({ expenses: [] });
+    	return store.dispatch(expenseAC.addExpensesInQuery(expectedResponse)).then(() => {
+    		expect(store.getActions()).to.eql(expectedActions);
+    	});
+  	});
+});
 
 //--- expenseActionCreators Requests ---//
 describe('Requests', () => {
@@ -137,25 +210,4 @@ describe('Successes', () => {
     	expect(expenseAC.addExpensesSuccess(data)).to.deep.equal(expectedAction);
 	});
 	
-});
-
-
-
-
-
-
-
-
-//--- test ---//
-let reverse = (s) => {
-    return s.split("").reverse().join("");
-}
-describe('random', () => {
-  it('should return a reverse string', () => {
-  		let passedString = '0123';
-	    let expectedString = '3210';
-	    
-
-    	expect(reverse(passedString)).to.equal(expectedString);
-	});
 });

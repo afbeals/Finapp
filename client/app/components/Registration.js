@@ -27,7 +27,8 @@ export default class Registration extends React.Component {
 	submitInput(e){
 		e.preventDefault();
 		console.log('submit',e,this.state);
-		this.props.addExpensesInQuery(this.state);
+		//this.props.addExpensesInQuery(this.state);
+		this.props.getAllExpenses(1)
 	}
 
 	testingQuery(e){

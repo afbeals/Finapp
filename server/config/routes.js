@@ -28,5 +28,81 @@ module.exports = function(app){
 	    });
 	})
 
+	app.get('/get_all_expenses',function(req,res){
+	    MySQL.pool.getConnection(function(err,connection){
+	      if (err) {
+	      	connection.release();
+	        console.log({"code" : 100, "status" : "Error in connection database","err":err});
+	        throw Error(err);
+	        return;
+	      }   
+	      console.log('connected as id ' + connection.threadId);   
+	      connection.query("SELECT * FROM expenses WHERE users_id = ?",[req.query.users_id],function(err,rows){
+	        connection.release(); 
+	        if(!err) {
+	           res.json(rows);
+	        }else {
+	        	throw Error(err);
+	        	res.status(500).send('Something broke!');
+	        }
+	      });
+	      connection.on('error', function(err) {      
+	        console.log({"code" : 100, "status" : "Error in connection database", "err":err});
+	        throw Error(err);
+	        return;     
+	      });
+	    });
+	})
 
+	app.get('/get_all_expenses_in_month',function(req,res){
+	    MySQL.pool.getConnection(function(err,connection){
+	      if (err) {
+	      	connection.release();
+	        console.log({"code" : 100, "status" : "Error in connection database","err":err});
+	        throw Error(err);
+	        return;
+	      }   
+	      console.log('connected as id ' + connection.threadId);   
+	      connection.query("SELECT * FROM expenses WHERE users_id = ? AND month = ?",[req.query.users_id,req.query.month],function(err,rows){
+	        connection.release(); 
+	        if(!err) {
+	           res.json(rows);
+	        }else {
+	        	throw Error(err);
+	        	res.status(500).send('Something broke!');
+	        }
+	      });
+	      connection.on('error', function(err) {      
+	        console.log({"code" : 100, "status" : "Error in connection database", "err":err});
+	        throw Error(err);
+	        return;     
+	      });
+	    });
+	})
+
+	app.get('/get_all_expenses_in_range',function(req,res){
+	    MySQL.pool.getConnection(function(err,connection){
+	      if (err) {
+	      	connection.release();
+	        console.log({"code" : 100, "status" : "Error in connection database","err":err});
+	        throw Error(err);
+	        return;
+	      }   
+	      console.log('connected as id ' + connection.threadId);   
+	      connection.query("SELECT * FROM expenses WHERE users_id = ? AND month = ?",[req.query.users_id,req.query.month],function(err,rows){
+	        connection.release(); 
+	        if(!err) {
+	           res.json(rows);
+	        }else {
+	        	throw Error(err);
+	        	res.status(500).send('Something broke!');
+	        }
+	      });
+	      connection.on('error', function(err) {      
+	        console.log({"code" : 100, "status" : "Error in connection database", "err":err});
+	        throw Error(err);
+	        return;     
+	      });
+	    });
+	})
 }
