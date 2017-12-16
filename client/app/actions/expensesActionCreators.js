@@ -61,7 +61,6 @@ export function getAllExpenses(query){
                 return response;
             })
             .then((response)=>{
-                console.log(response);
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(getAllExpensesSuccess(response.data));
             })
@@ -151,7 +150,6 @@ export function removeExpensesInQuery(params){
             })
             .then((response)=>{ 
                 dispatch(fetchingExpensesSuccess(true));
-                console.log(params);
                 dispatch(removeExpensesSuccess(params));
             })
             .catch((err) => dispatch(fetchingExpensesError(true)));
@@ -175,20 +173,16 @@ export function addExpensesInQuery(query){
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingExpensesError(true));
                      dispatch(fetchingExpenses(false));
-                     console.log(1,response.status);
                     throw Error(response.statusText);
                 }
-                console.log(1);
                 dispatch(fetchingExpenses(false));
                 return response;
             })
             .then((response)=>{ 
-                console.log('insert response:',response);
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(addExpensesSuccess(testQuery));
             })
             .catch((err) => {
-                console.log(2,err);
                 dispatch(fetchingExpensesError(true))});
     };
 }

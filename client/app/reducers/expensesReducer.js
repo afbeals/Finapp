@@ -3,19 +3,18 @@ export default function expensesReducer(state = [], action){
 		case 'GET_ALL_EXPENSES':
 			return action.data;
 		case 'GET_ALL_EXPENSES_IN_MONTH':
-			return {...state,expenses:action.data};
+			return action.data;
 		case 'GET_ALL_EXPENSES_IN_RANGE':
-			return {...state,expenses:action.data};
+			return action.data;
 		case 'UPDATE_EXPENSE':
-			return {...state,expenses:state.expenses.map((item)=>{
+			return [...state.map((item)=>{
 				return item.id == action.data.id ? action.data : item;
-			})};
+			})];
 		case 'REMOVE_EXPENSE':
-			return {...state,expenses:[
-						...state.expenses.slice(0,action.id),
-						...state.expenses.slice(action.id + 1)
-						]
-					};
+			return [
+				...state.slice(0,action.index_in_array),
+				...state.slice(action.index_in_array + 1)
+			];
 		case 'ADD_EXPENSE':
 			return [...state,action.data];
 		case 'REQUESTING_EXPENSE':
