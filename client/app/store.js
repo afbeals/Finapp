@@ -11,6 +11,7 @@ const defaultState = {
   expenses: [
   	{
   		"name": "name",
+      "id": "1",
   		"due_day": 1,
   		"amount_due": 0,
   		"amount_paid": 0,

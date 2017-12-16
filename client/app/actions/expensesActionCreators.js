@@ -92,7 +92,7 @@ export function getAllExpensesInMonth(users_id,month){
 }
 
 //--- Get All Expenses In Range ---//
-export function getAllExpensesInRange(users_id,begMnt,BegDay,EndMnt,EndDay){
+export function getAllExpensesInRange(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
         return axios.get("/get_all_expenses_in_range",{params:{params}})
@@ -107,17 +107,17 @@ export function getAllExpensesInRange(users_id,begMnt,BegDay,EndMnt,EndDay){
             })
             .then((response)=>{ 
                 dispatch(fetchingExpensesSuccess(true));
-                dispatch(getAllExpensesInRangeSuccess(response));
+                dispatch(getAllExpensesInRangeSuccess(response.data));
             })
             .catch((err) => dispatch(fetchingExpensesError(true)));
     };
 }
 
 //--- Update Existing Expense ---//
-export function updateExpensesInQuery(query,params){
+export function updateExpensesInQuery(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        axios.post("/update_expenses_in_query",{params:{params}})
+        return axios.post("/update_expenses_in_query",{params:{params}})
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingExpensesError(true));
@@ -129,17 +129,17 @@ export function updateExpensesInQuery(query,params){
             })
             .then((response)=>{ 
                 dispatch(fetchingExpensesSuccess(true));
-                dispatch(updateExpensesSuccess(response));
+                dispatch(updateExpensesSuccess(params));
             })
             .catch((err) => dispatch(fetchingExpensesError(true)));
     };
 }
 
 //--- Remove Existing Expense ---//
-export function removeExpensesInQuery(query,params){
+export function removeExpensesInQuery(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        axios.delete("/remove_expenses_in_query",{params:{params}})
+        return axios.delete("/remove_expenses_in_query",{params:{params}})
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingExpensesError(true));
@@ -151,7 +151,8 @@ export function removeExpensesInQuery(query,params){
             })
             .then((response)=>{ 
                 dispatch(fetchingExpensesSuccess(true));
-                dispatch(removeExpensesSuccess(params.id));
+                console.log(params);
+                dispatch(removeExpensesSuccess(params));
             })
             .catch((err) => dispatch(fetchingExpensesError(true)));
     };
@@ -247,10 +248,10 @@ export function getAllExpensesInRangeSuccess(response){
     }
 }
 
-export function removeExpensesSuccess(id){
+export function removeExpensesSuccess(query){
     return {
         type: expensesConstants.REMOVE_EXPENSE,
-        id: id
+        id: query
     }
 }
 
