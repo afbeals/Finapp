@@ -41,6 +41,13 @@ export default class Registration extends React.Component {
 		return(
 			<div>
 				Registration Page!
+				<ul>
+					{
+						this.props.expenses.map((c,i)=>{
+							return <li key={i}>{c.name},{c.id},{c.amount_due}</li>
+						})
+					}
+				</ul>
 				<form onSubmit={this.submitInput}>
 					<label htmlFor="regis_firstName">
 						First Name

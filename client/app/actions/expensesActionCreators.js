@@ -47,10 +47,10 @@ const urlSelector = (queryType)=>{
 
 //--- AJAX Calls ---//
 //--- Retrieve Expeneses ---//
-export function getAllExpenses(query){
+export function getAllExpenses(id){
 	return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        return axios.get("/get_all_expenses",{params: {users_id: query}})
+        return axios.get("/get_all_expenses",{params: {users_id: id}})
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                 	 dispatch(fetchingExpensesError(true));
@@ -94,7 +94,7 @@ export function getAllExpensesInMonth(users_id,month){
 export function getAllExpensesInRange(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        return axios.get("/get_all_expenses_in_range",{params:{params}})
+        return axios.get("/get_all_expenses_in_range",{params:params})
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingExpensesError(true));
@@ -116,7 +116,7 @@ export function getAllExpensesInRange(params){
 export function updateExpensesInQuery(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        return axios.post("/update_expenses_in_query",{params:{params}})
+        return axios.post("/update_expenses_in_query",{params:params})
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingExpensesError(true));

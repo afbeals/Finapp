@@ -8,6 +8,7 @@ import {Router, Route, IndexRoute } from 'react-router';
 import App from './components/App';
 import SubComponent from './components/SubComponent';
 import Registration from './components/Registration';
+import Expenses from './components/Expenses';
 
 import store, {history} from './store';
 
@@ -16,6 +17,7 @@ render(
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={Registration} />
+        <Route path="/expenses" component={Expenses} />
         <Route path="/view/:username" component={SubComponent} />
       </Route>
     </Router>
