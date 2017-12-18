@@ -33,7 +33,7 @@ describe('async actions', () => {
 	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: true },
 	    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: false },
 	    	{ type: expensesConstants.REQUESTING_EXPENSE_SUCCESS,isSuccessful: true },
-	    	{ type: expensesConstants.REMOVE_EXPENSE,id: expectedResponse }
+	    	{ type: expensesConstants.REMOVE_EXPENSE,data: expectedResponse }
     	];
    		const store = mockStore({ expenses: [] });
     	return store.dispatch(expenseAC.removeExpensesInQuery(passedQuery)).then(() => {
@@ -238,13 +238,13 @@ describe('Successes', () => {
 	});
 
 	it('should return action REMOVE_EXPENSE and bool', () => {
-	    let id = 4;
+	    let data = 4;
 	    let expectedAction = {
 	    	type: expensesConstants.REMOVE_EXPENSE,
-	    	id
+	    	data
 	    }
 
-    	expect(expenseAC.removeExpensesSuccess(id)).to.deep.equal(expectedAction);
+    	expect(expenseAC.removeExpensesSuccess(data)).to.deep.equal(expectedAction);
 	});
 
 	it('should return action ADD_EXPENSE and bool', () => {

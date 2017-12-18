@@ -7,7 +7,6 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux'; 
 
 //--- Import reducers ---//
-import basicReducer from './basicReducer';
 import userRegisteringReducer from './userRegisteringReducer';
 import {default as user} from './userReducer';
 import {default as expenses} from './expensesReducer';

@@ -116,7 +116,7 @@ export function getAllExpensesInRange(params){
 export function updateExpensesInQuery(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        return axios.post("/update_expenses_in_query",{params:params})
+        return axios.post("/update_expenses_in_query",params)
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingExpensesError(true));
@@ -138,7 +138,7 @@ export function updateExpensesInQuery(params){
 export function removeExpensesInQuery(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        return axios.delete("/remove_expenses_in_query",{params:{params}})
+        return axios.post("/remove_expenses_in_query",params)
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingExpensesError(true));
@@ -156,19 +156,10 @@ export function removeExpensesInQuery(params){
     };
 }
 //--- Add New Expense ---//
-var testQuery = {
-    users_id: 1,
-    name: "test name2",
-    due_day: 5,
-    amount_due: 4200.33,
-    amount_paid: 250,
-    notes: "!!!noenasa anot notes eafea!!!"
-
-}
-export function addExpensesInQuery(query){
+export function addExpensesInQuery(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        return axios.post("/add_expenses_in_query",testQuery)
+        return axios.post("/add_expenses_in_query",params)
             .then((response) => {
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingExpensesError(true));
@@ -180,7 +171,7 @@ export function addExpensesInQuery(query){
             })
             .then((response)=>{ 
                 dispatch(fetchingExpensesSuccess(true));
-                dispatch(addExpensesSuccess(testQuery));
+                dispatch(addExpensesSuccess(params));
             })
             .catch((err) => {
                 dispatch(fetchingExpensesError(true))});
@@ -245,7 +236,7 @@ export function getAllExpensesInRangeSuccess(response){
 export function removeExpensesSuccess(query){
     return {
         type: expensesConstants.REMOVE_EXPENSE,
-        id: query
+        data: query
     }
 }
 

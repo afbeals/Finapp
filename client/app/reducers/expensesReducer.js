@@ -11,9 +11,10 @@ export default function expensesReducer(state = [], action){
 				return item.id == action.data.id ? action.data : item;
 			})];
 		case 'REMOVE_EXPENSE':
+			console.log(action);
 			return [
-				...state.slice(0,action.index_in_array),
-				...state.slice(action.index_in_array + 1)
+				...state.slice(0,action.data.index_in_array),
+				...state.slice(action.data.index_in_array + 1)
 			];
 		case 'ADD_EXPENSE':
 			return [...state,action.data];

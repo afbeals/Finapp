@@ -6,10 +6,11 @@ var Prvt = require('../../private.js');
 module.exports = {
 	pool : mysql.createPool({
 		//connectionLimit : 100,
-		host 			: 'localhost',
-		user 			: 'root',
-		password 		: Prvt.pass,
-		database 		: 'finapp',
-		debug 			: false
+		host 			: 		'localhost',
+		user 			: 		'root',
+		password 		: 		Prvt.pass,
+		database 		: 		'finapp',
+		debug 			: 		false,
+		multipleStatements: 	true
 	})
 }

@@ -60,14 +60,14 @@ describe('Expense Reducers',()=>{
 			{users_id: 1,name: "test name2",id:6,due_day: 8,amount_due: 8730.33,amount_paid: 2150,notes: "!eafea!!!",month: "jan"}
 		]
 
-		let removedData = 2;
+		let removedData = {index_in_array: 1};
 
 		let returnData = [
 			{users_id: 1,name: "test name2",id:3,due_day: 5,amount_due: 4200.33,amount_paid: 2050,notes: "!!!noenasa notes eafea!!!",month: "sept"},
-			{users_id: 1,name: "test name2",id:4,due_day: 4,amount_due: 4600.33,amount_paid: 2510,notes: " anot notes eafea!!!",month: "march"},
+			{users_id: 1,name: "test name2",id:5,due_day: 2,amount_due: 4234.33,amount_paid: 2550,notes: "notes eafea!!!",month: "feb"},
 			{users_id: 1,name: "test name2",id:6,due_day: 8,amount_due: 8730.33,amount_paid: 2150,notes: "!eafea!!!",month: "jan"}
 		]
-		expect(reducer(preloadedState,{type: "REMOVE_EXPENSE",index_in_array: removedData})).to.deep.equal(returnData);
+		expect(reducer(preloadedState,{type: "REMOVE_EXPENSE",data: removedData})).to.deep.equal(returnData);
 	});
 
 	it('should return new state with added expense when ADD_EXPENSE',()=>{
