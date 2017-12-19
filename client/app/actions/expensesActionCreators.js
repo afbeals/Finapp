@@ -1,10 +1,13 @@
-//---  Import axios for ajax calls ---/
+//---  Import axios for ajax calls ---//
+//------------------------------------//
 import axios from 'axios';
 
 //--- Import Constants ---//
+//------------------------//
 import {expensesConstants} from '../constants/expensesConstants';
 
 //--- Action Creators ---//
+//-----------------------//
 /*--- Example:
 Basic:
 export function increaseNum(i) {
@@ -47,6 +50,7 @@ const urlSelector = (queryType)=>{
 
 //--- AJAX Calls ---//
 //--- Retrieve Expeneses ---//
+//--------------------------//
 export function getAllExpenses(id){
 	return (dispatch) => {
         dispatch(fetchingExpenses(true));
@@ -69,6 +73,7 @@ export function getAllExpenses(id){
 }
 
 //--- Get All Expenses In Month ---//
+//---------------------------------//
 export function getAllExpensesInMonth(users_id,month){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
@@ -91,6 +96,7 @@ export function getAllExpensesInMonth(users_id,month){
 }
 
 //--- Get All Expenses In Range ---//
+//---------------------------------//
 export function getAllExpensesInRange(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
@@ -113,6 +119,7 @@ export function getAllExpensesInRange(params){
 }
 
 //--- Update Existing Expense ---//
+//-------------------------------//
 export function updateExpensesInQuery(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
@@ -135,6 +142,7 @@ export function updateExpensesInQuery(params){
 }
 
 //--- Remove Existing Expense ---//
+//-------------------------------//
 export function removeExpensesInQuery(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
@@ -156,6 +164,7 @@ export function removeExpensesInQuery(params){
     };
 }
 //--- Add New Expense ---//
+//-----------------------//
 export function addExpensesInQuery(params){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
@@ -181,6 +190,7 @@ export function addExpensesInQuery(params){
 
 //--- Action Creators ---//
 //--- Requesting Data ---//
+//-----------------------//
 export function fetchingExpenses(bool){
 	return {
 		type: expensesConstants.REQUESTING_EXPENSE,
@@ -189,6 +199,7 @@ export function fetchingExpenses(bool){
 }
 
 //--- Request Failures ---//
+//------------------------//
 export function fetchingExpensesError(bool){
 	return {
 		type: expensesConstants.REQUESTING_EXPENSE_FAILURE,
@@ -198,6 +209,7 @@ export function fetchingExpensesError(bool){
 }
 
 //--- Request Successes ---//
+//-------------------------//
 export function fetchingExpensesSuccess(bool){
     return {
         type: expensesConstants.REQUESTING_EXPENSE_SUCCESS,

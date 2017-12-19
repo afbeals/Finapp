@@ -1,28 +1,31 @@
+//--- Import Constants ---//
+//------------------------//
+import {expensesConstants} from '../constants/expensesConstants';
+
 export default function expensesReducer(state = [], action){
 	switch (action.type){
-		case 'GET_ALL_EXPENSES':
+		case expensesConstants.GET_ALL_EXPENSES:
 			return action.data;
-		case 'GET_ALL_EXPENSES_IN_MONTH':
+		case expensesConstants.GET_ALL_EXPENSES_IN_MONTH:
 			return action.data;
-		case 'GET_ALL_EXPENSES_IN_RANGE':
+		case expensesConstants.GET_ALL_EXPENSES_IN_RANGE:
 			return action.data;
-		case 'UPDATE_EXPENSE':
+		case expensesConstants.UPDATE_EXPENSE:
 			return [...state.map((item)=>{
 				return item.id == action.data.id ? action.data : item;
 			})];
-		case 'REMOVE_EXPENSE':
-			console.log(action);
+		case expensesConstants.REMOVE_EXPENSE:
 			return [
 				...state.slice(0,action.data.index_in_array),
 				...state.slice(action.data.index_in_array + 1)
 			];
-		case 'ADD_EXPENSE':
+		case expensesConstants.ADD_EXPENSE:
 			return [...state,action.data];
-		case 'REQUESTING_EXPENSE':
+		case expensesConstants.REQUESTING_EXPENSE:
 			return state;
-		case 'REQUESTING_EXPENSE_SUCCESS':
+		case expensesConstants.REQUESTING_EXPENSE_SUCCESS:
 			return state;
-		case 'REQUESTING_EXPENSE_FAILURE':
+		case expensesConstants.REQUESTING_EXPENSE_FAILURE:
 			return state;
 		default:
 			return state;

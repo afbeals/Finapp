@@ -1,5 +1,6 @@
 //--- Dependencies ---//
 var expenses = require ('../controllers/expenses');
+var incomes = require('../controllers/incomes');
 var MySQL = require('./MySQL');
 
 
@@ -28,5 +29,31 @@ module.exports = function(app){
 
 	app.get('/get_all_expenses_in_range',function(req,res){
 		expenses.getAllExpensesInRange(req,res);
+	});
+
+	//--- Income Routes ---//
+	//----------------------//
+	app.post('/add_incomes_in_query',function(req,res){
+	    incomes.addIncomesInQuery(req,res);
+	});
+
+	app.post('/update_incomes_in_query',function(req,res){
+		incomes.updateIncomesInQuery(req,res);
+	});
+
+	app.post('/remove_incomes_in_query',function(req,res){
+		incomes.removeIncomesInQuery(req,res);
+	});	
+
+	app.get('/get_all_incomes',function(req,res){
+	    incomes.getAllIncomes(req,res);
+	});
+
+	app.get('/get_all_incomes_in_month',function(req,res){
+	    incomes.getAllIncomesInMonth(req,res);
+	});
+
+	app.get('/get_all_incomes_in_range',function(req,res){
+		incomes.getAllIncomesInRange(req,res);
 	});
 }

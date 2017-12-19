@@ -11,16 +11,7 @@ const defaultState = {
     users_id:1
   },
   expenses: [],
-  incomes: [
-  	{
-  		"name": "name",
-  		"due_day": 1,
-  		"amount_paid": 0,
-  		"note": "notes"
-  	}
-  ]
-
-
+  incomes: []
 }
 // const enhancers = compose(
 //   window.devToolsExtension ? window.devToolsExtension() : f => f
