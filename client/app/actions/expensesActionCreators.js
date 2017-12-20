@@ -111,6 +111,7 @@ export function getAllExpensesInRange(params){
                 return response;
             })
             .then((response)=>{ 
+                console.log(response.data);
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(getAllExpensesInRangeSuccess(response.data));
             })
@@ -178,9 +179,9 @@ export function addExpensesInQuery(params){
                 dispatch(fetchingExpenses(false));
                 return response;
             })
-            .then((response)=>{ 
+            .then((response)=>{
                 dispatch(fetchingExpensesSuccess(true));
-                dispatch(addExpensesSuccess(params));
+                dispatch(addExpensesSuccess(Object.assign(params, {expensesId: response.data.expensesId})));
             })
             .catch((err) => {
                 dispatch(fetchingExpensesError(true))});

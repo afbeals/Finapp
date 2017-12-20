@@ -13,10 +13,10 @@ module.exports = {
 			console.log('connected as id ' + connection.threadId);   
 			connection.query("INSERT INTO expenses (users_id,name,due_day,amount_due,amount_paid,notes,created_at) VALUES (?,?,?,?,?,?,?)",[req.body.users_id,req.body.name,req.body.due_day,req.body.amount_due,req.body.amount_paid,req.body.notes,new Date()],(err,rows)=>{
 				if(!err) {
-			   		connection.query("INSERT INTO months_has_expenses (months_id,expenses_id,created_at) VALUES (?,?,?)",[req.body.month,rows.insertId,new Date()],(err,rows)=>{
+			   		connection.query("INSERT INTO months_has_expenses (months_id,expenses_id,created_at) VALUES (?,?,?)",[req.body.monthId,rows.insertId,new Date()],(err,rows2)=>{
 						connection.release(); 
 						if(!err) {
-					   		res.status(200).send();
+					   		res.json({expensesId:rows.insertId});
 						}else {
 							throw Error(err);
 							res.status(500).send('Something broke!');
@@ -61,7 +61,7 @@ module.exports = {
 				throw Error(err);
 			}   
 			console.log('connected as id ' + connection.threadId);   
-			connection.query("SELECT name, amount_due, month, expenses.id AS id, months.id as month FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ?",[req.query.users_id],(err,rows)=>{
+			connection.query("SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId, months.id as month FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ?",[req.query.users_id],(err,rows)=>{
 				connection.release(); 
 				if(!err) {
 					res.json(rows);
@@ -85,7 +85,7 @@ module.exports = {
 				throw Error(err);
 			}   
 			console.log('connected as id ' + connection.threadId);   
-			connection.query("SELECT name, amount_due, month, expenses.id AS id FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ? AND months.id = ?",[req.query.users_id,req.query.month],(err,rows)=>{
+			connection.query("SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ? AND months.id = ?",[req.query.users_id,req.query.month],(err,rows)=>{
 				connection.release(); 
 				if(!err) {
 			   		res.json(rows);
@@ -103,11 +103,11 @@ module.exports = {
 
 	getAllExpensesInRange : (req,res) => {
 		let query,params;
-      	if(req.query.BegDay && req.query.EndDay){
-      		query = "SELECT name, amount_due, month, expenses.id AS id FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (expenses.due_day >= ? AND expenses.due_day <= ?) ";
+      	if((typeof req.query.begDay != "undefined") && (typeof req.query.endDay != "undefined")){
+      		query = "SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (expenses.due_day >= ? AND expenses.due_day <= ?) ";
       		params = [req.query.users_id,req.query.begMnt,req.query.endMnt,req.query.begDay,req.query.endDay];
       	} else {
-      		query = "SELECT name, amount_due, month, expenses.id AS id FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ? AND months.id >= ? AND months.id <= ?";
+      		query = "SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ? AND months.id >= ? AND months.id <= ?";
       		params = [req.query.users_id,req.query.begMnt,req.query.endMnt]
       	}
 	    MySQL.pool.getConnection((err,connection)=>{
@@ -120,6 +120,7 @@ module.exports = {
 			connection.query(query,params,(err,rows)=>{
 				connection.release(); 
 				if(!err) {
+					console.log(rows);
 			   		res.json(rows);
 				}else {
 					throw Error(err);

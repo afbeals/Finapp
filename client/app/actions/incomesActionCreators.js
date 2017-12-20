@@ -180,7 +180,7 @@ export function addIncomesInQuery(params){
             })
             .then((response)=>{ 
                 dispatch(fetchingIncomesSuccess(true));
-                dispatch(addIncomesSuccess(params));
+                dispatch(addIncomesSuccess(Object.assign(params, {incomesId: response.data.incomesId})));
             })
             .catch((err) => {
                 dispatch(fetchingIncomesError(true))});

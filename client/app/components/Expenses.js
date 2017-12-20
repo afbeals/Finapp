@@ -10,8 +10,8 @@ export default class Expenses extends React.Component{
 			expense_request_month: 'none',
 			get_all_expenses_in_range_begMnt: 'none',
 			get_all_expenses_in_range_endMnt: 'none',
-			get_all_expenses_in_range_begDay: '',
-			get_all_expenses_in_range_endDay: '',
+			get_all_expenses_in_range_begDay: null,
+			get_all_expenses_in_range_endDay: null,
 			add_expenses_in_query_name: '',
 			add_expenses_in_query_due_day: '',
 			add_expenses_in_query_amount_due: '',
@@ -76,7 +76,7 @@ export default class Expenses extends React.Component{
 			amount_due: 	this.state.add_expenses_in_query_amount_due,
 			amount_paid: 	this.state.add_expenses_in_query_amount_paid,
 			notes: 			this.state.add_expenses_in_query_notes,
-			month: 			this.state.add_expenses_in_query_month,
+			monthId: 		this.state.add_expenses_in_query_month,
 			id: 			this.state.add_expenses_in_query_month
 		})
 	}
@@ -144,10 +144,10 @@ export default class Expenses extends React.Component{
 					{
 						this.props.expenses.map((c,i)=>{
 							return 	<li key={i} >
-										<span contentEditable="true" suppressContentEditableWarning="true" name="name" onInput={(e)=>this.updateExpenseInfo(e,c.id)}>{c.name}</span>
-										,{c.id},
-										<span contentEditable="true" suppressContentEditableWarning="true" name="amount_due" onInput={(e)=>this.updateExpenseInfo(e,c.id)}>{c.amount_due}</span>,
-										<select value={(this.state.expenseUpdateSelect['select'+c.id]||c.month)} name="month" onChange={(e)=>this.updateExpenseInfo(e,c.id)}>
+										<span contentEditable="true" suppressContentEditableWarning="true" name="name" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.name}</span>
+										,{c.expensesId},
+										<span contentEditable="true" suppressContentEditableWarning="true" name="amount_due" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.amount_due}</span>,
+										<select value={(this.state.expenseUpdateSelect['select'+c.expensesId]||c.monthId)} name="month" onChange={(e)=>this.updateExpenseInfo(e,c.expensesId)}>
 											<option value="1">January</option>
 											<option value="2">February</option>
 											<option value="3">March</option>
@@ -162,7 +162,7 @@ export default class Expenses extends React.Component{
 											<option value="12">December</option>
 										</select>
 
-										<button onClick={()=>this.removeExpensesInQuery(c.id,c.month,i)}>Remove Item</button>
+										<button onClick={()=>this.removeExpensesInQuery(c.expensesId,c.monthId,i)}>Remove Item</button>
 										<button onClick={()=>this.sendUpdatedExpense()}>Update Item</button>
 									</li>
 						})
@@ -239,7 +239,7 @@ export default class Expenses extends React.Component{
 				<input type="number" value={this.state.add_expenses_in_query_amount_paid} onChange={this.updateInput} name="add_expenses_in_query_amount_paid" id="add_expenses_in_query_amount_paid" placeholder="Enter Expense Amount Paid" min="0.00" step="0.01" />
 				<input type="text" value={this.state.add_expenses_in_query_notes} onChange={this.updateInput} name="add_expenses_in_query_notes" id="add_expenses_in_query_notes" placeholder="Enter Expense Notes" />
 				<select value={this.state.add_expenses_in_query_month} name="add_expenses_in_query_month" id="add_expenses_in_query_month" onChange={this.updateInput}>
-					<option value="none" disabled={true}>Select End Month</option>
+					<option value="none" disabled={true}>Select Expense Month</option>
 					<option value="1">January</option>
 					<option value="2">February</option>
 					<option value="3">March</option>

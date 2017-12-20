@@ -10,13 +10,13 @@ export default class Incomes extends React.Component{
 			incomes_request_month: 'none',
 			get_all_incomes_in_range_begMnt: 'none',
 			get_all_incomes_in_range_endMnt: 'none',
-			get_all_incomes_in_range_begDay: '',
-			get_all_incomes_in_range_endDay: '',
+			get_all_incomes_in_range_begDay: null,
+			get_all_incomes_in_range_endDay: null,
 			add_incomes_in_query_name: '',
 			add_incomes_in_query_due_day: '',
 			add_incomes_in_query_amount: '',
 			add_incomes_in_query_notes: '',
-			add_incomess_in_query_month: 'none',
+			add_incomes_in_query_month: 'none',
 			incomesUpdateSelect: '',
 			incomeseUpdateData: {
 				month: 'none'
@@ -54,7 +54,7 @@ export default class Incomes extends React.Component{
 
 	getAllIncomesInMonth(){
 		console.log('exp state', this.state);
-		this.props.getAllIncomesInMonth(this.props.user.users_id,this.state.expense_request_month);
+		this.props.getAllIncomesInMonth(this.props.user.users_id,this.state.incomes_request_month);
 	}
 
 	getAllIncomesInRange(){
@@ -74,7 +74,7 @@ export default class Incomes extends React.Component{
 			due_day: 		this.state.add_incomes_in_query_due_day,
 			amount: 		this.state.add_incomes_in_query_amount,
 			notes: 			this.state.add_incomes_in_query_notes,
-			month: 			this.state.add_incomes_in_query_month,
+			monthId: 		this.state.add_incomes_in_query_month,
 			id: 			this.state.add_incomes_in_query_month
 		})
 	}
@@ -124,10 +124,10 @@ export default class Incomes extends React.Component{
 		(this.state.isEditing) ? this.setState({...this.state,isEditing: false}) : this.setState({...this.state,isEditing: true});
 	}
 
-	removeIncomesInQuery(exp_id,mnt_id,i){
+	removeIncomesInQuery(inc_id,mnt_id,i){
 		this.props.removeIncomesInQuery({
 			users_id: this.props.user.users_id,
-			id: exp_id,
+			id: inc_id,
 			months_id: mnt_id,
 			index_in_array: i
 		})
@@ -142,10 +142,10 @@ export default class Incomes extends React.Component{
 					{
 						this.props.incomes.map((c,i)=>{
 							return 	<li key={i} >
-										<span contentEditable="true" suppressContentEditableWarning="true" name="name" onInput={(e)=>this.updateIncomesInfo(e,c.id)}>{c.name}</span>
-										,{c.id},
-										<span contentEditable="true" suppressContentEditableWarning="true" name="due_day" onInput={(e)=>this.updateIncomesInfo(e,c.id)}>{c.due_day}</span>,
-										<select value={(this.state.incomesUpdateSelect['select'+c.id]||c.month)} name="month" onChange={(e)=>this.updateIncomesInfo(e,c.id)}>
+										<span contentEditable="true" suppressContentEditableWarning="true" name="name" onInput={(e)=>this.updateIncomesInfo(e,c.incomesId)}>{c.name}</span>
+										,{c.incomesId},
+										<span contentEditable="true" suppressContentEditableWarning="true" name="due_day" onInput={(e)=>this.updateIncomesInfo(e,c.incomesId)}>{c.due_day}</span>,
+										<select value={(this.state.incomesUpdateSelect['select'+c.incomesId]||c.monthId)} name="month" onChange={(e)=>this.updateIncomesInfo(e,c.incomesId)}>
 											<option value="1">January</option>
 											<option value="2">February</option>
 											<option value="3">March</option>
@@ -160,7 +160,7 @@ export default class Incomes extends React.Component{
 											<option value="12">December</option>
 										</select>
 
-										<button onClick={()=>this.removeIncomesInQuery(c.id,c.month,i)}>Remove Item</button>
+										<button onClick={()=>this.removeIncomesInQuery(c.incomesId,c.monthId,i)}>Remove Item</button>
 										<button onClick={()=>this.sendUpdatedIncomes()}>Update Item</button>
 									</li>
 						})
@@ -172,7 +172,7 @@ export default class Incomes extends React.Component{
 				<button onClick={this.getAllIncomes}>Get 'em!</button>
 				<hr />
 				<div>Get Incomes In Month</div>
-				<select value={this.state.income_request_month} name="incomes_request_month" id="incomes_request_month" onChange={this.updateInput}>
+				<select value={this.state.incomes_request_month} name="incomes_request_month" id="incomes_request_month" onChange={this.updateInput}>
 					<option value="none" disabled={true}>Select A Month</option>
 					<option value="1">January</option>
 					<option value="2">February</option>
@@ -189,6 +189,7 @@ export default class Incomes extends React.Component{
 				</select>
 				<button onClick={this.getAllIncomesInMonth}>Get 'em!</button>
 				<hr />
+
 				<div>Get Incomes In Range</div>
 				<select value={this.state.get_all_incomes_in_range_begMnt} name="get_all_incomes_in_range_begMnt" id="get_all_incomes_in_range_begMnt" onChange={this.updateInput}>
 					<option value="none" disabled={true}>Select Beg Month</option>
@@ -230,6 +231,7 @@ export default class Incomes extends React.Component{
 				<input type="number" value={this.state.get_all_incomes_in_range_endDay} onChange={this.updateInput} name="get_all_incomes_in_range_endDay" id="get_all_incomes_in_range_endDay" placeholder="enter ending day" max="31" min="1" />
 				<button onClick={this.getAllIncomesInRange}>Get 'em!</button>
 				<hr />
+
 				<div> Add Income In Query</div>
 				<input type="text" value={this.state.add_incomes_in_query_name} onChange={this.updateInput} name="add_incomes_in_query_name" id="add_incomes_in_query_name" placeholder="Enter Income Name" />
 				<input type="number" value={this.state.add_incomes_in_query_amount} onChange={this.updateInput} name="add_incomes_in_query_amount" id="add_incomes_in_query_amount" placeholder="Enter Income Amount" min="0.01" step="0.01" />
