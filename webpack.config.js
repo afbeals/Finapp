@@ -12,13 +12,13 @@ var config = {
 	entry: ['webpack-hot-middleware/client',SRC_DIR + "/app/finapp"],
 	output: {
 		path: DIST_DIR + "/app",
-		filename: "bundle.js",
+		filename: "bundle.js"
 		//publicPath: "/dist"
 	},
 	module: {
 		rules: [
 			{
-				test: /\.js$/,
+				test: /\.jsx?$/,
 				include: SRC_DIR,
 				use: [
 					{
@@ -37,19 +37,20 @@ var config = {
 						"css-loader",
 						"sass-loader"
 
-					]
+					],
+					fallback: 'style-loader'
 				})
 			},
 			{
-				test: /\.html$/,
+				test: /\.(html)$/,
 				use: ['html-loader']
 			},
             {
-                test: /\.(jpg|png)$/,
+                test: /\.(jpg|png|gif)$/,
                 use: [
                     {
                         loader: 'file-loader',
-                        query: {
+                        options: {
 						  publicPath: 'img/',
 						  outputPath: 'img/',
 						  name: '[name].[ext]',
@@ -63,11 +64,8 @@ var config = {
 	plugins: [
 		extractPlugin,
 		new HTMLWebpackPlugin({
-			template: 'client/index.html'
-		}),
-		new webpack.ProvidePlugin({
-			$: 'jquery',
-			jQuery: 'jquery'
+			template: 'client/index.html',
+			title: 'Finapp'
 		}),
 		new webpack.HotModuleReplacementPlugin(),
     	new webpack.NoEmitOnErrorsPlugin()

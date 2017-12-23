@@ -4,10 +4,10 @@
   "description": "track your finance's more effectively",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build",
-    "build": "rm -r dist/* && webpack -d && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback --port 3000",
-    "build:prod": "webpack -p && cp client/index.html dist/index.html",
-    "build:dev": "node appServer.js",
+    "start": "npm run build:dev",
+    "old-build": "rm -r dist/* && webpack -d && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback --port 3000",
+    "build:prod": "webpack -p",
+    "build:dev": "cross-env NODE_ENV=development node appServer.js",
     "test": "mocha --compilers js:babel-core/register"
   },
   "keywords": [
@@ -45,6 +45,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
+    "cross-env": "^5.1.3",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^2.1.2",
     "fetch-mock": "^5.13.1",

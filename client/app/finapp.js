@@ -1,4 +1,5 @@
 //--- Dependencies ---//
+console.log('running');
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider }	 from 'react-redux';

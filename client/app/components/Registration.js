@@ -41,6 +41,9 @@ export default class Registration extends React.Component {
 		return(
 			<div>
 				Registration Page!
+				<Link to="/incomes">
+					Incomes!
+				</Link>
 				<ul>
 					{
 						this.props.expenses.map((c,i)=>{

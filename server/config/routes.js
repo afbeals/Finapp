@@ -56,4 +56,5 @@ module.exports = function(app){
 	app.get('/get_all_incomes_in_range',function(req,res){
 		incomes.getAllIncomesInRange(req,res);
 	});
+
 }

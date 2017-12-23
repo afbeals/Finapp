@@ -19,7 +19,7 @@ const defaultState = {
 const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, defaultState, enhancers(applyMiddleware(thunk)));
 
-export const history = syncHistoryWithStore( hashHistory, store);
+export const history = syncHistoryWithStore( browserHistory, store);
 
 //--- Enable Hot Reloading for the reducers ---//
 if(module.hot) {
