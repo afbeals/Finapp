@@ -20,13 +20,19 @@ if(app.get('env') === "development"){
 	}));
 
 	app.use(require('webpack-hot-middleware')(compiler));
+
+	app.use(express.static(__dirname + '/client'));
+
+	app.get('*', function(req, res) {
+	  res.sendFile(path.join(__dirname, '/client/index.html'));
+	});
+} else {
+	app.use(express.static(__dirname + '/dist'));
+
+	app.get('*', function(req, res) {
+	  res.sendFile(path.join(__dirname, '/dist/index.html'));
+	});
 }
-
-app.use(express.static(__dirname + '/client'));
-
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, '/client/index.html'));
-});
 
 app.listen(port, 'localhost', function(err) {
   if (err) {
