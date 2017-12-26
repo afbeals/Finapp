@@ -1,5 +1,5 @@
 //--- Dependencies ---//
-console.log('running');
+//--------------------//
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider }	 from 'react-redux';
@@ -16,6 +16,8 @@ import Profile from './components/Profile';
 
 import store, {history} from './store';
 
+let rootElement = document.getElementById('app');
+
 render(
 	<Provider store={store}>
     <Router history={history}>
@@ -28,5 +30,5 @@ render(
       </Route>
     </Router>
   </Provider>,
-	document.getElementById('app')
+	rootElement
 );

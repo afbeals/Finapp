@@ -10,7 +10,7 @@ export default class Main extends React.Component {
 		return (
 			<div>
 				<div>Main Element</div>
-				<Nav />
+				<Nav test={{test:"test"}} />
         		{ React.cloneElement(this.props.children, this.props) }
 			</div>
 		)

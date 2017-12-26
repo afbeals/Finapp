@@ -1,6 +1,5 @@
 //--Dependencies--//
 import React from 'react';
-import {Link} from 'react-router';
 
 export default class Registration extends React.Component {
 	constructor(props){
@@ -41,9 +40,6 @@ export default class Registration extends React.Component {
 		return(
 			<div>
 				Registration Page!
-				<Link to="/incomes">
-					Incomes!
-				</Link>
 				<ul>
 					{
 						this.props.expenses.map((c,i)=>{
