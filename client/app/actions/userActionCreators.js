@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 //--- Import Constants ---//
-import userConstants from '../constants/userConstants';
+import {userConstants} from '../constants/userConstants';
 
 //--- Action Creators ---//
 /*--- Example:
@@ -36,30 +36,30 @@ export function itemsFetchData(url) {
 export function register(user){
 	return (dispatch) => {
         dispatch(userIsRegistering(true));
-        axios.post("/register_user",{user})
+        return axios.post("/register_user",user)
             .then((response) => {  
-                if (!response.ok) {
-                	userRegisteringError(true)
+                if (!(response.status >= 200 && response.status <= 299)) {
+                	userRegisteringError(true);
                     throw Error(response.statusText);
                 }
-                dispatch(userIsRegistering(false));
                 return response;
             })
-            .then((response)=>dispatch(userHasRegistered(response)))
+            .then((response)=>dispatch(userHasRegistered({users_id:response.data.user_id,first_name: user.regis_firstName,isLoggedIn: true})))
             .catch((err) => dispatch(userRegisteringError(true)));
     };
 }
 
 export function userIsRegistering(bool){
 	return {
-		type: REGISTERING_USER,
+		type: userConstants.REGISTERING_USER,
 		isRegistering: bool
 	}
 }
 
 export function userRegisteringError(bool){
 	return {
-		type: REGISTER_FAILURE,
+		type: userConstants.REGISTER_FAILURE,
+        isRegistering: false,
 		hasErrored: bool,
 
 	}
@@ -67,7 +67,8 @@ export function userRegisteringError(bool){
 
 export function userHasRegistered(user){
 	return {
-		type: REGISTER_SUCCESS,
+		type: userConstants.REGISTER_SUCCESS,
+        isRegistering: false,
 		user: user
 	}
 }

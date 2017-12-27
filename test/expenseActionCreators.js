@@ -145,10 +145,10 @@ describe('Expenses Action Creators', () =>{
 		    	const request = moxios.requests.mostRecent();
 		    	request.respondWith({
 		    		status: 200,
-		        	response: { message: 'success', status: '220' },
+		        	response: { message: 'success', status: '220',expensesId:1 },
 		      	});
 		    });
-	    	let expectedResponse = {users_id: 1,name: "test name2",due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!"}
+	    	let expectedResponse = {users_id: 1,name: "test name2",expensesId: 1,due_day: 5,amount_due: 4200.33,amount_paid: 250,notes: "!!!noenasa anot notes eafea!!!"}
 	    	const expectedActions = [
 		    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: true },
 		    	{ type: expensesConstants.REQUESTING_EXPENSE,isRegistering: false },

@@ -8,8 +8,6 @@ export default class Registration extends React.Component {
 		this.state = {};
 		this.updateInput = this.updateInput.bind(this);
 		this.submitInput = this.submitInput.bind(this);
-
-		this.testingQuery = this.testingQuery.bind(this);
 	}
 
 	updateInput(e){
@@ -26,14 +24,8 @@ export default class Registration extends React.Component {
 	submitInput(e){
 		e.preventDefault();
 		console.log('submit',e,this.state);
-		//this.props.addExpensesInQuery(this.state);
-		this.props.getAllExpenses(1)
-	}
+		//this.props.getAllExpenses(this.props.user.users_id);
 
-	testingQuery(e){
-		console.log('starting testing query');
-		this.props.testingQuery('passed query');
-		e.preventDefault();
 	}
 
 	render(){
@@ -64,8 +56,10 @@ export default class Registration extends React.Component {
 						Password
 					</label>
 					<input type="password" value={this.state.value} onChange={this.updateInput} name="regis_password" id="regis_password" placeholder="enter password" />
-
-
+					<label htmlFor="regis_password">
+						Password Confirmation
+					</label>
+					<input type="password" value={this.state.value} onChange={this.updateInput} name="regis_password_confirm" id="regis_password_confirm" placeholder="confirm password" />
 					<input type="submit" value="Submit" />
 				</form>
 

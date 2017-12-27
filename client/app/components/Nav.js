@@ -16,8 +16,10 @@ export default class Nav extends React.Component{
 				<ul>
 					<li><IndexLink activeClassName="active" to="/" activeStyle={{color: 'pink'}}>Home</IndexLink></li>
 					<li><Link activeClassName="active" to="/incomes" activeStyle={{color: 'pink'}}>Incomes</Link></li>
-					<li><Link activeClassName="active" to="/Expenses" activeStyle={{color: 'pink'}}>Expenses</Link></li>
-					<li><Link activeClassName="active" to="/Profile" activeStyle={{color: 'pink'}}>Profile</Link></li>
+					<li><Link activeClassName="active" to="/expenses" activeStyle={{color: 'pink'}}>Expenses</Link></li>
+					<li><Link activeClassName="active" to="/profile" activeStyle={{color: 'pink'}}>Profile</Link></li>
+					<li><Link activeClassName="active" to="/login" activeStyle={{color: 'pink'}}>Login</Link></li>
+					<li><Link activeClassName="active" to="/register" activeStyle={{color: 'pink'}}>Register</Link></li>
 				</ul>
 			</div>
 		)

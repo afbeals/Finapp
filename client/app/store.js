@@ -8,7 +8,10 @@ import rootReducer from './reducers/combinedReducer';
 //--- Create Store w/ default state (should match reducers) ---//
 const defaultState = {
   user: {
-    users_id:1
+    users_id:1,
+    first_name:"Allan",
+    isRegistering: false,
+    isLoggedIn: true
   },
   expenses: [],
   incomes: []

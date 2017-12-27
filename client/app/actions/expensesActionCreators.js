@@ -177,11 +177,12 @@ export function addExpensesInQuery(params){
                     throw Error(response.statusText);
                 }
                 dispatch(fetchingExpenses(false));
+                console.log(response.data,Object.assign({},params, {expensesId: response.data.expensesId}))
                 return response;
             })
             .then((response)=>{
                 dispatch(fetchingExpensesSuccess(true));
-                dispatch(addExpensesSuccess(Object.assign(params, {expensesId: response.data.expensesId})));
+                dispatch(addExpensesSuccess(Object.assign({},params, {expensesId: response.data.expensesId})));
             })
             .catch((err) => {
                 dispatch(fetchingExpensesError(true))});
