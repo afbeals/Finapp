@@ -4,9 +4,10 @@ var webpack = require('webpack');
 var config = require('./webpack.config');
 var port = process.env.PORT || 3000;
 var app = express();
-
+var auth = require('./server/config/auth')();
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
+app.use(auth.initialize());
 
 var router = require('./server/config/routes');
 router(app);

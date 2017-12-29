@@ -1,6 +1,8 @@
 //--- Dependencies ---//
 var expenses = require ('../controllers/expenses');
 var incomes = require('../controllers/incomes');
+var users = require('../controllers/users');
+var auth = require("../config/auth")();
 var MySQL = require('./MySQL');
 
 
@@ -57,4 +59,9 @@ module.exports = function(app){
 		incomes.getAllIncomesInRange(req,res);
 	});
 
+	//--- User Routes ---//
+	//-------------------//
+	app.post('/register_user',function(req,res){
+	    users.registerUser(req,res);
+	});
 }

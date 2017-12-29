@@ -10,8 +10,8 @@ const defaultState = {
   user: {
     users_id:1,
     first_name:"Allan",
-    isRegistering: false,
-    isLoggedIn: true
+    authenticated: true,
+    isRegistering: false
   },
   expenses: [],
   incomes: []

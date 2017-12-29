@@ -32,8 +32,7 @@ export function itemsFetchData(url) {
 
 
 --- */
-
-export function register(user){
+export function registerUser(user){
 	return (dispatch) => {
         dispatch(userIsRegistering(true));
         return axios.post("/register_user",user)
@@ -44,7 +43,11 @@ export function register(user){
                 }
                 return response;
             })
-            .then((response)=>dispatch(userHasRegistered({users_id:response.data.user_id,first_name: user.regis_firstName,isLoggedIn: true})))
+            .then((response)=>{
+                dispatch(userHasRegistered({users_id:response.data.payload.user_id,first_name: user.regis_firstName}));
+                axios.defaults.headers.common['Authorization'] = response.data.token;
+                localStorage.setItem('finapp_user',resonse.data.token);
+            })
             .catch((err) => dispatch(userRegisteringError(true)));
     };
 }
@@ -52,6 +55,7 @@ export function register(user){
 export function userIsRegistering(bool){
 	return {
 		type: userConstants.REGISTERING_USER,
+        authenticated: false,
 		isRegistering: bool
 	}
 }
@@ -60,6 +64,7 @@ export function userRegisteringError(bool){
 	return {
 		type: userConstants.REGISTER_FAILURE,
         isRegistering: false,
+        authenticated: false,
 		hasErrored: bool,
 
 	}
@@ -69,7 +74,21 @@ export function userHasRegistered(user){
 	return {
 		type: userConstants.REGISTER_SUCCESS,
         isRegistering: false,
-		user: user
+        authenticated: true,
+		user
 	}
 }
 
+export function userIsAuthenticated(bool){
+    return {
+        type: userConstants.AUTHENTICATED_SUCCESS,
+        authenticated: true
+    }
+}
+
+export function userIsNotAuthenticated(bool){
+    return {
+        type: userConstants.AUTHENTICATED_FAILURE,
+        authenticated: false
+    }
+}

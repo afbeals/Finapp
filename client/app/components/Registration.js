@@ -24,7 +24,12 @@ export default class Registration extends React.Component {
 	submitInput(e){
 		e.preventDefault();
 		console.log('submit',e,this.state);
-		//this.props.getAllExpenses(this.props.user.users_id);
+		this.props.registerUser({
+			first_name: this.state.regis_firstName,
+			last_name: this.state.regis_lastName,
+			email: this.state.regis_email,
+			password:  this.state.regis_password
+		});
 
 	}
 
@@ -62,8 +67,6 @@ export default class Registration extends React.Component {
 					<input type="password" value={this.state.value} onChange={this.updateInput} name="regis_password_confirm" id="regis_password_confirm" placeholder="confirm password" />
 					<input type="submit" value="Submit" />
 				</form>
-
-				
 			</div>
 		)
 	}
