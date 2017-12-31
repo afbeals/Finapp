@@ -54,7 +54,7 @@ const urlSelector = (queryType)=>{
 export function getAllExpenses(id){
 	return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        return axios.get("/get_all_expenses",{params: {users_id: id}})
+        return axios.get("/get_all_expenses",{params: {user_id: id}})
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                 	 dispatch(fetchingExpensesError(true));
@@ -74,10 +74,10 @@ export function getAllExpenses(id){
 
 //--- Get All Expenses In Month ---//
 //---------------------------------//
-export function getAllExpensesInMonth(users_id,month){
+export function getAllExpensesInMonth(user_id,month){
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        return axios.get("/get_all_expenses_in_month",{params:{users_id,month}})
+        return axios.get("/get_all_expenses_in_month",{params:{user_id,month}})
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingExpensesError(true));
@@ -111,7 +111,6 @@ export function getAllExpensesInRange(params){
                 return response;
             })
             .then((response)=>{ 
-                console.log(response.data);
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(getAllExpensesInRangeSuccess(response.data));
             })
@@ -177,7 +176,6 @@ export function addExpensesInQuery(params){
                     throw Error(response.statusText);
                 }
                 dispatch(fetchingExpenses(false));
-                console.log(response.data,Object.assign({},params, {expensesId: response.data.expensesId}))
                 return response;
             })
             .then((response)=>{

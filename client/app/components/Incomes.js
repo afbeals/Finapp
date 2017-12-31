@@ -23,7 +23,6 @@ export default class Incomes extends React.Component{
 			},
 			isEditing: false
 		};
-		console.log('exp props',props, this.state);
 		this.updateInput = this.updateInput.bind(this);
 
 		this.getAllIncomes = this.getAllIncomes.bind(this);
@@ -49,17 +48,16 @@ export default class Incomes extends React.Component{
 	}
 
 	getAllIncomes(){
-		this.props.getAllIncomes(this.props.user.users_id);
+		this.props.getAllIncomes(this.props.user.user_id);
 	}
 
 	getAllIncomesInMonth(){
-		console.log('exp state', this.state);
-		this.props.getAllIncomesInMonth(this.props.user.users_id,this.state.incomes_request_month);
+		this.props.getAllIncomesInMonth(this.props.user.user_id,this.state.incomes_request_month);
 	}
 
 	getAllIncomesInRange(){
 		this.props.getAllIncomesInRange({
-			users_id: 	this.props.user.users_id,
+			user_id: 	this.props.user.user_id,
 			begMnt: 	this.state.get_all_incomes_in_range_begMnt,
 			endMnt: 	this.state.get_all_incomes_in_range_endMnt,
 			begDay: 	this.state.get_all_incomes_in_range_begDay,
@@ -69,7 +67,7 @@ export default class Incomes extends React.Component{
 
 	addIncomesInQuery(){
 		this.props.addIncomesInQuery({
-			users_id: 		this.props.user.users_id,
+			user_id: 		this.props.user.user_id,
 			name: 			this.state.add_incomes_in_query_name,
 			due_day: 		this.state.add_incomes_in_query_due_day,
 			amount: 		this.state.add_incomes_in_query_amount,
@@ -110,12 +108,11 @@ export default class Incomes extends React.Component{
 				}
 			})	
 		}
-		console.log(this.state.incomesUpdateData);
 	};
 
 	sendUpdatedIncomes(){
 		this.props.updateIncomesInQuery({
-			users_id: this.props.user.users_id,
+			user_id: this.props.user.user_id,
 			...this.state.incomesUpdateData
 		})
 	}
@@ -126,7 +123,7 @@ export default class Incomes extends React.Component{
 
 	removeIncomesInQuery(inc_id,mnt_id,i){
 		this.props.removeIncomesInQuery({
-			users_id: this.props.user.users_id,
+			user_id: this.props.user.user_id,
 			id: inc_id,
 			months_id: mnt_id,
 			index_in_array: i

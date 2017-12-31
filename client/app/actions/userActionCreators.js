@@ -44,26 +44,90 @@ export function registerUser(user){
                 return response;
             })
             .then((response)=>{
-                dispatch(userHasRegistered({users_id:response.data.payload.user_id,first_name: user.regis_firstName}));
-                axios.defaults.headers.common['Authorization'] = response.data.token;
-                localStorage.setItem('finapp_user',resonse.data.token);
+                dispatch(userIsRegistering(false));
+                dispatch(userHasRegistered(response.data.payload));
+                localStorage.setItem('finapp_user',response.data.token);
+                axios.defaults.headers.common['Authorization'] = "Bearer "+response.data.token;
             })
             .catch((err) => dispatch(userRegisteringError(true)));
     };
+}
+
+export function loginUser(user){
+    return (dispatch) => {
+        dispatch(userIsLoggingIn(true));
+        return axios.post('/login_user',user)
+            .then((response)=>{
+                if (!(response.status >= 200 && response.status <= 299)) {
+                    userLogginError(true);
+                    throw Error(response.statusText);
+                }
+                console.log('aefa',response);
+                return response;
+            })
+            .then((response)=>{
+                console.log(response);
+                dispatch(userIsLoggingIn(false));
+                dispatch(userHasLoggedIn(response.data.payload));
+                localStorage.setItem('finapp_user',response.data.token);
+                axios.defaults.headers.common['Authorization'] = "Bearer "+response.data.token;
+            })
+            .catch((err) => dispatch(userRegisteringError(true)));
+    }
+}
+
+export function testHeaders(token){
+    return(dispatch) => {
+        return axios.get('/test_header',{params: {token}})
+            .then((response)=>{
+                if (!(response.status >= 200 && response.status <= 299)) {
+                    throw Error(response.statusText);
+                }
+            })
+            .catch((err) => {
+                userRegisteringError(true);
+            });
+    }
+}
+
+export function userIsLoggingIn(bool){
+    return {
+        type: userConstants.LOGIN_REQUEST,
+        authenticated: false,
+        isRequesting: bool
+    }
+}
+
+export function userHasLoggedIn(user){
+    return {
+        type: userConstants.LOGIN_SUCCESS,
+        authenticated: true,
+        isRequesting: false,
+        user
+    }
+}
+
+export function userLogginError(bool){
+    return {
+        type: userConstants.LOGIN_FAILURE,
+        authenticated: false,
+        isRequesting: false,
+        hasErrored: bool
+    }
 }
 
 export function userIsRegistering(bool){
 	return {
 		type: userConstants.REGISTERING_USER,
         authenticated: false,
-		isRegistering: bool
+		isRequesting: bool
 	}
 }
 
 export function userRegisteringError(bool){
 	return {
 		type: userConstants.REGISTER_FAILURE,
-        isRegistering: false,
+        isRequesting: false,
         authenticated: false,
 		hasErrored: bool,
 
@@ -71,9 +135,10 @@ export function userRegisteringError(bool){
 }
 
 export function userHasRegistered(user){
+    console.log('UHS',user);
 	return {
 		type: userConstants.REGISTER_SUCCESS,
-        isRegistering: false,
+        isRequesting: false,
         authenticated: true,
 		user
 	}
@@ -92,3 +157,5 @@ export function userIsNotAuthenticated(bool){
         authenticated: false
     }
 }
+
+//Need error handling that displays error message

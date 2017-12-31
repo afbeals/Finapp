@@ -14,6 +14,7 @@ import Nav from './components/Nav';
 import Profile from './components/Profile';
 import Home from './components/Home';
 import Login from './components/Login';
+import HOC_Auth from './components/HOC_Auth';
 
 import store, {history} from './store';
 
@@ -24,9 +25,9 @@ render(
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={Home} />
-        <Route path="/expenses" component={Expenses} />
-        <Route path="/incomes" component={Incomes} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/expenses" component={HOC_Auth(Expenses)} />
+        <Route path="/incomes" component={HOC_Auth(Incomes)} />
+        <Route path="/profile" component={HOC_Auth(Profile)} />
         <Route path="/login" component={Login} />
         <Route path="register" component={Registration} />
       </Route>

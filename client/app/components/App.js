@@ -16,7 +16,7 @@ import Main from './Main';
 //-----------------------------------------------------------------------------------------//
 
 function mapStateToProps(state) {
-	console.log('mapstatetoprops',state);
+	console.log('App.js -> mapstatetoprops -> ',state);
 	return {
 		user: state.user,
 		expenses: state.expenses,

@@ -4,7 +4,6 @@ import React from 'react';
 export default class Registration extends React.Component {
 	constructor(props){
 		super(props);
-		console.log('registration component',props);
 		this.state = {};
 		this.updateInput = this.updateInput.bind(this);
 		this.submitInput = this.submitInput.bind(this);
@@ -23,7 +22,6 @@ export default class Registration extends React.Component {
 
 	submitInput(e){
 		e.preventDefault();
-		console.log('submit',e,this.state);
 		this.props.registerUser({
 			first_name: this.state.regis_firstName,
 			last_name: this.state.regis_lastName,
@@ -37,13 +35,6 @@ export default class Registration extends React.Component {
 		return(
 			<div>
 				Registration Page!
-				<ul>
-					{
-						this.props.expenses.map((c,i)=>{
-							return <li key={i}>{c.name},{c.id},{c.amount_due}</li>
-						})
-					}
-				</ul>
 				<form onSubmit={this.submitInput}>
 					<label htmlFor="regis_firstName">
 						First Name
@@ -54,7 +45,7 @@ export default class Registration extends React.Component {
 					</label>
 					<input type="text" value={this.state.value} onChange={this.updateInput} name="regis_lastName" id="regis_lastName" placeholder="Last Name" />
 					<label htmlFor="regis_email">
-						First Name
+						Email
 					</label>
 					<input type="email" value={this.state.value} onChange={this.updateInput} name="regis_email" id="regis_email" placeholder="Email" />
 					<label htmlFor="regis_password">

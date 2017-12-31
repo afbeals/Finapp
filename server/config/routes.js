@@ -21,7 +21,7 @@ module.exports = function(app){
 		expenses.removeExpensesInQuery(req,res);
 	});	
 
-	app.get('/get_all_expenses',function(req,res){
+	app.get('/get_all_expenses',auth.authenticateHeader(),function(req,res){
 	    expenses.getAllExpenses(req,res);
 	});
 
@@ -64,4 +64,13 @@ module.exports = function(app){
 	app.post('/register_user',function(req,res){
 	    users.registerUser(req,res);
 	});
+
+	app.post('/login_user',function(req,res){
+	    users.loginUser(req,res);
+	});
+
+	app.get('/test_header', auth.authenticateLocal(), function(req,res){
+		console.log(req.headers);
+		res.sendStatus(200);
+	})
 }

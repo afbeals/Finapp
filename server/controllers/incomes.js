@@ -11,7 +11,7 @@ module.exports = {
 				throw Error(err);
 			}   
 			console.log('connected as id ' + connection.threadId);   
-			connection.query("INSERT INTO incomes (users_id,name,due_day,amount,notes,created_at) VALUES (?,?,?,?,?,?)",[req.body.users_id,req.body.name,req.body.due_day,req.body.amount,req.body.notes,new Date()],(err,rows)=>{
+			connection.query("INSERT INTO incomes (users_id,name,due_day,amount,notes,created_at) VALUES (?,?,?,?,?,?)",[req.body.user_id,req.body.name,req.body.due_day,req.body.amount,req.body.notes,new Date()],(err,rows)=>{
 				if(!err) {
 			   		connection.query("INSERT INTO months_has_incomes (months_id,incomes_id,created_at) VALUES (?,?,?)",[req.body.monthId,rows.insertId,new Date()],(err,rows2)=>{
 						connection.release(); 
@@ -61,7 +61,7 @@ module.exports = {
 				throw Error(err);
 			}   
 			console.log('connected as id ' + connection.threadId);   
-			connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId, months.id as month FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ?",[req.query.users_id],(err,rows)=>{
+			connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId, months.id as month FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ?",[req.query.user_id],(err,rows)=>{
 				connection.release(); 
 				if(!err) {
 					res.json(rows);
@@ -85,7 +85,7 @@ module.exports = {
 				throw Error(err);
 			}   
 			console.log('connected as id ' + connection.threadId);   
-			connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ? AND months.id = ?",[req.query.users_id,req.query.month],(err,rows)=>{
+			connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ? AND months.id = ?",[req.query.user_id,req.query.month],(err,rows)=>{
 				connection.release(); 
 				if(!err) {
 			   		res.json(rows);
@@ -105,10 +105,10 @@ module.exports = {
 		let query,params;
       	if((typeof req.query.begDay != "undefined") && (typeof req.query.endDay != "undefined")){
       		query = "SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (incomes.due_day >= ? AND incomes.due_day <= ?) ";
-      		params = [req.query.users_id,req.query.begMnt,req.query.endMnt,req.query.begDay,req.query.endDay];
+      		params = [req.query.user_id,req.query.begMnt,req.query.endMnt,req.query.begDay,req.query.endDay];
       	} else {
       		query = "SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ? AND months.id >= ? AND months.id <= ?";
-      		params = [req.query.users_id,req.query.begMnt,req.query.endMnt]
+      		params = [req.query.user_id,req.query.begMnt,req.query.endMnt]
       	}
 	    MySQL.pool.getConnection((err,connection)=>{
 			if (err) {
@@ -149,7 +149,7 @@ module.exports = {
                     }
                 }
             }
-			query += " WHERE users_id = "+obj['users_id']+" AND id = "+obj['id'];
+			query += " WHERE users_id = "+obj['user_id']+" AND id = "+obj['id'];
 			if(obj['month']){
 				query += "; UPDATE months_has_incomes SET months_id = "+obj['month']+" WHERE incomes_id = '"+obj['id']+"'";
             }
@@ -186,7 +186,7 @@ module.exports = {
 				throw Error(err);
 			}   
 			console.log('connected as id ' + connection.threadId);   
-			connection.query("DELETE FROM months_has_incomes WHERE months_id = ? AND incomes_id = ?; DELETE FROM incomes WHERE users_id = ? AND id = ?",[req.body.months_id,req.body.id,req.body.users_id,req.body.id],(err,rows)=>{
+			connection.query("DELETE FROM months_has_incomes WHERE months_id = ? AND incomes_id = ?; DELETE FROM incomes WHERE users_id = ? AND id = ?",[req.body.months_id,req.body.id,req.body.user_id,req.body.id],(err,rows)=>{
 				connection.release(); 
 				if(!err) {
 			  		res.status(200).send();

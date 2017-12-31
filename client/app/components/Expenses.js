@@ -24,7 +24,6 @@ export default class Expenses extends React.Component{
 			},
 			isEditing: false
 		};
-		console.log('exp props',props, this.state);
 		this.updateInput = this.updateInput.bind(this);
 
 		this.getAllExpenses = this.getAllExpenses.bind(this);
@@ -50,17 +49,16 @@ export default class Expenses extends React.Component{
 	}
 
 	getAllExpenses(){
-		this.props.getAllExpenses(this.props.user.users_id);
+		this.props.getAllExpenses(this.props.user.use_rid);
 	}
 
 	getAllExpensesInMonth(){
-		console.log('exp state', this.state);
-		this.props.getAllExpensesInMonth(this.props.user.users_id,this.state.expense_request_month);
+		this.props.getAllExpensesInMonth(this.props.user.user_id,this.state.expense_request_month);
 	}
 
 	getAllExpensesInRange(){
 		this.props.getAllExpensesInRange({
-			users_id: 	this.props.user.users_id,
+			user_id: 	this.props.user.user_id,
 			begMnt: 	this.state.get_all_expenses_in_range_begMnt,
 			endMnt: 	this.state.get_all_expenses_in_range_endMnt,
 			begDay: 	this.state.get_all_expenses_in_range_begDay,
@@ -70,7 +68,7 @@ export default class Expenses extends React.Component{
 
 	addExpensesInQuery(){
 		this.props.addExpensesInQuery({
-			users_id: 		this.props.user.users_id,
+			user_id: 		this.props.user.user_id,
 			name: 			this.state.add_expenses_in_query_name,
 			due_day: 		this.state.add_expenses_in_query_due_day,
 			amount_due: 	this.state.add_expenses_in_query_amount_due,
@@ -112,12 +110,11 @@ export default class Expenses extends React.Component{
 				}
 			})	
 		}
-		console.log(this.state.expenseUpdateData);
 	};
 
 	sendUpdatedExpense(){
 		this.props.updateExpensesInQuery({
-			users_id: this.props.user.users_id,
+			user_id: this.props.user.user_id,
 			...this.state.expenseUpdateData
 		})
 	}
@@ -128,7 +125,7 @@ export default class Expenses extends React.Component{
 
 	removeExpensesInQuery(exp_id,mnt_id,i){
 		this.props.removeExpensesInQuery({
-			users_id: this.props.user.users_id,
+			user_id: this.props.user.user_id,
 			id: exp_id,
 			months_id: mnt_id,
 			index_in_array: i

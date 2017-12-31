@@ -6,24 +6,41 @@ var users = require('../controllers/users');
 var cfg = require('../../private.js');
 var ExtractJwt = passportJWT.ExtractJwt;
 var Strategy = passportJWT.Strategy;
-var params = {
+var StrategyLocal = function(req){
+	var token = null;
+	if(req && req.query) {
+		token = req.query.token;
+	}
+	return token;
+};
+var paramsHeader = {
 	secretOrKey: cfg.jwtSecret,
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 	passReqToCallback: true
 };
-
+var paramsLocal = {
+	secretOrKey: cfg.jwtSecret,
+	jwtFromRequest: StrategyLocal,
+	passReqToCallback: true
+};
 module.exports = function(){
-	var strategy = new Strategy(params, function(req,payload,done){
-		users.registerUser(req,payload,done);
+	var strategyHeader = new Strategy(paramsHeader, function(req,payload,done){
+		done(null,{});
 	});
-	passport.use('jwt',strategy);
+	var strategyLocal = new Strategy(paramsLocal, function(req,payload,done){
+		done(null,{});
+	});
+	passport.use('jwt',strategyHeader);
+	passport.use('local',strategyLocal)
 	return {
 		initialize: function(){
 			return passport.initialize();
 		},
-		authenticate: function(){
-			console.log('we checked');
+		authenticateHeader: function(){
 			return passport.authenticate("jwt",cfg.jwtSession);
+		},
+		authenticateLocal: function(){
+			return passport.authenticate("local",cfg.jwtSession);
 		}
 	}
 };

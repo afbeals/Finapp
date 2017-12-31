@@ -54,7 +54,7 @@ const urlSelector = (queryType)=>{
 export function getAllIncomes(id){
 	return (dispatch) => {
         dispatch(fetchingIncomes(true));
-        return axios.get("/get_all_incomes",{params: {users_id: id}})
+        return axios.get("/get_all_incomes",{params: {user_id: id}})
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                 	 dispatch(fetchingIncomesError(true));
@@ -74,10 +74,10 @@ export function getAllIncomes(id){
 
 //--- Get All Incomes In Month ---//
 //--------------------------------//
-export function getAllIncomesInMonth(users_id,month){
+export function getAllIncomesInMonth(user_id,month){
     return (dispatch) => {
         dispatch(fetchingIncomes(true));
-        return axios.get("/get_all_incomes_in_month",{params:{users_id,month}})
+        return axios.get("/get_all_incomes_in_month",{params:{user_id,month}})
             .then((response) => {  
                 if (!(response.status >= 200 && response.status <= 299)) {
                      dispatch(fetchingIncomesError(true));
