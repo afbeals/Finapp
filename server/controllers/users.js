@@ -21,7 +21,7 @@ module.exports = {
 			  		console.log(data);
 			  		var password = data.password,
 			  			hashPassword = null;
-			  		bcrypt.hash(password, 10, (err,hash) => {
+			  		bcrypt.hash(password, cfg.salt, (err,hash) => {
 			  			if(err){
 			  				connection.release();
 			  				throw Error(err);
