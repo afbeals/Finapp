@@ -49,7 +49,7 @@ export default class Expenses extends React.Component{
 	}
 
 	getAllExpenses(){
-		this.props.getAllExpenses(this.props.user.use_rid);
+		this.props.getAllExpenses(this.props.user.user_id);
 	}
 
 	getAllExpensesInMonth(){

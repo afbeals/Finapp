@@ -26,7 +26,9 @@ export default class Registration extends React.Component {
 			first_name: this.state.regis_firstName,
 			last_name: this.state.regis_lastName,
 			email: this.state.regis_email,
-			password:  this.state.regis_password
+			password:  this.state.regis_password,
+			password_confirm: this.state.regis_password_confirm
+
 		});
 
 	}
@@ -52,7 +54,7 @@ export default class Registration extends React.Component {
 						Password
 					</label>
 					<input type="password" value={this.state.value} onChange={this.updateInput} name="regis_password" id="regis_password" placeholder="enter password" />
-					<label htmlFor="regis_password">
+					<label htmlFor="regis_password_confirm">
 						Password Confirmation
 					</label>
 					<input type="password" value={this.state.value} onChange={this.updateInput} name="regis_password_confirm" id="regis_password_confirm" placeholder="confirm password" />

@@ -34,19 +34,15 @@ export function itemsFetchData(url) {
 }
 --- */
 
-//--- url selector based on query.url -> to return url for axios request ---//
-const urlSelector = (queryType)=>{
-    switch(queryType){
-        case 'get_all_expenses':
-            return "/get_all_expenses";
-        case 'get_all_expenses_in_month':
-            return '/get_all_expenses_in_month';
-        case 'get_all_expenses_in_range':
-            return "/get_all_expenses_in_range";
-        default:
-            return null;
+//--- validate reponse ---//
+let nonValidResponse = (response) => {
+    let status = null
+    if(response.status >= 200 && response.status < 300){
+        return status = false;
     }
-}
+    return status = true
+};
+
 
 //--- AJAX Calls ---//
 //--- Retrieve Expeneses ---//
@@ -56,7 +52,7 @@ export function getAllExpenses(id){
         dispatch(fetchingExpenses(true));
         return axios.get("/get_all_expenses",{params: {user_id: id}})
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                 	 dispatch(fetchingExpensesError(true));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
@@ -79,7 +75,7 @@ export function getAllExpensesInMonth(user_id,month){
         dispatch(fetchingExpenses(true));
         return axios.get("/get_all_expenses_in_month",{params:{user_id,month}})
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                      dispatch(fetchingExpensesError(true));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
@@ -102,7 +98,7 @@ export function getAllExpensesInRange(params){
         dispatch(fetchingExpenses(true));
         return axios.get("/get_all_expenses_in_range",{params:params})
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                      dispatch(fetchingExpensesError(true));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
@@ -125,7 +121,7 @@ export function updateExpensesInQuery(params){
         dispatch(fetchingExpenses(true));
         return axios.post("/update_expenses_in_query",params)
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                      dispatch(fetchingExpensesError(true));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
@@ -148,7 +144,7 @@ export function removeExpensesInQuery(params){
         dispatch(fetchingExpenses(true));
         return axios.post("/remove_expenses_in_query",params)
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+               if (nonValidResponse(response)) {
                      dispatch(fetchingExpensesError(true));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
@@ -170,7 +166,7 @@ export function addExpensesInQuery(params){
         dispatch(fetchingExpenses(true));
         return axios.post("/add_expenses_in_query",params)
             .then((response) => {
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                      dispatch(fetchingExpensesError(true));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);

@@ -34,19 +34,14 @@ export function itemsFetchData(url) {
 }
 --- */
 
-//--- url selector based on query.url -> to return url for axios request ---//
-const urlSelector = (queryType)=>{
-    switch(queryType){
-        case 'get_all_expenses':
-            return "/get_all_expenses";
-        case 'get_all_expenses_in_month':
-            return '/get_all_expenses_in_month';
-        case 'get_all_expenses_in_range':
-            return "/get_all_expenses_in_range";
-        default:
-            return null;
+//--- validate reponse ---//
+let nonValidResponse = (response) => {
+    let status = null
+    if(response.status >= 200 && response.status < 300){
+        return status = false;
     }
-}
+    return status = true
+};
 
 //--- AJAX Calls ---//
 //--- Retrieve Incomes ---//
@@ -56,7 +51,7 @@ export function getAllIncomes(id){
         dispatch(fetchingIncomes(true));
         return axios.get("/get_all_incomes",{params: {user_id: id}})
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+               if (nonValidResponse(response)) {
                 	 dispatch(fetchingIncomesError(true));
                      dispatch(fetchingIncomes(false));
                     throw Error(response.statusText);
@@ -79,7 +74,7 @@ export function getAllIncomesInMonth(user_id,month){
         dispatch(fetchingIncomes(true));
         return axios.get("/get_all_incomes_in_month",{params:{user_id,month}})
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                      dispatch(fetchingIncomesError(true));
                      dispatch(fetchingIncomes(false));
                     throw Error(response.statusText);
@@ -102,7 +97,7 @@ export function getAllIncomesInRange(params){
         dispatch(fetchingIncomes(true));
         return axios.get("/get_all_incomes_in_range",{params:params})
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                      dispatch(fetchingIncomesError(true));
                      dispatch(fetchingIncomes(false));
                     throw Error(response.statusText);
@@ -125,7 +120,7 @@ export function updateIncomesInQuery(params){
         dispatch(fetchingIncomes(true));
         return axios.post("/update_incomes_in_query",params)
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                      dispatch(fetchingIncomesError(true));
                      dispatch(fetchingIncomes(false));
                     throw Error(response.statusText);
@@ -148,7 +143,7 @@ export function removeIncomesInQuery(params){
         dispatch(fetchingIncomes(true));
         return axios.post("/remove_incomes_in_query",params)
             .then((response) => {  
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                      dispatch(fetchingIncomesError(true));
                      dispatch(fetchingIncomes(false));
                     throw Error(response.statusText);
@@ -170,7 +165,7 @@ export function addIncomesInQuery(params){
         dispatch(fetchingIncomes(true));
         return axios.post("/add_incomes_in_query",params)
             .then((response) => {
-                if (!(response.status >= 200 && response.status <= 299)) {
+                if (nonValidResponse(response)) {
                      dispatch(fetchingIncomesError(true));
                      dispatch(fetchingIncomes(false));
                     throw Error(response.statusText);

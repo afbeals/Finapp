@@ -12,7 +12,7 @@ const defaultState = {
     first_name:"Allan",
     authenticated: true,
     isRequesting: false,
-    hasErrored: false
+    hasErrored: []
   },
   expenses: [],
   incomes: []

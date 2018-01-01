@@ -6,6 +6,7 @@ import {Link, IndexLink} from 'react-router';
 export default class Nav extends React.Component{
 	constructor(props){
 		super(props);
+		console.log('props',this.props);
 	}
 
 	render(){
@@ -19,6 +20,7 @@ export default class Nav extends React.Component{
 					<li><Link activeClassName="active" to="/profile" activeStyle={{color: 'pink'}}>Profile</Link></li>
 					<li><Link activeClassName="active" to="/login" activeStyle={{color: 'pink'}}>Login</Link></li>
 					<li><Link activeClassName="active" to="/register" activeStyle={{color: 'pink'}}>Register</Link></li>
+					<li><Link to="/" onClick={this.props.logOutUser}>Logout</Link></li>
 				</ul>
 			</div>
 		)
