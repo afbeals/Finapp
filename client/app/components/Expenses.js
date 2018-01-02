@@ -53,7 +53,7 @@ export default class Expenses extends React.Component{
 	}
 
 	getAllExpensesInMonth(){
-		this.props.getAllExpensesInMonth(this.props.user.user_id,this.state.expense_request_month);
+		this.props.getAllExpensesInMonth(this.props.user.user_id,this.state.expense_request_monthId);
 	}
 
 	getAllExpensesInRange(){
@@ -171,7 +171,7 @@ export default class Expenses extends React.Component{
 				<button onClick={this.getAllExpenses}>Get 'em!</button>
 				<hr />
 				<div>Get Expenses In Month</div>
-				<select value={this.state.expense_request_month} name="expense_request_month" id="expense_request_month" onChange={this.updateInput}>
+				<select value={this.state.expense_request_monthId} name="expense_request_monthId" id="expense_request_monthId" onChange={this.updateInput}>
 					<option value="none" disabled={true}>Select A Month</option>
 					<option value="1">January</option>
 					<option value="2">February</option>

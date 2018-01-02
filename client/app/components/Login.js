@@ -1,52 +1,90 @@
 //--Dependencies--//
 //----------------//
 import React from 'react';
+import { connect } from 'react-redux';
+import {required, email,length} from 'redux-form-validators';
+import {
+		Field, 
+		reduxForm,
+		getFormValues,
+		isDirty,
+  		isPristine,
+		isValid,
+		isInvalid,
+		getFormSyncErrors
+	} from 'redux-form';
 
-export default class Login extends React.Component {
+const renderField = (field) => (
+    <label>
+		{field.label}
+	    <div className="input-row">
+	    	<input {...field.input} type={field.type} placeholder={field.placeholder}/>
+			{field.meta.touched && field.meta.error && 
+			<span className="error">{field.meta.error}</span>}
+	    </div>
+    </label>
+  )
+
+class Login extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {};
-		this.updateInput = this.updateInput.bind(this);
 		this.submitInput = this.submitInput.bind(this);
 	}
 
-	updateInput(e){
-		const target = e.target;
-		const value = e.target.value;
-		const name = target.name;
-
-		this.setState({
-			...this.state,
-			[name]: value
-		});
-	}
-
-	submitInput(e){
-		e.preventDefault();
-		this.props.loginUser({
-			email: this.state.login_email,
-			password:  this.state.login_password
-		});
-
+	submitInput(values){
+		this.props.loginUser(values);
 	}
 
 	render(){
+		let {pristine, valid,dirty,invalid} = {...this.props};
+		let errors = Object.keys(this.props.formErrors).length;
 		return(
 			<div>
 				Login Page!
-				{this.props.user.first_name}
-				<form onSubmit={this.submitInput}>
-					<label htmlFor="login_email">
-						Email
-					</label>
-					<input type="email" value={this.state.value} onChange={this.updateInput} name="login_email" id="login_email" placeholder="Email" />
-					<label htmlFor="login_password">
-						Password
-					</label>
-					<input type="password" value={this.state.value} onChange={this.updateInput} name="login_password" id="login_password" placeholder="enter password" />
-					<input type="submit" value="Submit" />
-				</form>
-			</div>
+				<form onSubmit={this.props.handleSubmit(this.submitInput)}>
+					<div>
+						<Field
+							name="email"
+							component={renderField}
+							type="email"
+							placeholder="Email"
+							validate={[email()]}
+							label="Email"
+						/>
+					</div>
+			    	<div>
+						<Field
+							name="password"
+							component={renderField}
+							type="password"
+							placeholder="enter password"
+							validate={[required(),length({min:1})]}
+							label="Password"
+						/>
+					</div>
+					<div>
+						<button type="submit" disabled={errors}> Submit </button>
+					</div>
+			    </form>
+		    </div>
 		)
 	}
 }
+
+Login = reduxForm({
+	form: 'login'
+})(Login);
+
+Login = connect(
+  state => ({
+    formValues: getFormValues('login')(state),
+    dirty: isDirty('login')(state),
+    pristine: isPristine('login')(state),
+    valid: isValid('login')(state),
+    invalid: isInvalid('login')(state),
+    formErrors: getFormSyncErrors('login')(state)
+  })
+)(Login);
+
+export default Login

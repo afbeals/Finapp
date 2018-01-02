@@ -14,8 +14,9 @@ import { routerReducer } from 'react-router-redux';
 import {default as user} from './userReducer';
 import {default as expenses} from './expensesReducer';
 import {default as incomes} from './incomesReducer';
+import {reducer as formReducer} from 'redux-form';
 
 
-const rootReducer = combineReducers({ user, expenses, incomes, routing: routerReducer });
+const rootReducer = combineReducers({ user, expenses, incomes,form: formReducer, routing: routerReducer });
 
 export default rootReducer;
