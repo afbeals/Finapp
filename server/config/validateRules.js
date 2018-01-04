@@ -86,4 +86,4 @@ module.exports = {
 		id: 'required|integer',
 		user_id: 'required|integer'
 	}
-}
+};

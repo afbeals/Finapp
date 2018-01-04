@@ -6,34 +6,6 @@ import axios from 'axios';
 //------------------------//
 import {incomesConstants} from '../constants/incomesConstants';
 
-//--- Action Creators ---//
-//-----------------------//
-/*--- Example:
-Basic:
-export function increaseNum(i) {
-  return {
-    type: 'INCREASE_NUM'
-  };
-}
-
-Ajax:
-export function itemsFetchData(url) {
-    return (dispatch) => {
-        dispatch();
-        axios.get(url)
-            .then((response) => {  
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                dispatch();
-                return response;
-            })
-            .then((data) => dispatch())
-            .catch(() => dispatch());
-    };
-}
---- */
-
 //--- validate reponse ---//
 let nonValidResponse = (response) => {
     let status = null

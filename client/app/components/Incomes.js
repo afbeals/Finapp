@@ -74,7 +74,7 @@ export default class Incomes extends React.Component{
 			notes: 			this.state.add_incomes_in_query_notes,
 			monthId: 		this.state.add_incomes_in_query_month,
 			id: 			this.state.add_incomes_in_query_month
-		})
+		});
 	}
 
 	updateIncomesInfo(e,id){

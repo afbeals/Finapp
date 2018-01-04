@@ -15,7 +15,14 @@
     "redux",
     "mysql",
     "webpack",
-    "babel"
+    "babel",
+    "express",
+    "jwt",
+    "axios",
+    "bcrypt",
+    "mocha",
+    "chai",
+    "passport"
   ],
   "author": "Allan Beals-Gibson",
   "license": "ISC",

@@ -11,8 +11,7 @@ module.exports = {
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
-						console.log({"code" : 100, "status" : "Error in connection database","err":err});
-						throw Error(err);
+						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
 					connection.query("INSERT INTO incomes (users_id,name,due_day,amount,notes,created_at) VALUES (?,?,?,?,?,?)",[data.user_id,data.name,data.due_day,data.amount,data.notes,new Date()],(err,rows)=>{
@@ -22,24 +21,22 @@ module.exports = {
 								if(!err) {
 							   		res.json({incomesId:rows.insertId});
 								}else {
-									res.status(500).send('Something broke!');
-									throw Error(err);
+									res.status(400).send({errors: {msg: "error while trying to add an income",status:400 }});
+									console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 								}
 							});
 						}else {
-							res.status(500).send('Something broke!');
-							throw Error(err);
+							res.status(500).send({errors: {msg: "error while trying to get all incomes",status:500 }});
 						}
 					});
 					connection.on('error', (err)=>{      
-						console.log({"code" : 100, "status" : "Error in connection database", "err":err});
-						throw Error(err);
+						console.error({"code" : err.code, "status" : "Error in connection database", "err":err});
 					});
 			    });	
 			})
 			.catch((errors)=>{
-				console.log(errors);
-				res.status(400).send({error:errors});
+				console.error(errors);
+				res.status(500).send({error:{msg:"something when wrong",status:500}});
 			});	
 	},
 
@@ -49,8 +46,7 @@ module.exports = {
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
-						console.log({"code" : 100, "status" : "Error in connection database","err":err});
-						throw Error(err);
+						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
 					connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId, months.id as month FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ?",[data.user_id],(err,rows)=>{
@@ -58,19 +54,18 @@ module.exports = {
 						if(!err) {
 							res.json(rows);
 						}else {
-							res.status(500).send('Something broke!');
-							throw Error(err);
+							res.status(500).send({errors: {msg: "error while trying to get all incomes",status:500 }});
+							console.error({"code" : err.code, "status" : "error while trying to get all incomes","err":err});
 						}
 					});
 					connection.on('error', (err)=>{      
-						console.log({"code" : 100, "status" : "Error in connection database", "err":err});
-						throw Error(err); 
+						console.error({"code" : err.code, "status" : "Error in connection database", "err":err});
 					});
 			    });
 			})
 			.catch((errors)=>{
-				console.log(errors);
-				res.status(400).send({error:errors});
+				console.error(errors);
+				res.status(500).send({error:{msg:"something when wrong",status:500}});
 			});	
 		
 	},
@@ -81,8 +76,7 @@ module.exports = {
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
-						console.log({"code" : 100, "status" : "Error in connection database","err":err});
-						throw Error(err);
+						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
 					connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ? AND months.id = ?",[data.user_id,data.month],(err,rows)=>{
@@ -90,19 +84,18 @@ module.exports = {
 						if(!err) {
 					   		res.json(rows);
 						}else {
-							res.status(500).send('Something broke!');
-							throw Error(err);
+							res.status(500).send({errors: {msg: "error while trying to get all incomes within month ",status:500 }});
+							console.error(err);
 						}
 					});
 					connection.on('error', (err)=>{
-						console.log({"code" : 100, "status" : "Error in connection database", "err":err});
-						throw Error(err);   
+						console.error({"code" : err.code, "status" : "Error in connection database", "err":err}); 
 					});
 			    });
 			})
 			.catch((errors)=>{
-				console.log(errors);
-				res.status(400).send({error:errors});
+				console.error(errors);
+				res.status(500).send({error:{msg:"something when wrong",status:500}});
 			});	
 		
 	},
@@ -121,29 +114,26 @@ module.exports = {
 			    MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
-						console.log({"code" : 100, "status" : "Error in connection database","err":err});
-						throw Error(err);
+						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);  
 					connection.query(query,params,(err,rows)=>{
 						connection.release(); 
 						if(!err) {
-							console.log(rows);
 					   		res.json(rows);
 						}else {
-							res.status(500).send('Something broke!');
-							throw Error(err);
+							res.status(500).send({errors: {msg: "error while trying to get all incomes within range item",status:500 }});
+							console.error(err);
 						}
 					});
 					connection.on('error', (err)=>{      
-						console.log({"code" : 100, "status" : "Error in connection database", "err":err});
-						throw Error(err);
+						console.error({"code" : err.code, "status" : "Error in connection database", "err":err});
 					});
 			    });
 			})
 			.catch((errors)=>{
-				console.log(errors);
-				res.status(400).send({error:errors});
+				console.error(errors);
+				res.status(500).send({error:{msg:"something when wrong",status:500}});
 			});	
 		
 	},
@@ -174,8 +164,7 @@ module.exports = {
 			    MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
-						console.log({"code" : 100, "status" : "Error in connection database","err":err});
-						throw Error(err);
+						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
 					connection.query(buildQuery(data),(err,rows)=>{
@@ -183,19 +172,18 @@ module.exports = {
 						if(!err) {
 					  		res.status(200).send();
 						}else {
-							res.status(500).send('Something broke!');
-							throw Error(err);
+							res.status(500).send({errors: {msg: "error while trying to update item",status:500 }});
+							console.error(err);
 						}
 					});
 					connection.on('error', (err)=>{      
-						console.log({"code" : 100, "status" : "Error in connection database", "err":err});
-						throw Error(err);   
+						console.error({"code" : err.code, "status" : "Error in connection database", "err":err}); 
 					});
 			    });
 			})
 			.catch((errors)=>{
-				console.log(errors);
-				res.status(400).send({error:errors});
+				console.error(errors);
+				res.status(500).send({error:{msg:"something when wrong",status:500}});
 			});	
 		
 	},
@@ -206,8 +194,7 @@ module.exports = {
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
-						console.log({"code" : 100, "status" : "Error in connection database","err":err});
-						throw Error(err);
+						res.status(500).send({error: {msg:err,status:500}});
 					}   
 					console.log('connected as id ' + connection.threadId);   
 					connection.query("DELETE FROM months_has_incomes WHERE months_id = ? AND incomes_id = ?; DELETE FROM incomes WHERE users_id = ? AND id = ?",[data.months_id,data.id,data.user_id,data.id],(err,rows)=>{
@@ -215,19 +202,18 @@ module.exports = {
 						if(!err) {
 					  		res.status(200).send();
 						}else {
-							throw Error(err);
-							res.status(500).send('Something broke!');
+							console.error({msg:"error while trying to delete data",err});
+							res.status(500).send({errors: {msg: "error while trying to delete item",status:500 }});
 						}
 					});
 					connection.on('error', (err)=>{      
-						console.log({"code" : 100, "status" : "Error in connection database", "err":err});
-						throw Error(err);   
+						console.error({"code" : err.code, "status" : "Error in connection database", "err":err});   
 					});
 			    });
 			})
 			.catch((errors)=>{
-				console.log(errors);
-				res.status(400).send({error:errors});
+				console.error(errors);
+				res.status(500).send({error:{msg:"something when wrong",status:500}});
 			});	 
 	}
 };

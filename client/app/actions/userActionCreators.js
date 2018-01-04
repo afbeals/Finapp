@@ -1,38 +1,10 @@
-//---  Import axios for ajax calls ---/
+//---  Import axios for ajax calls ---//
+//------------------------------------//
 import axios from 'axios';
 
 //--- Import Constants ---//
+//------------------------//
 import {userConstants} from '../constants/userConstants';
-
-//--- Action Creators ---//
-/*--- Example:
-Basic:
-export function increaseNum(i) {
-  return {
-    type: 'INCREASE_NUM'
-  };
-}
-
-Ajax:
-export function itemsFetchData(url) {
-    return (dispatch) => {
-        dispatch();
-        axios.get(url)
-            .then((response) => {  
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                dispatch();
-                return response;
-            })
-            .then((data) => dispatch())
-            .catch(() => dispatch());
-    };
-}
-
-
-
---- */
 
 let nonValidResponse = (response) => {
     let status = null
@@ -59,7 +31,7 @@ export function registerUser(user){
                 localStorage.setItem('finapp_user',response.data.token);
                 axios.defaults.headers.common['Authorization'] = "Bearer "+response.data.token;
             })
-            .catch((err) => dispatch(userRegisteringError(err.response.data.error)));
+            .catch((err) => {console.log(err);dispatch(userRegisteringError(err.response.data.error))});
     };
 }
 
@@ -80,36 +52,20 @@ export function loginUser(user){
                 localStorage.setItem('finapp_user',response.data.token);
                 axios.defaults.headers.common['Authorization'] = "Bearer "+response.data.token;
             })
-            .catch((err) => {console.log(err);dispatch(userRegisteringError(err.response.data.error))});
+            .catch((err) => dispatch(userLogginError(err.response.data.error)));
     }
 }
 
 export function logOutUser(user){
-    console.log('in here');
     return (dispatch) => {
         try {
             axios.defaults.headers.common['Authorization'] = '';
             localStorage.removeItem('finapp_user','');
             dispatch(userHasLoggedOut());
-            console.log('tried it all');
         }
         catch (err){
             console.log(err);
         }
-    }
-}
-
-export function testHeaders(token){
-    return(dispatch) => {
-        return axios.get('/test_header',{params: {token}})
-            .then((response)=>{
-                if (!(response.status >= 200 && response.status <= 299)) {
-                    throw Error(response.statusText);
-                }
-            })
-            .catch((err) => {
-                userRegisteringError(true);
-            });
     }
 }
 
@@ -166,7 +122,6 @@ export function userRegisteringError(errors){
 }
 
 export function userHasRegistered(user){
-    console.log('UHS',user);
 	return {
 		type: userConstants.REGISTER_SUCCESS,
         isRequesting: false,
@@ -175,14 +130,14 @@ export function userHasRegistered(user){
 	}
 }
 
-export function userIsAuthenticated(bool){
+export function userIsAuthenticated(){
     return {
         type: userConstants.AUTHENTICATED_SUCCESS,
         authenticated: true
     }
 }
 
-export function userIsNotAuthenticated(bool){
+export function userIsNotAuthenticated(){
     return {
         type: userConstants.AUTHENTICATED_FAILURE,
         authenticated: false

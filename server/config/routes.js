@@ -1,4 +1,5 @@
 //--- Dependencies ---//
+//--------------------//
 var expenses = require ('../controllers/expenses');
 var incomes = require('../controllers/incomes');
 var users = require('../controllers/users');
@@ -34,7 +35,7 @@ module.exports = function(app){
 	});
 
 	//--- Income Routes ---//
-	//----------------------//
+	//---------------------//
 	app.post('/add_incomes_in_query',auth.authenticateHeader(),function(req,res){
 	    incomes.addIncomesInQuery(req,res);
 	});
@@ -72,5 +73,5 @@ module.exports = function(app){
 	app.get('/test_header', auth.authenticateLocal(), function(req,res){
 		console.log(req.headers);
 		res.sendStatus(200);
-	})
-}
+	});
+};

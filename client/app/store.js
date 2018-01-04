@@ -1,4 +1,5 @@
 //--- Dependencies ---//
+//--------------------//
 import { createStore, applyMiddleware, compose } from 'redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { browserHistory, hashHistory } from 'react-router';
@@ -6,6 +7,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers/combinedReducer';
 
 //--- Create Store w/ default state (should match reducers) ---//
+//-------------------------------------------------------------//
 const defaultState = {
   user: {
     user_id:1,
@@ -26,6 +28,7 @@ const store = createStore(rootReducer, defaultState, enhancers(applyMiddleware(t
 export const history = syncHistoryWithStore( browserHistory, store);
 
 //--- Enable Hot Reloading for the reducers ---//
+//---------------------------------------------//
 if(module.hot) {
   module.hot.accept('./reducers/combinedReducer', () => {
     const nextRootReducer = require('./reducers/combinedReducer').default;

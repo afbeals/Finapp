@@ -31,7 +31,7 @@ module.exports = function(){
 		done(null,{});
 	});
 	passport.use('jwt',strategyHeader);
-	passport.use('local',strategyLocal)
+	passport.use('local',strategyLocal);
 	return {
 		initialize: function(){
 			return passport.initialize();
@@ -42,5 +42,5 @@ module.exports = function(){
 		authenticateLocal: function(){
 			return passport.authenticate("local",cfg.jwtSession);
 		}
-	}
+	};
 };
