@@ -35,7 +35,7 @@ var config = {
 				use: extractPlugin.extract({
 					use: [
 						"css-loader",
-						"sass-loader"
+						"scss-loader"
 
 					],
 					fallback: 'style-loader'

@@ -99,7 +99,7 @@ module.exports = {
 						}
 					});		
 					connection.on('error', (err)=>{      
-						console.error(({"code" : 100, "status" : "Error in connection database", "err":err});
+						console.error(({"code" : 100, "status" : "Error in connection database", "err":err}));
 						res.status(500).send({error: {msg:err,status:500}});
 					});
 			    });

@@ -28,10 +28,10 @@ if(app.get('env') === "development"){
 	  res.sendFile(path.join(__dirname, '/client/index.html'));
 	});
 } else {
-	app.use(express.static(__dirname + '/dist'));
+	app.use(express.static(__dirname + '/dist/app'));
 
 	app.get('*', function(req, res) {
-	  res.sendFile(path.join(__dirname, '/dist/index.html'));
+	  res.sendFile(path.join(__dirname, '/dist/app/index.html'));
 	});
 }
 
@@ -41,5 +41,5 @@ app.listen(port, 'localhost', function(err) {
     return;
   }
   
-  console.log('Listening at localhost:'+port+'!');
+  console.log('Listening at localhost:'+port+'!!!!');
 });
