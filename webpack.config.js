@@ -4,9 +4,6 @@ var DIST_DIR = path.resolve(__dirname, "dist");
 var SRC_DIR = path.resolve(__dirname, "client");
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HTMLWebpackPlugin = require('html-webpack-plugin');
-var extractPlugin = new ExtractTextPlugin({
-	filename: "basic.css"
-});
 
 var config = {
 	entry: ['webpack-hot-middleware/client',SRC_DIR + "/app/finapp"],
@@ -32,14 +29,7 @@ var config = {
 			},
 			{
 				test: /\.scss$/,
-				use: extractPlugin.extract({
-					use: [
-						"css-loader",
-						"scss-loader"
-
-					],
-					fallback: 'style-loader'
-				})
+				use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: [ 'css-loader','sass-loader' ] })
 			},
 			{
 				test: /\.(html)$/,
@@ -62,13 +52,13 @@ var config = {
 		]
 	},
 	plugins: [
-		extractPlugin,
 		new HTMLWebpackPlugin({
 			template: 'client/index.html',
 			title: 'Finapp'
 		}),
 		new webpack.HotModuleReplacementPlugin(),
-    	new webpack.NoEmitOnErrorsPlugin()
+    	new webpack.NoEmitOnErrorsPlugin(),
+    	new ExtractTextPlugin('main.css')
 	]
 };
 

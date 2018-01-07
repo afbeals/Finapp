@@ -1,0 +1,29 @@
+//--- Set Media Query ---//
+//-----------------------//
+@mixin for-xsmall {
+  @media (max-width: #{$xsmall-width}) {
+    @content;
+  }
+}
+@mixin for-mobile {
+  @media (min-width: #{$xsmall-width + 1}) and (max-width: #{$mobile-width}) {
+    @content;
+  }
+}
+
+@mixin for-tablet {
+  @media (min-width: #{$mobile-width + 1}) and (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+@mixin for-desktop {
+  @media (min-width: #{$tablet-width + 1}) and (max-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+@mixin for-large {
+  @media (min-width: #{$desktop-width + 1}){
+    @content;
+  }
+}
