@@ -4,7 +4,6 @@
 $primary-blue: #134074;
 $primary-green: #4bc417;
 $primary-orange: #ef7c17;
-$primary-font: #d8d8d8;
 
 //--- Lighten ---//
 //---------------//
@@ -24,6 +23,11 @@ $primary-green-darkest: #247900;
 $primary-orange-dark: #BE5D07;
 $primary-orange-darkest: #964700;
 
+//--- Font ---//
+//---------------//
+$font-stack: Radjhadi, sans-serif;
+$primary-font: #d8d8d8;
+
 //--- Media ---//
 //-------------//
 $xsmall-width: 320px;
@@ -31,6 +35,12 @@ $mobile-width: 767px;
 $tablet-width: 991px;
 $desktop-width: 1199px;
 
-//--- Styling ---//
-//---------------//
-$font-stack: Radjhadi, sans-serif;
+//--- Other ---//
+//-------------//
+$color-black: #000000;
+$transparent: #ff000000;
+
+//--- Footer ---//
+//--------------//
+$activator-height: 100px;
+$footer-main-shadow: #2e2e2e;

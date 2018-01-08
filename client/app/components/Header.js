@@ -1,20 +1,31 @@
 //--- Dependencies ---//
 //--------------------//
 import React from 'react';
-import {Link, IndexLink} from 'react-router';
+import {Link} from 'react-router';
 
-export default class Header extends React.Component{
-	constructor(props){
-		super(props);
-	}
 
-	render(){
-		return (
-			<nav className="header">
-					<button className="home"><IndexLink activeClassName="active" to="/" activeStyle={{color: 'pink'}}>Home</IndexLink></button>
-					<button className="finances"><Link activeClassName="active" to="/finances" activeStyle={{color: 'pink'}}>Finances</Link></button>
-					<button className="logout"><Link to="/" onClick={this.props.logOutUser}>Logout</Link></button>
-			</nav>
-		)
-	}
+export default function Finances(props) {
+	console.log(props);
+	const formatDate = () =>{
+	  let months = ["January", "February", "March",
+	    "April", "May", "June", "July",
+	    "August", "September", "October",
+	    "November", "December"
+	  	],
+	  	days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+			date = new Date(),
+	  	weekDay = days[date.getDay()],
+  		day = date.getDate(),
+  		month = months[date.getMonth()],
+  		year = date.getFullYear();
+	  return weekDay + ', ' + month + ' ' + day + ', ' + year;
+	};
+
+  return (
+  		<ul className="header">
+  			<li className="logo"><Link to="/" >FinApp</Link></li>
+  			<li>{formatDate()}</li>
+				<li><Link to="/Profile" ><div className="userIcon"><i className="fas fa-user"></i></div>Profile</Link></li>
+		</ul>
+	)
 }

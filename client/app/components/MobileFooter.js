@@ -11,9 +11,10 @@ export default class MobileFooter extends React.Component{
 	render(){
 		return (
 			<nav className="footer">
-					<button className="home"><IndexLink activeClassName="active" to="/" activeStyle={{color: 'pink'}}>Home</IndexLink></button>
-					<button className="finances"><Link activeClassName="active" to="/finances" activeStyle={{color: 'pink'}}>Finances</Link></button>
-					<button className="logout"><Link to="/" onClick={this.props.logOutUser}>Logout</Link></button>
+				<div><i className="fas fa-caret-down"></i></div>
+				<IndexLink className="home" activeClassName="active" to="/">Home</IndexLink>
+				<Link activeClassName="active" className="finances" to="/finances">Finances</Link>
+				<Link to="/" className="logout" onClick={this.props.logOutUser}>Logout</Link>
 			</nav>
 		)
 	}

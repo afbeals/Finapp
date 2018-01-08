@@ -1,23 +1,83 @@
-
 nav.footer{
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: auto;
+	grid-template-rows: 1fr;
 	grid-template-areas: "nav-home-btn nav-finances-btn nav-logout-btn";
 	grid-area: footer;
-	grid-column-gap: 2rem;
- 	grid-row-gap: 2rem;
-	grid-column-start: 1;
-	grid-column-end: 4;
-	grid-row-start: 4;
-	grid-row-end: 5;
- 	.home{
- 		grid-area: nav-home-btn;
- 	}
- 	.finances{
- 		grid-area: nav-finances-btn;
- 	}
- 	.logout{
- 		grid-area: nav-logout-btn;
- 	}
+	grid-row-start: 3;
+	background: $primary-blue;
+	align-content: space-evenly;
+	padding: 1.5rem 0rem;
+	box-shadow: 0px -2px 8px $footer-main-shadow;
+	position: relative;
+	&:before{
+		position: absolute;
+    	content: ' ';
+		background: $primary-blue;
+	    width: $activator-height * 2;
+	    height: $activator-height;
+	    margin-left: auto;
+	    margin-right: auto;
+	    left: 0;
+	    right: 0;
+	    border-top-left-radius: $activator-height;
+	    border-top-right-radius: $activator-height;
+	    top: -$activator-height + 5;
+	    box-shadow: -1px -2px 3px $footer-main-shadow, 2px -2px 3px $footer-main-shadow;
+	}
+	&:after{
+		position: absolute;
+    	content: ' ';
+		background: $transparent;
+	    width: ($activator-height - 20)* 2;
+	    height: $activator-height - 20;
+	    margin-left: auto;
+	    margin-right: auto;
+	    left: 0;
+	    right: 0;
+	    border-top-left-radius: $activator-height;
+	    border-top-right-radius: $activator-height;
+	    top: -$activator-height + 20;
+	    box-shadow: 0px -2px 3px #cdcdcd54, inset 0px 3px 3px #0d2c50, inset 0px 1px 1px $primary-blue;    
+	}
+	div{
+		position: absolute;
+	    margin-left: auto;
+	    margin-right: auto;
+	    left: 0;
+	    right: 0;
+	    display: inline-block;
+	    text-align: center;
+	    top: -7rem;
+	    font-size: 10rem;
+	    color: $primary-font;
+	    filter: drop-shadow(0px 5px 2px $footer-main-shadow);
+	}
+	a{
+		justify-self: center;
+    	width: 80%;
+		z-index: 2;
+		background: $primary-blue-darkest;
+		font-size: 2rem;
+		padding: 1rem;
+		border: none;
+	    border-radius: 10px;
+	    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+	    z-index: 1;
+	    color: $primary-font;
+	 	text-decoration: none;
+	 	text-align: center;
+		&.home{
+	 		grid-area: nav-home-btn;
+	 	}
+	 	&.finances{
+	 		grid-area: nav-finances-btn;
+	 	}
+	 	&.logout{
+	 		grid-area: nav-logout-btn;
+	 	}
+	 	&.active{
+	 		color:red;
+	 	}
+	}
 }

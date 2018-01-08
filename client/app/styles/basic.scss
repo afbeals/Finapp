@@ -7,22 +7,19 @@
 html{
 	font-size: 16px;
 	body {
-
-		@include for-xsmall {
-			//font-size: 12px;
-		}
-		@include for-mobile {
-			//font-size: 22px;
-		}
 		#app{
 			>div{
 				display: grid;
 				grid-template-columns: 1fr;
 				grid-template-rows: 1fr 6fr 2fr;
 				grid-template-areas: "header" "main" "footer";
-				grid-column-gap: 2rem;
-		 		grid-row-gap: 2rem;
 			}
+		}
+		@include for-xsmall {
+			//font-size: 12px;
+		}
+		@include for-mobile {
+			//font-size: 22px;
 		}
 	}
 }
