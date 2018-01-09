@@ -5,7 +5,6 @@ import {Link} from 'react-router';
 
 
 export default function Finances(props) {
-	console.log(props);
 	const formatDate = () =>{
 	  let months = ["January", "February", "March",
 	    "April", "May", "June", "July",
@@ -23,9 +22,16 @@ export default function Finances(props) {
 
   return (
   		<ul className="header">
-  			<li className="logo"><Link to="/" >FinApp</Link></li>
-  			<li>{formatDate()}</li>
-				<li><Link to="/Profile" ><div className="userIcon"><i className="fas fa-user"></i></div>Profile</Link></li>
+  			<li className="headerLogo"><Link to="/login" >FinApp</Link></li>
+  			<li className="headerDate">{formatDate()}</li>
+				<li className="headerProfile">
+					<Link to="/Profile" >
+						<div className="userIcon">
+							<i className="fas fa-user"></i>
+						</div>
+						{props.first_name}
+					</Link>
+				</li>
 		</ul>
 	)
 }

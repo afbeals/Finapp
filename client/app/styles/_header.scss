@@ -1,3 +1,58 @@
-nav.header{
+ul.header{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-areas: "header-home-logo header-home-date header-home-profile";
 	grid-area: header;
+	grid-row-start: 1;
+	background: $primary-blue;
+	align-content: space-evenly;
+	padding: .5rem 0rem;
+	box-shadow: 0px 2px 8px $nav-main-shadow;
+	li{
+		&.headerLogo{
+			grid-area: header-home-logo;
+			font-size:2.5rem;
+			justify-self: start;
+			padding-left:.7rem;
+			align-self: end;
+			a{
+				text-decoration: none;
+				color: $primary-font;
+				text-shadow: 2px 2px 1px black;
+			}
+		}
+		&.headerDate{
+			grid-area: header-home-date;
+			justify-self: center;
+			font-size: 1.4rem;
+			color: $primary-font;
+			align-self: end;
+			text-shadow: 1px 1px 1px black;
+		}
+		&.headerProfile{
+			grid-area: header-home-profile;
+			justify-self: end;
+			align-self: end;
+			padding-right:.7rem;
+			div{
+				display: inline-block;
+		    margin: 0rem .3rem;
+		    padding: 0.3rem 0.3rem 0rem 0.3rem;
+		    border-radius: 100px 100px 100px 100px;
+		    background: $primary-font;
+		    color: $primary-blue-lightest;
+		    overflow: hidden;
+		    position: relative;
+		    top: 3px;
+		    font-size: 2rem;
+			}
+			a{
+				text-decoration: none;
+				color: $primary-font;
+				text-shadow: $main-font-shadow;
+				vertical-align: bottom;
+				font-size: 1.5rem;
+			}
+		}
+	}
 }

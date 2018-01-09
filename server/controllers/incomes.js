@@ -5,7 +5,8 @@ var {validateAll} = require('indicative');
 var validation = require('../config/validateRules');
 
 module.exports = {
-	addIncomesInQuery : (req,res)=>{
+	addIncomesInQuery : (req,res)=>{ 
+		console.log(req.body);
 		validateAll(req.body, validation.addIncomesInQuery_rules)
 			.then((data)=>{
 				MySQL.pool.getConnection((err,connection)=>{
@@ -41,15 +42,17 @@ module.exports = {
 	},
 
 	getAllIncomes : (req,res) => {
-		validateAll(req.body, validation.getAllIncomes_rules)
+		console.log(typeof req.query.user_id)
+		validateAll(req.query, validation.getAllIncomes_rules)
 			.then((data)=>{
+				console.log(data);
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
 						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
-					connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId, months.id as month FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ?",[data.user_id],(err,rows)=>{
+					connection.query("SELECT name, amount, notes, due_day, months.id AS monthId, incomes.id AS incomesId, months.id as month FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ?",[data.user_id],(err,rows)=>{
 						connection.release(); 
 						if(!err) {
 							res.json(rows);

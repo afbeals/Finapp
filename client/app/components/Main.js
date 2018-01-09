@@ -10,9 +10,9 @@ export default class Main extends React.Component {
 	render(){
 		return (
 			<div id="container">
-				<Header />
-        		{ React.cloneElement(this.props.children, this.props) }
-        		<MobileFooter  {...this.props} />
+				<Header {...this.props.user} />
+        { React.cloneElement(this.props.children, this.props) }
+        <MobileFooter  {...this.props} />
 			</div>
 		)
 	}

@@ -16,6 +16,8 @@ import Login from './components/Login';
 import Finances from './components/Finances';
 import HOC_Auth from './components/HOC_Auth';
 
+//import TestIncomes from './components/testIncomes';
+
 import store, {history} from './store';
 
 //--- Include Styles ---//
@@ -27,13 +29,13 @@ render(
 	<Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={Home} />
+        <IndexRoute component={HOC_Auth(Incomes)} />
         <Route path="/expenses" component={HOC_Auth(Expenses)} />
         <Route path="/incomes" component={HOC_Auth(Incomes)} />
         <Route path="/profile" component={HOC_Auth(Profile)} />
         <Route path="/finances" component={Finances} />
         <Route path="/login" component={Login} />
-        <Route path="register" component={Registration} />
+        <Route path="/register" component={Registration} />
       </Route>
     </Router>
   </Provider>,

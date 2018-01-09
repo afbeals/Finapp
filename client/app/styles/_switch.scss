@@ -1,0 +1,90 @@
+.switch{
+	grid-area: switch;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr;
+	grid-template-areas: "leftSwitch rightSwitch";
+	position: relative;
+	background: white;
+	a{
+		text-decoration: none;
+		&.leftSwitch{
+			grid-area: leftSwitch;
+			justify-self: start;
+			font-size: 2em;
+			text-transform: capitalize;
+			border:1px solid $color-black;
+			color: $switch-deact;
+			width: 99%;
+    	height: 100%;
+    	border-right: 3px solid $color-black;
+	    border-bottom: 3px solid $color-black;
+	    border-top: 1px solid $color-black;
+	    background: #a5a5a5;
+			&.active{
+				color: $primary-font;
+			}
+			p{
+				position: relative;
+				top: .5rem;
+				padding-left: .7rem;
+				text-shadow: $main-font-shadow;
+			}
+		}
+		&.rightSwitch{
+			grid-area: rightSwitch;
+			justify-self: end;
+			text-align: right;
+			font-size: 2em;
+			text-transform: capitalize;
+			border:1px solid $color-black;
+			color: $switch-deact;
+			width: 99%;
+    	height: 100%;
+    	border-left: 3px solid $color-black;
+	    border-bottom: 3px solid $color-black;
+	    border-top: 1px solid $color-black;
+	    background: #a5a5a5;
+			&.active{
+				color: $primary-font;
+			}
+			p{
+				position: relative;
+				top: .5rem;
+				padding-right: .7rem;
+				text-shadow: $main-font-shadow;
+			}
+		}
+	}
+	div.optionsSwitch{
+		position: absolute;
+		margin-left: 0;
+		margin-right: 0;
+		left: 0;
+		right: 0;
+		display: inline-block;
+    text-align: center;
+    height: 1px;
+    top: 17%;
+    z-index: 2;
+    cursor: pointer;
+    div.optionsActivator{
+    	font-size: 1.8rem;
+	    background: $primary-blue;
+	    display: inline-block;
+	    border-radius: 2rem;
+	    padding: .3rem;
+	    color: $primary-font;
+	    &.active{
+	    	color: $primary-orange;
+	    }
+    }
+    div.options{
+    	display:none;
+    	position: absolute;
+    	&.active{
+    		display:inline-block;
+    	}
+    }
+	}
+}

@@ -55,13 +55,13 @@ module.exports = {
 	addIncomesInQuery_rules : {
 		user_id : 'required|above:0|integer',
 		name: 'required|min:3|max:45',
-		due_day: 'required|range:1,31|integer',
-		amount_due: 'required|number',
+		due_day: 'required|range:0,32|integer',
+		amount: 'required|number',
 		notes: 'string|max:300',
-		monthId: 'required|range:1,12|integer'
+		monthId: 'required|range:0,13|integer'
 	},
-	getAllIncomes : {
-		user_id : 'required|above:0|integer'
+	getAllIncomes_rules : {
+		user_id : 'required|above:0'
 	},
 	getAllIncomesInMonth_rules: {
 		user_id : 'required|above:0|integer',

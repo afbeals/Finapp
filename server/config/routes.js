@@ -48,7 +48,7 @@ module.exports = function(app){
 		incomes.removeIncomesInQuery(req,res);
 	});	
 
-	app.get('/get_all_incomes',auth.authenticateHeader(),function(req,res){
+	app.get('/get_all_incomes',function(req,res){
 	    incomes.getAllIncomes(req,res);
 	});
 

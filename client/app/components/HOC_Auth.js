@@ -19,7 +19,7 @@ export default function (Component) {
 
 		render(){
 			return(
-				<div>
+				<div className="main">
 					<Component {...this.props} />
 				</div>
 			)
