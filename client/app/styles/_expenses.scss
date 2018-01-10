@@ -1,4 +1,4 @@
-div.incomes{
+div.expenses{
 	.switch{
 		a{
 			&.leftSwitch{
@@ -98,7 +98,7 @@ div.incomes{
 						position: absolute;
 				    content: ' ';
 				    bottom: 7px;
-				    border-bottom: 4px solid $primary-green;
+				    border-bottom: 4px solid $primary-red;
 				    width: 55%;
 				    left: 0;
 				    right: 0;

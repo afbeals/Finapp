@@ -24,7 +24,7 @@ module.exports = {
 		monthId: 'required|range:1,12|integer'
 	},
 	getAllExpenses : {
-		user_id : 'required|above:0|integer'
+		user_id : 'required|above:0'
 	},
 	getAllExpensesInMonth_rules: {
 		user_id : 'required|above:0|integer',

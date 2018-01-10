@@ -10,7 +10,7 @@ var MySQL = require('./MySQL');
 module.exports = function(app){
 	//--- Expense Routes ---//
 	//----------------------//
-	app.post('/add_expenses_in_query',auth.authenticateHeader(),function(req,res){
+	app.post('/add_expenses_in_query',function(req,res){
 	    expenses.addExpensesInQuery(req,res);
 	});
 
@@ -22,7 +22,7 @@ module.exports = function(app){
 		expenses.removeExpensesInQuery(req,res);
 	});	
 
-	app.get('/get_all_expenses',auth.authenticateHeader(),function(req,res){
+	app.get('/get_all_expenses',function(req,res){
 	    expenses.getAllExpenses(req,res);
 	});
 

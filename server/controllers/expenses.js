@@ -43,7 +43,7 @@ module.exports = {
 	},
 
 	getAllExpenses : (req,res) => {
-		validateAll(req.body, validation.getAllExpenses_rules)
+		validateAll(req.query, validation.getAllExpenses_rules)
 			.then((data)=>{
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
