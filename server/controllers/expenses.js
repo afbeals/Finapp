@@ -38,7 +38,7 @@ module.exports = {
 			})
 			.catch((errors) => {
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});
 	},
 

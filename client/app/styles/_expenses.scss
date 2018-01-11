@@ -19,10 +19,14 @@ div.expenses{
 		    right: 0;
 		    margin-left: auto;
 		    margin-right: auto;
-		    background: blue;
-		    height: 214px;
-		    width: 79%;
-		    top: 3rem;
+		    background: $primary-blue;
+		    top: 2.8rem;
+		    height: 405px;
+		    border: .5px solid $color-black;
+		    border-radius: 5px;
+		    box-shadow: -3px 5px 10px $color-black;
+		    width: 95%;
+		    cursor: default;
 				.actionButtons{
 					position: relative;
 			    top: 40px;
@@ -35,7 +39,7 @@ div.expenses{
 						margin: .4rem;
 				    cursor: pointer;
 				    margin: .3rem;
-				    font-size: 1rem;
+				    font-size: 1.8rem;
 				    text-transform: capitalize;
 				    background: $primary-blue-darkest;
 				    color: $primary-font;
@@ -58,16 +62,43 @@ div.expenses{
 							display:inline-block;
 							height: 100%;
 							padding: 1rem .5rem;
+							min-width: 255px;
 							p{
 								text-align: left;
+								font-size: 1.8rem;
+    						color: $primary-font;
+    						text-shadow: $main-font-shadow;
 							}
 							select,input{
-								display: block;
-						    width: 83%;
-						    margin: 0 auto;
+								float:left;
+							  display: inline-block;
+						    width: 80%;
+						    margin: .5rem;
+						    padding: .4rem;
+						    text-transform: capitalize;
+						    background: $primary-blue-lightest;
+						    border: none;
+						    color: $primary-font;
+						    text-shadow: 2px 1px 1px black;
+						    font-size: 1.1rem;
+						    border-radius: 5px;
+						    &::placeholder{
+						    	color: $primary-font;
+						    }
 							}
-							.submit{
+							button{
 								float:right;
+						    padding: .5rem;
+						    cursor: pointer;
+						    margin-right: 3rem;
+						    font-size: 1.4rem;
+						    text-transform: capitalize;
+						    background: $primary-blue-darkest;
+						    color: $primary-font;
+						    text-shadow: $main-font-shadow;
+						    border: none;
+						    border-radius: .3rem;
+						    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
 							}
 						}		
 					}

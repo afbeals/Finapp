@@ -13,11 +13,11 @@ const defaultState = {
     user_id:8,
     first_name:"Allan",
     authenticated: true,
-    isRequesting: false,
-    hasErrored: []
+    isRequesting: false
   },
   expenses: [],
-  incomes: []
+  incomes: [],
+  errors: []
 }
 // const enhancers = compose(
 //   window.devToolsExtension ? window.devToolsExtension() : f => f

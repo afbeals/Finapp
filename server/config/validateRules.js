@@ -17,7 +17,7 @@ module.exports = {
 	addExpensesInQuery_rules : {
 		user_id : 'required|above:0|integer',
 		name: 'required|min:3|max:45',
-		due_day: 'required|range:1,31|integer',
+		due_day: 'required|range:0,32|integer',
 		amount_due: 'required|number',
 		amount_paid: 'number',
 		notes: 'string|max:300',

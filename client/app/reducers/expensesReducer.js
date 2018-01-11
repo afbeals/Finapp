@@ -25,8 +25,6 @@ export default function expensesReducer(state = [], action){
 			return state;
 		case expensesConstants.REQUESTING_EXPENSE_SUCCESS:
 			return state;
-		case expensesConstants.REQUESTING_EXPENSE_FAILURE:
-			return state;
 		default:
 			return state;
 	}

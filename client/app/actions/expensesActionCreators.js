@@ -5,6 +5,7 @@ import axios from 'axios';
 //--- Import Constants ---//
 //------------------------//
 import {expensesConstants} from '../constants/expensesConstants';
+import {errorConstants} from '../constants/errorConstants';
 
 //--- validate reponse ---//
 let nonValidResponse = (response) => {
@@ -151,7 +152,9 @@ export function addExpensesInQuery(params){
                 dispatch(addExpensesSuccess(Object.assign({},params, {expensesId: response.data.expensesId})));
             })
             .catch((err) => {
-                dispatch(fetchingExpensesError(true))});
+                dispatch(fetchingExpensesError(err.response.data.errors))
+
+            });
     };
 }
 
@@ -168,10 +171,10 @@ export function fetchingExpenses(bool){
 
 //--- Request Failures ---//
 //------------------------//
-export function fetchingExpensesError(bool){
+export function fetchingExpensesError(err){
 	return {
-		type: expensesConstants.REQUESTING_EXPENSE_FAILURE,
-		hasErrored: bool,
+		type: errorConstants.REQUESTING_EXPENSE_FAILURE,
+		err
 
 	}
 }

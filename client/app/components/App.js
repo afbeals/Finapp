@@ -20,14 +20,15 @@ function mapStateToProps(state) {
 	return {
 		user: state.user,
 		expenses: state.expenses,
-		incomes: state.incomes
+		incomes: state.incomes,
+		errors: state.errors
 	};
 }
 
 //--- Bind actions to dispatch, and make actions available to props ---//
 //---------------------------------------------------------------------//
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators({...userActionCreators,...expensesActionCreators,...incomesActionCreators}, dispatch);
+  return bindActionCreators({...userActionCreators,...expensesActionCreators,...incomesActionCreators, }, dispatch);
 }
 
 //--- Create <App/> to display <Main/> with populated props. connect() it all together ---//

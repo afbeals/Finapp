@@ -5,6 +5,7 @@ import axios from 'axios';
 //--- Import Constants ---//
 //------------------------//
 import {incomesConstants} from '../constants/incomesConstants';
+import {default as errors} from '../constants/errorConstants';
 
 //--- validate reponse ---//
 let nonValidResponse = (response) => {
@@ -35,7 +36,7 @@ export function getAllIncomes(id){
                 dispatch(fetchingIncomesSuccess(true));
                 dispatch(getAllIncomesSuccess(response.data));
             })
-            .catch((err) => dispatch(fetchingIncomesError(true)));
+            .catch((err) => dispatch(fetchingIncomesError(err.response.data.errors)));
     };
 }
 
@@ -58,7 +59,7 @@ export function getAllIncomesInMonth(user_id,month){
                 dispatch(fetchingIncomesSuccess(true));
                 dispatch(getAllIncomesInMonthSuccess(response.data));
             })
-            .catch((err) => dispatch(fetchingIncomesError(true)));
+            .catch((err) => dispatch(fetchingIncomesError(err.response.data.errors)));
     };
 }
 
@@ -81,7 +82,7 @@ export function getAllIncomesInRange(params){
                 dispatch(fetchingIncomesSuccess(true));
                 dispatch(getAllIncomesInRangeSuccess(response.data));
             })
-            .catch((err) => dispatch(fetchingIncomesError(true)));
+            .catch((err) => dispatch(fetchingIncomesError(err.response.data.errors)));
     };
 }
 
@@ -104,7 +105,7 @@ export function updateIncomesInQuery(params){
                 dispatch(fetchingIncomesSuccess(true));
                 dispatch(updateIncomesSuccess(params));
             })
-            .catch((err) => dispatch(fetchingIncomesError(true)));
+            .catch((err) => dispatch(fetchingIncomesError(err.response.data.errors)));
     };
 }
 
@@ -127,7 +128,7 @@ export function removeIncomesInQuery(params){
                 dispatch(fetchingIncomesSuccess(true));
                 dispatch(removeIncomesSuccess(params));
             })
-            .catch((err) => dispatch(fetchingIncomesError(true)));
+            .catch((err) => dispatch(fetchingIncomesError(err.response.data.errors)));
     };
 }
 //--- Add New Income ---//
@@ -150,7 +151,7 @@ export function addIncomesInQuery(params){
                 dispatch(addIncomesSuccess(Object.assign(params, {incomesId: response.data.incomesId})));
             })
             .catch((err) => {
-                dispatch(fetchingIncomesError(true))});
+                dispatch(fetchingIncomesError(err.response.data.errors))});
     };
 }
 
@@ -166,10 +167,10 @@ export function fetchingIncomes(bool){
 }
 
 //--- Request Failures ---//
-export function fetchingIncomesError(bool){
+export function fetchingIncomesError(err){
 	return {
-		type: incomesConstants.REQUESTING_INCOME_FAILURE,
-		hasErrored: bool,
+		type: errors.REQUESTING_INCOME_FAILURE,
+		err
 
 	}
 }

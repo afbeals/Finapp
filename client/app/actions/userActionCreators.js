@@ -5,6 +5,7 @@ import axios from 'axios';
 //--- Import Constants ---//
 //------------------------//
 import {userConstants} from '../constants/userConstants';
+import {default as errors} from '../constants/errorConstants';
 
 let nonValidResponse = (response) => {
     let status = null
@@ -95,12 +96,10 @@ export function userHasLoggedIn(user){
     }
 }
 
-export function userLogginError(errors){
+export function userLogginError(err){
     return {
-        type: userConstants.LOGIN_FAILURE,
-        authenticated: false,
-        isRequesting: false,
-        hasErrored: errors
+        type: errors.LOGIN_FAILURE,
+        err
     }
 }
 
@@ -112,12 +111,10 @@ export function userIsRegistering(bool){
 	}
 }
 
-export function userRegisteringError(errors){
+export function userRegisteringError(err){
 	return {
-		type: userConstants.REGISTER_FAILURE,
-        isRequesting: false,
-        authenticated: false,
-		hasErrored: errors,
+		type: errors.REGISTER_FAILURE,
+        err
 	}
 }
 
@@ -139,9 +136,8 @@ export function userIsAuthenticated(){
 
 export function userIsNotAuthenticated(){
     return {
-        type: userConstants.AUTHENTICATED_FAILURE,
-        authenticated: false
+        type: errors.AUTHENTICATED_FAILURE,
+        authenticated: false,
+        err: {msg: "could not authenticate, please try logging in"}
     }
 }
-
-//Need error handling that displays error message

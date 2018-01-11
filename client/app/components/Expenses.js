@@ -221,8 +221,8 @@ export default class Expenses extends React.Component{
 											<option value="11">November</option>
 											<option value="12">December</option>
 										</select>
-										<input type="number" value={this.state.get_all_expenses_in_range_begDay} onChange={this.updateInput} name="get_all_expenses_in_range_begDay" id="get_all_expenses_in_range_begDay" placeholder="enter beginning day" max="31" min="1" />
-										<input type="number" value={this.state.get_all_expenses_in_range_endDay} onChange={this.updateInput} name="get_all_expenses_in_range_endDay" id="get_all_expenses_in_range_endDay" placeholder="enter ending day" max="31" min="1" />
+										<input type="number" value={this.state.get_all_expenses_in_range_begDay || ""} onInput={this.updateInput} name="get_all_expenses_in_range_begDay" id="get_all_expenses_in_range_begDay" placeholder="enter beginning day" max="31" min="1" />
+										<input type="number" value={this.state.get_all_expenses_in_range_endDay || ""} onChange={this.updateInput} name="get_all_expenses_in_range_endDay" id="get_all_expenses_in_range_endDay" placeholder="enter ending day" max="31" min="1" />
 										<button onClick={this.getAllExpensesInRange}>Submit</button>
   								</div>
   								<div className="getMonth">
@@ -246,11 +246,17 @@ export default class Expenses extends React.Component{
   								</div>
   								<div className="add">
   									<p>Add Expense</p>
-  									<input type="text" value={this.state.add_expenses_in_query_name} onChange={this.updateInput} name="add_expenses_in_query_name" id="add_expenses_in_query_name" placeholder="Enter Expense Name" />
-										<input type="number" value={this.state.add_expenses_in_query_due_day} onChange={this.updateInput} name="add_expenses_in_query_due_day" id="add_expenses_in_query_due_day" placeholder="Enter Expense Due Day" max="31" min="1" />
-										<input type="number" value={this.state.add_expenses_in_query_amount_due} onChange={this.updateInput} name="add_expenses_in_query_amount_due" id="add_expenses_in_query_amount_due" placeholder="Enter Expense Amount Due" min="0.01" step="0.01" />
-										<input type="number" value={this.state.add_expenses_in_query_amount_paid} onChange={this.updateInput} name="add_expenses_in_query_amount_paid" id="add_expenses_in_query_amount_paid" placeholder="Enter Expense Amount Paid" min="0.00" step="0.01" />
-										<input type="text" value={this.state.add_expenses_in_query_notes} onChange={this.updateInput} name="add_expenses_in_query_notes" id="add_expenses_in_query_notes" placeholder="Enter Expense Notes" />
+  									
+  									<input type="text" value={this.state.add_expenses_in_query_name} onChange={this.updateInput || ""} name="add_expenses_in_query_name" id="add_expenses_in_query_name" placeholder="Enter Expense Name" />
+  									{
+  										this.props.errors.map((c,i,a)=>{
+												if(c.field == "name") return <p key={i}>{c.message}</p>
+											})
+  									}
+										<input type="number" value={this.state.add_expenses_in_query_due_day} onChange={this.updateInput || ""} name="add_expenses_in_query_due_day" id="add_expenses_in_query_due_day" placeholder="Enter Expense Due Day" max="31" min="1" />
+										<input type="number" value={this.state.add_expenses_in_query_amount_due} onChange={this.updateInput || ""} name="add_expenses_in_query_amount_due" id="add_expenses_in_query_amount_due" placeholder="Enter Expense Amount Due" min="0.01" step="0.01" />
+										<input type="number" value={this.state.add_expenses_in_query_amount_paid} onChange={this.updateInput || ""} name="add_expenses_in_query_amount_paid" id="add_expenses_in_query_amount_paid" placeholder="Enter Expense Amount Paid" min="0.00" step="0.01" />
+										<input type="text" value={this.state.add_expenses_in_query_notes} onChange={this.updateInput || ""} name="add_expenses_in_query_notes" id="add_expenses_in_query_notes" placeholder="Enter Expense Notes" />
 										<select value={this.state.add_expenses_in_query_month} name="add_expenses_in_query_month" id="add_expenses_in_query_month" onChange={this.updateInput}>
 											<option value="none" disabled={true}>Select Expense Month</option>
 											<option value="1">January</option>
