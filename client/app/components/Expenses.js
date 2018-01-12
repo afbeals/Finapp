@@ -2,6 +2,7 @@
 //--------------------//
 import React from 'react';
 import {Link} from 'react-router';
+import GetRange from './expense_forms/GetRange';
 
 export default class Expenses extends React.Component{
 	constructor(props){
@@ -171,6 +172,8 @@ export default class Expenses extends React.Component{
 	}
 
 	render(){
+		let {prestine, valid, dirty, invalid} = {...this.props};
+
 		return(
 			<div className="expenses">
 				<div className="switch">
@@ -339,7 +342,9 @@ export default class Expenses extends React.Component{
 						</tbody>
 					</table>
   			</div>
+  			<GetRange onSubmit={(e)=>{console.log(e)}} style="z-index:100;position:relative;" />
 			</div>
 		)
 	}
 }
+

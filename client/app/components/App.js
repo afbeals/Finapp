@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as userActionCreators from '../actions/userActionCreators';
 import * as expensesActionCreators from '../actions/expensesActionCreators';
 import * as incomesActionCreators from '../actions/incomesActionCreators';
+import * as errorActionCreators from '../actions/errorActionCreators';
 
 //--- Components: Everything is in Main - so we import that one ---//
 //-----------------------------------------------------------------//
@@ -28,7 +29,7 @@ function mapStateToProps(state) {
 //--- Bind actions to dispatch, and make actions available to props ---//
 //---------------------------------------------------------------------//
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators({...userActionCreators,...expensesActionCreators,...incomesActionCreators, }, dispatch);
+  return bindActionCreators({...userActionCreators,...expensesActionCreators,...incomesActionCreators, ...errorActionCreators}, dispatch);
 }
 
 //--- Create <App/> to display <Main/> with populated props. connect() it all together ---//

@@ -14,8 +14,13 @@ export default function errorsReducer(state = [], action){
 			return [...action.err];
 		case errorConstants.REGISTER_FAILURE:
 			return [...action.err];
-		case errorConstants.CLEAR_ERRORS:
+		case errorConstants.CLEAR_ALL_ERRORS:
 			return [];
+		case errorConstants.REMOVE_ERROR:
+			return [
+				...state.slice(0,action.index),
+				...state.slice(action.index + 1)
+			];;
 		default:
 			return state;
 	}

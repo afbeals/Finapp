@@ -3,10 +3,11 @@
 var MySQL = require('../config/MySQL');
 var {validateAll} = require('indicative');
 var validation = require('../config/validateRules');
+var messages = require('../config/validateMessages');
 
 module.exports = {
 	addExpensesInQuery : (req,res)=>{
-		validateAll(req.body, validation.addExpensesInQuery_rules)
+		validateAll(req.body, validation.addExpensesInQuery_rules, messages)
 			.then((data) =>{
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -43,7 +44,7 @@ module.exports = {
 	},
 
 	getAllExpenses : (req,res) => {
-		validateAll(req.query, validation.getAllExpenses_rules)
+		validateAll(req.query, validation.getAllExpenses_rules, messages)
 			.then((data)=>{
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -67,12 +68,12 @@ module.exports = {
 			})
 			.catch((errors) =>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});
 	},
 
 	getAllExpensesInMonth : (req,res) => {
-		validateAll(req.body, validation.getAllExpensesInMonth_rules)
+		validateAll(req.body, validation.getAllExpensesInMonth_rules, messages)
 			.then((data)=>{
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -96,12 +97,12 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});
 	},
 
 	getAllExpensesInRange : (req,res) => {
-		validateAll(req.body, validation.getAllExpensesInRange_rules)
+		validateAll(req.body, validation.getAllExpensesInRange_rules, messages)
 			.then((data)=>{
 				let query,params;
 		      	if((typeof data.begDay != "undefined") && (typeof data.endDay != "undefined")){
@@ -134,12 +135,12 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});
 	},
 
 	updateExpensesInQuery : (req,res) => {
-		validateAll(req.body, validation.updateExpensesInQuery_rules)
+		validateAll(req.body, validation.updateExpensesInQuery_rules, messages)
 			.then((data)=>{
 				let buildQuery = (obj) => {
 					let query = "UPDATE expenses SET ",
@@ -183,12 +184,12 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg: "Looks like something went wrong", "err":errors}});
+				res.status(500).send({errors,status:500});
 			});
 	},
 
 	removeExpensesInQuery : (req,res) => {
-		validateAll(req.body, validation.removeExpensesInQuery_rules)
+		validateAll(req.body, validation.removeExpensesInQuery_rules, messages)
 			.then((data)=>{
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -212,7 +213,7 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});
 	}
 };

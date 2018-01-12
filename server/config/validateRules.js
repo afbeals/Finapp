@@ -21,32 +21,32 @@ module.exports = {
 		amount_due: 'required|number',
 		amount_paid: 'number',
 		notes: 'string|max:300',
-		monthId: 'required|range:1,12|integer'
+		monthId: 'required|range:0,13|integer'
 	},
 	getAllExpenses : {
 		user_id : 'required|above:0'
 	},
 	getAllExpensesInMonth_rules: {
 		user_id : 'required|above:0|integer',
-		monthId: 'required|range:1,12|integer'
+		monthId: 'required|range:0,13|integer'
 	},
 	getAllExpensesInRange_rules : {
 		user_id : 'required|above:0|integer',
-		begDay: 'range:1,31|integer',
-		endDay: 'range:1,31|integer',
-		begMnt: 'required|range:1,12|integer',
-		endMnt: 'required|range:1,12|integer'
+		begDay: 'range:0,32|integer',
+		endDay: 'range:0,32|integer',
+		begMnt: 'required|range:0,13|integer',
+		endMnt: 'required|range:0,13|integer'
 	},
 	updateExpensesInQuery_rules : {
 		name: 'min:3|max:45',
-		due_day: 'range:1,31|integer',
+		due_day: 'range:0,32|integer',
 		amount_due: 'number',
 		amount_paid: 'number',
 		notes: 'string|max:300',
 		month: 'range:1,12|integer'
 	},
 	removeExpensesInQuery_rules : {
-		months_id: 'required|range:1,12|integer',
+		months_id: 'required|range:0,13|integer',
 		id: 'required|integer',
 		user_id: 'required|integer'
 	},
@@ -69,20 +69,20 @@ module.exports = {
 	},
 	getAllIncomesInRange_rules : {
 		user_id : 'required|above:0|integer',
-		begDay: 'range:1,31|integer',
-		endDay: 'range:1,31|integer',
-		begMnt: 'required|range:1,12|integer',
-		endMnt: 'required|range:1,12|integer'
+		begDay: 'range:0,32|integer',
+		endDay: 'range:0,32|integer',
+		begMnt: 'required|range:0,13|integer',
+		endMnt: 'required|range:0,13|integer'
 	},
 	updateIncomesInQuery_rules : {
 		name: 'min:3|max:45',
-		due_day: 'range:1,31|integer',
+		due_day: 'range:0,32|integer',
 		amount: 'number',
 		notes: 'string|max:300',
 		month: 'range:1,12|integer'
 	},
 	removeIncomesInQuery_rules : {
-		months_id: 'required|range:1,12|integer',
+		months_id: 'required|range:0,13|integer',
 		id: 'required|integer',
 		user_id: 'required|integer'
 	}

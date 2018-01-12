@@ -21,12 +21,12 @@ let nonValidResponse = (response) => {
 //--- Retrieve Expeneses ---//
 //--------------------------//
 export function getAllExpenses(id){
-	return (dispatch) => {
+    return (dispatch) => {
         dispatch(fetchingExpenses(true));
         return axios.get("/get_all_expenses",{params: {user_id: id}})
             .then((response) => {  
                 if (nonValidResponse(response)) {
-                	 dispatch(fetchingExpensesError(true));
+                     dispatch(fetchingExpensesError(response));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
                 }
@@ -37,7 +37,7 @@ export function getAllExpenses(id){
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(getAllExpensesSuccess(response.data));
             })
-            .catch((err) => dispatch(fetchingExpensesError(true)));
+            .catch((err) => dispatch(fetchingExpensesError(err.response.data.errors)));
     };
 }
 
@@ -49,7 +49,7 @@ export function getAllExpensesInMonth(user_id,month){
         return axios.get("/get_all_expenses_in_month",{params:{user_id,month}})
             .then((response) => {  
                 if (nonValidResponse(response)) {
-                     dispatch(fetchingExpensesError(true));
+                     dispatch(fetchingExpensesError(response));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
                 }
@@ -60,7 +60,7 @@ export function getAllExpensesInMonth(user_id,month){
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(getAllExpensesInMonthSuccess(response.data));
             })
-            .catch((err) => dispatch(fetchingExpensesError(true)));
+            .catch((err) => dispatch(fetchingExpensesError(err.response.data.errors)));
     };
 }
 
@@ -72,7 +72,7 @@ export function getAllExpensesInRange(params){
         return axios.get("/get_all_expenses_in_range",{params:params})
             .then((response) => {  
                 if (nonValidResponse(response)) {
-                     dispatch(fetchingExpensesError(true));
+                     dispatch(fetchingExpensesError(response));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
                 }
@@ -83,7 +83,7 @@ export function getAllExpensesInRange(params){
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(getAllExpensesInRangeSuccess(response.data));
             })
-            .catch((err) => dispatch(fetchingExpensesError(true)));
+            .catch((err) => dispatch(fetchingExpensesError(err.response.data.errors)));
     };
 }
 
@@ -95,7 +95,7 @@ export function updateExpensesInQuery(params){
         return axios.post("/update_expenses_in_query",params)
             .then((response) => {  
                 if (nonValidResponse(response)) {
-                     dispatch(fetchingExpensesError(true));
+                     dispatch(fetchingExpensesError(response));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
                 }
@@ -106,7 +106,7 @@ export function updateExpensesInQuery(params){
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(updateExpensesSuccess(params));
             })
-            .catch((err) => dispatch(fetchingExpensesError(true)));
+            .catch((err) => dispatch(fetchingExpensesError(err.response.data.errors)));
     };
 }
 
@@ -118,7 +118,7 @@ export function removeExpensesInQuery(params){
         return axios.post("/remove_expenses_in_query",params)
             .then((response) => {  
                if (nonValidResponse(response)) {
-                     dispatch(fetchingExpensesError(true));
+                     dispatch(fetchingExpensesError(response));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
                 }
@@ -129,7 +129,7 @@ export function removeExpensesInQuery(params){
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(removeExpensesSuccess(params));
             })
-            .catch((err) => dispatch(fetchingExpensesError(true)));
+            .catch((err) => dispatch(fetchingExpensesError(err.response.data.errors)));
     };
 }
 //--- Add New Expense ---//
@@ -140,7 +140,7 @@ export function addExpensesInQuery(params){
         return axios.post("/add_expenses_in_query",params)
             .then((response) => {
                 if (nonValidResponse(response)) {
-                     dispatch(fetchingExpensesError(true));
+                     dispatch(fetchingExpensesError(response));
                      dispatch(fetchingExpenses(false));
                     throw Error(response.statusText);
                 }
@@ -151,10 +151,7 @@ export function addExpensesInQuery(params){
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(addExpensesSuccess(Object.assign({},params, {expensesId: response.data.expensesId})));
             })
-            .catch((err) => {
-                dispatch(fetchingExpensesError(err.response.data.errors))
-
-            });
+            .catch((err) => dispatch(fetchingExpensesError(err.response.data.errors)));
     };
 }
 
@@ -163,20 +160,20 @@ export function addExpensesInQuery(params){
 //--- Requesting Data ---//
 //-----------------------//
 export function fetchingExpenses(bool){
-	return {
-		type: expensesConstants.REQUESTING_EXPENSE,
-		isRegistering: bool
-	}
+    return {
+        type: expensesConstants.REQUESTING_EXPENSE,
+        isRegistering: bool
+    }
 }
 
 //--- Request Failures ---//
 //------------------------//
 export function fetchingExpensesError(err){
-	return {
-		type: errorConstants.REQUESTING_EXPENSE_FAILURE,
-		err
+    return {
+        type: errorConstants.REQUESTING_EXPENSE_FAILURE,
+        err
 
-	}
+    }
 }
 
 //--- Request Successes ---//
