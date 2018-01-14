@@ -56,7 +56,7 @@ div.expenses{
 			    display: inline-block;
 			    width: 50%;
 			    height: 100%;
-					div{
+					>div{
 						display:none;
 						&.active{
 							display:inline-block;
@@ -69,23 +69,34 @@ div.expenses{
     						color: $primary-font;
     						text-shadow: $main-font-shadow;
 							}
-							select,input{
-								float:left;
-							  display: inline-block;
-						    width: 80%;
-						    margin: .5rem;
-						    padding: .4rem;
-						    text-transform: capitalize;
-						    background: $primary-blue-lightest;
-						    border: none;
-						    color: $primary-font;
-						    text-shadow: 2px 1px 1px black;
-						    font-size: 1.1rem;
-						    border-radius: 5px;
-						    &::placeholder{
-						    	color: $primary-font;
-						    }
+							label{
+								span.error{
+									text-transform: capitalize;
+									&~div{
+										input,select{
+											border: inset 1px $form-warning;
+										}
+									}
+								}
+								select,input{
+									float:left;
+								  display: inline-block;
+							    width: 80%;
+							    margin: .5rem;
+							    padding: .4rem;
+							    text-transform: capitalize;
+							    background: $primary-blue-lightest;
+							    border: none;
+							    color: $primary-font;
+							    text-shadow: 2px 1px 1px black;
+							    font-size: 1.1rem;
+							    border-radius: 5px;
+							    &::placeholder{
+							    	color: $primary-font;
+							    }
+								}	
 							}
+							
 							button{
 								float:right;
 						    padding: .5rem;
@@ -204,6 +215,22 @@ div.expenses{
 						}
 					}
 				}
+				select,input{
+				  display: inline-block;
+			    width: 90%;
+			    margin: .5rem;
+			    padding: .4rem;
+			    text-transform: capitalize;
+			    background: $primary-blue;
+			    border: none;
+			    color: $primary-font;
+			    text-shadow: 2px 1px 1px black;
+			    font-size: 1.2rem;
+			    border-radius: 5px;
+			    &::placeholder{
+			    	color: $primary-font;
+			    }
+				}	
 				div.updatesWrapper{
 					display:inline-block;
 					color: $primary-blue-dark;

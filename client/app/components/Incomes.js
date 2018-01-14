@@ -3,28 +3,23 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+//--- Local Forms ---//
+//-------------------//
+import GetRangeIncome from 	'./local_forms/GetRangeIncome';
+import GetMonthIncome from 	'./local_forms/GetMonthIncome';
+import AddIncome from 	'./local_forms/AddIncome';
+import GenerateReport from 		'./local_forms/GenerateReport';
+
 export default class Incomes extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			incomes_request_month: 'none',
-			get_all_incomes_in_range_begMnt: 'none',
-			get_all_incomes_in_range_endMnt: 'none',
-			get_all_incomes_in_range_begDay: null,
-			get_all_incomes_in_range_endDay: null,
-			add_incomes_in_query_name: '',
-			add_incomes_in_query_due_day: '',
-			add_incomes_in_query_amount: '',
-			add_incomes_in_query_notes: '',
-			add_incomes_in_query_month: 'none',
 			incomesUpdateSelect: '',
 			incomeseUpdateData: {
 				month: 'none'
 			},
 			isEditing: false
 		};
-		this.updateInput = this.updateInput.bind(this);
-
 		this.getAllIncomes = this.getAllIncomes.bind(this);
 		this.getAllIncomesInMonth = this.getAllIncomesInMonth.bind(this);
 		this.getAllIncomesInRange = this.getAllIncomesInRange.bind(this);
@@ -36,49 +31,39 @@ export default class Incomes extends React.Component{
 		this.displayItemNotes = this.displayItemNotes.bind(this);
 		this.displayOptions = this.displayOptions.bind(this);
 		this.displayForm = this.displayForm.bind(this);
+		this.generateReport = this.generateReport.bind(this);
 
 		this.updateIsEditing = this.updateIsEditing.bind(this);
-	}
-
-	updateInput(e){
-		const target = e.target;
-		const value = target.value;
-		const name = target.name;
-
-		this.setState({
-			...this.state,
-			[name]: value
-		});
 	}
 
 	getAllIncomes(){
 		this.props.getAllIncomes(Number(this.props.user.user_id));
 	}
 
-	getAllIncomesInMonth(){
-		this.props.getAllIncomesInMonth(Number(this.props.user.user_id),Number(this.state.incomes_request_month));
+	getAllIncomesInMonth(data){
+		this.props.getAllIncomesInMonth(Number(this.props.user.user_id),Number(data.month));
 	}
 
-	getAllIncomesInRange(){
+	getAllIncomesInRange(data){
 		this.props.getAllIncomesInRange({
-			user_id: 	Number(this.props.user.user_id),
-			begMnt: 	Number(this.state.get_all_incomes_in_range_begMnt),
-			endMnt: 	Number(this.state.get_all_incomes_in_range_endMnt),
-			begDay: 	Number(this.state.get_all_incomes_in_range_begDay),
-			endDay: 	Number(this.state.get_all_incomes_in_range_endDay)
+			...data,
+			user_id: 	Number(this.props.user.user_id)
 		});
 	}
 
-	addIncomesInQuery(){
+	addIncomesInQuery(data){
 		this.props.addIncomesInQuery({
-			user_id: 		Number(this.props.user.user_id),
-			name: 			this.state.add_incomes_in_query_name,
-			due_day: 		Number(this.state.add_incomes_in_query_due_day),
-			amount: 		Number(this.state.add_incomes_in_query_amount),
-			notes: 			this.state.add_incomes_in_query_notes,
-			monthId: 		Number(this.state.add_incomes_in_query_month),
-			id: 				Number(this.state.add_incomes_in_query_month)
+			...data,
+			user_id: 			Number(this.props.user.user_id),
+			id: 				Number(data.month)
 		});
+	}
+
+	generateReport(data){
+		this.props.generateReport({
+			...data,
+			user_id: Number(this.props.users.user_id)
+		})
 	}
 
 	updateIncomesInfo(e,id){
@@ -189,84 +174,19 @@ export default class Incomes extends React.Component{
   							<div className="actionInfo">
   								<div className="getRange">
   									<p>Get All Incomes In Range</p>
-  									<select value={this.state.get_all_incomes_in_range_begMnt} name="get_all_incomes_in_range_begMnt" id="get_all_incomes_in_range_begMnt" onChange={this.updateInput}>
-											<option value="none" disabled={true}>Select Beg Month</option>
-											<option value="1">January</option>
-											<option value="2">February</option>
-											<option value="3">March</option>
-											<option value="4">April</option>
-											<option value="5">May</option>
-											<option value="6">June</option>
-											<option value="7">July</option>
-											<option value="8">August</option>
-											<option value="9">September</option>
-											<option value="10">October</option>
-											<option value="11">November</option>
-											<option value="12">December</option>
-										</select>
-										<select value={this.state.get_all_incomes_in_range_endMnt} name="get_all_incomes_in_range_endMnt" id="get_all_incomes_in_range_endMnt" onChange={this.updateInput}>
-											<option value="none" disabled={true}>Select End Month</option>
-											<option value="1">January</option>
-											<option value="2">February</option>
-											<option value="3">March</option>
-											<option value="4">April</option>
-											<option value="5">May</option>
-											<option value="6">June</option>
-											<option value="7">July</option>
-											<option value="8">August</option>
-											<option value="9">September</option>
-											<option value="10">October</option>
-											<option value="11">November</option>
-											<option value="12">December</option>
-										</select>
-										<input type="number" value={this.state.get_all_incomes_in_range_begDay} onChange={this.updateInput} name="get_all_incomes_in_range_begDay" id="get_all_incomes_in_range_begDay" placeholder="enter beginning day" max="31" min="1" />
-										<input type="number" value={this.state.get_all_incomes_in_range_endDay} onChange={this.updateInput} name="get_all_incomes_in_range_endDay" id="get_all_incomes_in_range_endDay" placeholder="enter ending day" max="31" min="1" />
-										<button onClick={this.getAllIncomesInRange} className="submit">Submit</button>
+									<GetRangeIncome onSubmit={(e)=>{this.getAllIncomesInRange(e)}} />
   								</div>
   								<div className="getMonth">
   									<p>Get All Incomes In Month</p>
-  									<select value={this.state.incomes_request_month} name="incomes_request_month" id="incomes_request_month" onChange={this.updateInput}>
-											<option value="none" disabled={true}>Select A Month</option>
-											<option value="1">January</option>
-											<option value="2">February</option>
-											<option value="3">March</option>
-											<option value="4">April</option>
-											<option value="5">May</option>
-											<option value="6">June</option>
-											<option value="7">July</option>
-											<option value="8">August</option>
-											<option value="9">September</option>
-											<option value="10">October</option>
-											<option value="11">November</option>
-											<option value="12">December</option>
-										</select>
-										<button onClick={this.getAllIncomesInMonth}>Submit</button>
+									<GetMonthIncome onSubmit={(e)=>{this.getAllIncomesInMonth(e)}} />
   								</div>
   								<div className="add">
   									<p>Add Income</p>
-  									<input type="text" value={this.state.add_incomes_in_query_name} onChange={this.updateInput} name="add_incomes_in_query_name" id="add_incomes_in_query_name" placeholder="Enter Income Name" />
-										<input type="number" value={this.state.add_incomes_in_query_amount} onChange={this.updateInput} name="add_incomes_in_query_amount" id="add_incomes_in_query_amount" placeholder="Enter Income Amount" min="0.01" step="0.01" />
-										<input type="number" value={this.state.add_incomes_in_query_due_day} onChange={this.updateInput} name="add_incomes_in_query_due_day" id="add_incomes_in_query_due_day" placeholder="Enter Income Due Day" max="31" min="1" />
-										<input type="text" value={this.state.add_incomes_in_query_notes} onChange={this.updateInput} name="add_incomes_in_query_notes" id="add_incomes_in_query_notes" placeholder="Enter Income Notes" />
-										<select value={this.state.add_incomes_in_query_month} name="add_incomes_in_query_month" id="add_incomes_in_query_month" onChange={this.updateInput}>
-											<option value="none" disabled={true}>Select End Month</option>
-											<option value="1">January</option>
-											<option value="2">February</option>
-											<option value="3">March</option>
-											<option value="4">April</option>
-											<option value="5">May</option>
-											<option value="6">June</option>
-											<option value="7">July</option>
-											<option value="8">August</option>
-											<option value="9">September</option>
-											<option value="10">October</option>
-											<option value="11">November</option>
-											<option value="12">December</option>
-										</select>
-										<button onClick={this.addIncomesInQuery}>Submit</button>
+									<AddIncome onSubmit={(e)=>{this.addIncomesInQuery(e)}} />
   								</div>
   								<div className="report">
-
+  									<p> GenerateReport</p>
+  									<GenerateReport onSubmit={(e)=>{this.generateReport(e)}} />
   								</div>
   							</div>
   						</div>

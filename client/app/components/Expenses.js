@@ -2,31 +2,24 @@
 //--------------------//
 import React from 'react';
 import {Link} from 'react-router';
-import GetRange from './expense_forms/GetRange';
+
+//--- Local Forms ---//
+//-------------------//
+import GetRangeExpense from 	'./local_forms/GetRangeExpense';
+import GetMonthExpense from 	'./local_forms/GetMonthExpense';
+import AddExpense from 				'./local_forms/AddExpense';
+import GenerateReport from 		'./local_forms/GenerateReport';
 
 export default class Expenses extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			expense_request_month: 'none',
-			get_all_expenses_in_range_begMnt: 'none',
-			get_all_expenses_in_range_endMnt: 'none',
-			get_all_expenses_in_range_begDay: null,
-			get_all_expenses_in_range_endDay: null,
-			add_expenses_in_query_name: '',
-			add_expenses_in_query_due_day: '',
-			add_expenses_in_query_amount_due: '',
-			add_expenses_in_query_amount_paid: '',
-			add_expenses_in_query_notes: '',
-			add_expenses_in_query_month: 'none',
 			expenseUpdateSelect: '',
 			expenseUpdateData: {
 				month: 'none'
 			},
 			isEditing: false
 		};
-		this.updateInput = this.updateInput.bind(this);
-
 		this.getAllExpenses = this.getAllExpenses.bind(this);
 		this.getAllExpensesInMonth = this.getAllExpensesInMonth.bind(this);
 		this.getAllExpensesInRange = this.getAllExpensesInRange.bind(this);
@@ -38,49 +31,42 @@ export default class Expenses extends React.Component{
 		this.displayItemNotes = this.displayItemNotes.bind(this);
 		this.displayOptions = this.displayOptions.bind(this);
 		this.displayForm = this.displayForm.bind(this);
+		this.generateReport = this.generateReport.bind(this);
+
 
 		this.updateIsEditing = this.updateIsEditing.bind(this);
 	}
-
-	updateInput(e){
-		const target = e.target;
-		const value = target.value;
-		const name = target.name;
-
-		this.setState({
-			...this.state,
-			[name]: value
-		});
-	}
-
 	getAllExpenses(){
 		this.props.getAllExpenses(Number(this.props.user.user_id));
 	}
 
-	getAllExpensesInMonth(){
-		this.props.getAllExpensesInMonth(Number(this.props.user.user_id),Number(this.state.expense_request_monthId));
+	getAllExpensesInMonth(data){
+		this.props.getAllExpensesInMonth(Number(this.props.user.user_id),Number(data.month));
 	}
 
-	getAllExpensesInRange(){
+	getAllExpensesInRange(data){
 		this.props.getAllExpensesInRange({
-			user_id: 	Number(this.props.user.user_id),
-			begMnt: 	Number(this.state.get_all_expenses_in_range_begMnt),
-			endMnt: 	Number(this.state.get_all_expenses_in_range_endMnt),
-			begDay: 	Number(this.state.get_all_expenses_in_range_begDay),
-			endDay: 	Number(this.state.get_all_expenses_in_range_endDay)
+			...data,
+			user_id: 	Number(this.props.user.user_id)
 		});
 	}
 
-	addExpensesInQuery(){
+	addExpensesInQuery(data){
+		console.log(data);
 		this.props.addExpensesInQuery({
+			...data,
+			due_day: 			Number(data.due_day),
+			amount_due: 	Number(data.amount_due),
+			amount_paid: 	Number(data.amount_paid),
 			user_id: 			Number(this.props.user.user_id),
-			name: 				this.state.add_expenses_in_query_name,
-			due_day: 			Number(this.state.add_expenses_in_query_due_day),
-			amount_due: 	Number(this.state.add_expenses_in_query_amount_due),
-			amount_paid: 	Number(this.state.add_expenses_in_query_amount_paid),
-			notes: 				this.state.add_expenses_in_query_notes,
-			monthId: 			Number(this.state.add_expenses_in_query_month),
-			id: 					Number(this.state.add_expenses_in_query_month)
+			id: 					Number(data.monthId)
+		})
+	}
+
+	generateReport(data){
+		this.props.generateReport({
+			...data,
+			user_id: Number(this.props.users.user_id)
 		})
 	}
 
@@ -183,7 +169,6 @@ export default class Expenses extends React.Component{
   				<div className="optionsSwitch">
   					<div onClick={this.displayOptions} className="optionsActivator"><i className="fas fa-cog"></i></div>
   					<div className="options">
-
   							<div className="actionButtons">
   								<button onClick={this.getAllExpenses}>Get All</button>
   								<button onClick={this.displayForm} data-form-name="getRange">Range</button>
@@ -194,95 +179,22 @@ export default class Expenses extends React.Component{
   							<div className="actionInfo">
   								<div className="getRange">
   									<p>Get All Expenses In Range</p>
-  									<select value={this.state.get_all_expenses_in_range_begMnt} name="get_all_expenses_in_range_begMnt" id="get_all_expenses_in_range_begMnt" onChange={this.updateInput}>
-											<option value="none" disabled={true}>Select Beg Month</option>
-											<option value="1">January</option>
-											<option value="2">February</option>
-											<option value="3">March</option>
-											<option value="4">April</option>
-											<option value="5">May</option>
-											<option value="6">June</option>
-											<option value="7">July</option>
-											<option value="8">August</option>
-											<option value="9">September</option>
-											<option value="10">October</option>
-											<option value="11">November</option>
-											<option value="12">December</option>
-										</select>
-										<select value={this.state.get_all_expenses_in_range_endMnt} name="get_all_expenses_in_range_endMnt" id="get_all_expenses_in_range_endMnt" onChange={this.updateInput}>
-											<option value="none" disabled={true}>Select End Month</option>
-											<option value="1">January</option>
-											<option value="2">February</option>
-											<option value="3">March</option>
-											<option value="4">April</option>
-											<option value="5">May</option>
-											<option value="6">June</option>
-											<option value="7">July</option>
-											<option value="8">August</option>
-											<option value="9">September</option>
-											<option value="10">October</option>
-											<option value="11">November</option>
-											<option value="12">December</option>
-										</select>
-										<input type="number" value={this.state.get_all_expenses_in_range_begDay || ""} onInput={this.updateInput} name="get_all_expenses_in_range_begDay" id="get_all_expenses_in_range_begDay" placeholder="enter beginning day" max="31" min="1" />
-										<input type="number" value={this.state.get_all_expenses_in_range_endDay || ""} onChange={this.updateInput} name="get_all_expenses_in_range_endDay" id="get_all_expenses_in_range_endDay" placeholder="enter ending day" max="31" min="1" />
-										<button onClick={this.getAllExpensesInRange}>Submit</button>
+									<GetRangeExpense onSubmit={(e)=>{this.getAllExpensesInRange(e)}} />
   								</div>
   								<div className="getMonth">
   									<p>Get All Expenses In Month</p>
-  									<select value={this.state.expense_request_monthId} name="expense_request_monthId" id="expense_request_monthId" onChange={this.updateInput}>
-											<option value="none" disabled={true}>Select A Month</option>
-											<option value="1">January</option>
-											<option value="2">February</option>
-											<option value="3">March</option>
-											<option value="4">April</option>
-											<option value="5">May</option>
-											<option value="6">June</option>
-											<option value="7">July</option>
-											<option value="8">August</option>
-											<option value="9">September</option>
-											<option value="10">October</option>
-											<option value="11">November</option>
-											<option value="12">December</option>
-										</select>
-										<button onClick={this.getAllExpensesInMonth}>Submit</button>
+									<GetMonthExpense onSubmit={(e)=>{this.getAllExpensesInMonth(e)}} />
   								</div>
   								<div className="add">
   									<p>Add Expense</p>
-  									
-  									<input type="text" value={this.state.add_expenses_in_query_name} onChange={this.updateInput || ""} name="add_expenses_in_query_name" id="add_expenses_in_query_name" placeholder="Enter Expense Name" />
-  									{
-  										this.props.errors.map((c,i,a)=>{
-												if(c.field == "name") return <p key={i}>{c.message}</p>
-											})
-  									}
-										<input type="number" value={this.state.add_expenses_in_query_due_day} onChange={this.updateInput || ""} name="add_expenses_in_query_due_day" id="add_expenses_in_query_due_day" placeholder="Enter Expense Due Day" max="31" min="1" />
-										<input type="number" value={this.state.add_expenses_in_query_amount_due} onChange={this.updateInput || ""} name="add_expenses_in_query_amount_due" id="add_expenses_in_query_amount_due" placeholder="Enter Expense Amount Due" min="0.01" step="0.01" />
-										<input type="number" value={this.state.add_expenses_in_query_amount_paid} onChange={this.updateInput || ""} name="add_expenses_in_query_amount_paid" id="add_expenses_in_query_amount_paid" placeholder="Enter Expense Amount Paid" min="0.00" step="0.01" />
-										<input type="text" value={this.state.add_expenses_in_query_notes} onChange={this.updateInput || ""} name="add_expenses_in_query_notes" id="add_expenses_in_query_notes" placeholder="Enter Expense Notes" />
-										<select value={this.state.add_expenses_in_query_month} name="add_expenses_in_query_month" id="add_expenses_in_query_month" onChange={this.updateInput}>
-											<option value="none" disabled={true}>Select Expense Month</option>
-											<option value="1">January</option>
-											<option value="2">February</option>
-											<option value="3">March</option>
-											<option value="4">April</option>
-											<option value="5">May</option>
-											<option value="6">June</option>
-											<option value="7">July</option>
-											<option value="8">August</option>
-											<option value="9">September</option>
-											<option value="10">October</option>
-											<option value="11">November</option>
-											<option value="12">December</option>
-										</select>
-										<button onClick={this.addExpensesInQuery}>Get 'em!</button>
+  									<AddExpense onSubmit={(e)=>{this.addExpensesInQuery(e)}} />
   								</div>
   								<div className="report">
-
+  									<p>GenerateReport</p>
+  									<GenerateReport onSubmit={(e)=>{this.generateReport(e)}} />
   								</div>
   							</div>
   						</div>
-
   				</div>
   				<Link className="rightSwitch" activeClassName="active" to="/expenses">
   					<p>expenses</p>
@@ -293,8 +205,8 @@ export default class Expenses extends React.Component{
 						<tbody>
 						<tr className="titles">
 							<th>Name:</th>
-							<th>Amount Due:</th>
-							<th>Amount Paid:</th>
+							<th>Due:</th>
+							<th>Paid:</th>
 							<th>Month:</th>
 							<th>Due:</th>
 							<th>Notes:</th>
@@ -342,9 +254,8 @@ export default class Expenses extends React.Component{
 						</tbody>
 					</table>
   			</div>
-  			<GetRange onSubmit={(e)=>{console.log(e)}} style="z-index:100;position:relative;" />
+  			
 			</div>
 		)
 	}
 }
-

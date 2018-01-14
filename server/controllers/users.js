@@ -6,16 +6,17 @@ var cfg = require('../../private');
 var {validateAll} = require('indicative');
 var validation = require('../config/validateRules');
 var bcrypt = require('bcrypt');
+var messages = require('../config/validateMessages');
 
 module.exports = {
 	registerUser : (req,res)=>{
-		validateAll(req.body, validation.registerUser_rules)
+		validateAll(req.body, validation.registerUser_rules, messages)
 			.then((data) => {
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
 						console.error({"code" : 100, "status" : "Error in connection database","err":err});
-						res.status(500).send({error: {msg:err,status:500}});
+						res.status(500).send({error:err,status:500});
 					}   
 					console.log('connected as id ' + connection.threadId);
 					var password = data.password,
@@ -33,7 +34,7 @@ module.exports = {
 			  						res.status(400).send({error: {msg:"This email already exists!",status:400}});
 			  						return;
 			  					}
-			  					console.error('!!!!!! error status',err.errno ,err.code, err.sqlMessage);
+			  					console.error('error status',err.errno ,err.code, err.sqlMessage);
 			  				} else {
 								var payload = {
 									user_id:rows.insertId,
@@ -46,25 +47,24 @@ module.exports = {
 			  		});
 					connection.on('error', (err)=>{      
 						console.error({"code" : 100, "status" : "Error in connection database", "err":err});
-						res.status(500).send({error: {msg:err,status:500}});
 					});
 			    });
 			})
 			.catch((errors) => {
 		  		console.error(errors);
-		  		res.status(400).send({error: errors});
+		  		res.status(500).send({errors,status:500});
 		 	});
 	},
 
 
 	loginUser : (req,res)=>{
-		validateAll(req.body, validation.loginUser_rules)
+		validateAll(req.body, validation.loginUser_rules, messages)
 			.then((data) => {
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
 						console.error({"code" : 100, "status" : "Error in connection database","err":err});
-						res.status(500).send({error: {msg:err,status:500}});
+						res.status(500).send({error:err,status:500});
 					}   
 					console.log('connected as id ' + connection.threadId);
 					connection.query("SELECT id,first_name,password FROM users WHERE email = ?",[data.email],(err,user)=>{
@@ -100,13 +100,12 @@ module.exports = {
 					});		
 					connection.on('error', (err)=>{      
 						console.error(({"code" : 100, "status" : "Error in connection database", "err":err}));
-						res.status(500).send({error: {msg:err,status:500}});
 					});
 			    });
 			})
 			.catch((errors) => {
 		  		console.error(errors);
-		  		res.status(400).send({error: errors});
+		  		res.status(500).send({errors,status:500});
 		 	});
 	}
 };

@@ -3,11 +3,11 @@
 var MySQL = require('../config/MySQL');
 var {validateAll} = require('indicative');
 var validation = require('../config/validateRules');
+var messages = require('../config/validateMessages');
 
 module.exports = {
 	addIncomesInQuery : (req,res)=>{ 
-		console.log(req.body);
-		validateAll(req.body, validation.addIncomesInQuery_rules)
+		validateAll(req.body, validation.addIncomesInQuery_rules, messages)
 			.then((data)=>{
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -15,7 +15,7 @@ module.exports = {
 						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
-					connection.query("INSERT INTO incomes (users_id,name,due_day,amount,notes,created_at) VALUES (?,?,?,?,?,?)",[data.user_id,data.name,data.due_day,data.amount,data.notes,new Date()],(err,rows)=>{
+					connection.query("INSERT INTO incomes (users_id,name,due_day,amount,notes,year, created_at) VALUES (?,?,?,?,?,?,?)",[data.user_id,data.name,data.due_day,data.amount,data.notes,data.year,new Date()],(err,rows)=>{
 						if(!err) {
 					   		connection.query("INSERT INTO months_has_incomes (months_id,incomes_id,created_at) VALUES (?,?,?)",[data.monthId,rows.insertId,new Date()],(err,rows2)=>{
 								connection.release(); 
@@ -37,13 +37,12 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});	
 	},
 
 	getAllIncomes : (req,res) => {
-		console.log(typeof req.query.user_id)
-		validateAll(req.query, validation.getAllIncomes_rules)
+		validateAll(req.query, validation.getAllIncomes_rules, messages)
 			.then((data)=>{
 				console.log(data);
 				MySQL.pool.getConnection((err,connection)=>{
@@ -52,7 +51,7 @@ module.exports = {
 						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
-					connection.query("SELECT name, amount, notes, due_day, months.id AS monthId, incomes.id AS incomesId, months.id as month FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ?",[data.user_id],(err,rows)=>{
+					connection.query("SELECT name, amount, notes, due_day, months.id AS monthId, incomes.id AS incomesId, months.id as month, year FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ?",[data.user_id],(err,rows)=>{
 						connection.release(); 
 						if(!err) {
 							res.json(rows);
@@ -68,13 +67,13 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});	
 		
 	},
 
 	getAllIncomesInMonth : (req,res) => {
-		validateAll(req.body, validation.getAllIncomesInMonth_rules)
+		validateAll(req.query, validation.getAllIncomesInMonth_rules, messages)
 			.then((data)=>{
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -82,7 +81,7 @@ module.exports = {
 						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
-					connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ? AND months.id = ?",[data.user_id,data.month],(err,rows)=>{
+					connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE year = ? AND incomes.users_id = ? AND months.id = ?",[data.year,data.user_id,data.month],(err,rows)=>{
 						connection.release(); 
 						if(!err) {
 					   		res.json(rows);
@@ -98,21 +97,21 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});	
 		
 	},
 
 	getAllIncomesInRange : (req,res) => {
-		validateAll(req.body, validation.addIncomesInQuery_rules)
+		validateAll(req.query, validation.addIncomesInQuery_rules, messages)
 			.then((data)=>{
 				let query,params;
 		      	if((typeof data.begDay != "undefined") && (typeof data.endDay != "undefined")){
-		      		query = "SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (incomes.due_day >= ? AND incomes.due_day <= ?) ";
-		      		params = [data.user_id,data.begMnt,data.endMnt,data.begDay,data.endDay];
+		      		query = "SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE year = ? AND incomes.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (incomes.due_day >= ? AND incomes.due_day <= ?) ";
+		      		params = [data.year,data.user_id,data.begMnt,data.endMnt,data.begDay,data.endDay];
 		      	} else {
-		      		query = "SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ? AND months.id >= ? AND months.id <= ?";
-		      		params = [data.user_id,data.begMnt,data.endMnt]
+		      		query = "SELECT name, amount, months.id AS monthId, incomes.id AS incomesId FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE year = ? incomes.users_id = ? AND months.id >= ? AND months.id <= ?";
+		      		params = [data.year,data.user_id,data.begMnt,data.endMnt]
 		      	}
 			    MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -136,13 +135,13 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});	
 		
 	},
 
 	updateIncomesInQuery : (req,res) => {
-		validateAll(req.body, validation.updateIncomesInQuery_rules)
+		validateAll(req.body, validation.updateIncomesInQuery_rules, messages)
 			.then((data)=>{
 				let buildQuery = (obj) => {
 					let query = "UPDATE incomes SET ",
@@ -186,13 +185,13 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});	
 		
 	},
 
 	removeIncomesInQuery : (req,res) => {
-		validateAll(req.body, validation.removeIncomesInQuery_rules)
+		validateAll(req.body, validation.removeIncomesInQuery_rules, messages)
 			.then((data)=>{
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -216,7 +215,7 @@ module.exports = {
 			})
 			.catch((errors)=>{
 				console.error(errors);
-				res.status(500).send({error:{msg:"something when wrong",status:500}});
+				res.status(500).send({errors,status:500});
 			});	 
 	}
 };

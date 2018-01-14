@@ -7,6 +7,7 @@ var messages = require('../config/validateMessages');
 
 module.exports = {
 	addExpensesInQuery : (req,res)=>{
+		console.log(req.body);
 		validateAll(req.body, validation.addExpensesInQuery_rules, messages)
 			.then((data) =>{
 				MySQL.pool.getConnection((err,connection)=>{
@@ -15,7 +16,7 @@ module.exports = {
 						res.status(500).send({error: {msg:"Whoops, looks like something went wrong!",status:500}});
 					}   
 					console.log('connected as id ' + connection.threadId);
-					connection.query("INSERT INTO expenses (users_id,name,due_day,amount_due,amount_paid,notes,created_at) VALUES (?,?,?,?,?,?,?)",[data.user_id,data.name,data.due_day,data.amount_due,data.amount_paid,data.notes,new Date()],(err,rows)=>{
+					connection.query("INSERT INTO expenses (users_id,name,due_day,amount_due,amount_paid,notes,year,created_at) VALUES (?,?,?,?,?,?,?,?)",[data.user_id,data.name,data.due_day,data.amount_due,data.amount_paid,data.notes,data.year,new Date()],(err,rows)=>{
 						if(!err) {
 					   		connection.query("INSERT INTO months_has_expenses (months_id,expenses_id,created_at) VALUES (?,?,?)",[data.monthId,rows.insertId,new Date()],(err,rows2)=>{
 								connection.release(); 
@@ -52,7 +53,7 @@ module.exports = {
 						res.status(500).send({error: {msg:"Whoops, looks like something went wrong!",status:500}});
 					}   
 					console.log('connected as id ' + connection.threadId);   
-					connection.query("SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId, months.id as month FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ?",[data.user_id],(err,rows)=>{
+					connection.query("SELECT name, amount_due, amount_paid, months.id AS monthId, due_day, expenses.id AS expensesId, months.id as month, notes,year FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ?",[data.user_id],(err,rows)=>{
 						connection.release(); 
 						if(!err) {
 							res.json(rows);
@@ -73,7 +74,7 @@ module.exports = {
 	},
 
 	getAllExpensesInMonth : (req,res) => {
-		validateAll(req.body, validation.getAllExpensesInMonth_rules, messages)
+		validateAll(req.query, validation.getAllExpensesInMonth_rules, messages)
 			.then((data)=>{
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -81,7 +82,7 @@ module.exports = {
 						res.status(500).send({error: {msg:"Whoops, looks like something went wrong!",status:500}});
 					}   
 					console.log('connected as id ' + connection.threadId);   
-					connection.query("SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ? AND months.id = ?",[data.user_id,data.monthId],(err,rows)=>{
+					connection.query("SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId, year FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE year = ? AND expenses.users_id = ? AND months.id = ?",[data.year, data.user_id,data.month],(err,rows)=>{
 						connection.release(); 
 						if(!err) {
 					   		res.json(rows);
@@ -102,15 +103,15 @@ module.exports = {
 	},
 
 	getAllExpensesInRange : (req,res) => {
-		validateAll(req.body, validation.getAllExpensesInRange_rules, messages)
+		validateAll(req.query, validation.getAllExpensesInRange_rules, messages)
 			.then((data)=>{
 				let query,params;
 		      	if((typeof data.begDay != "undefined") && (typeof data.endDay != "undefined")){
-		      		query = "SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (expenses.due_day >= ? AND expenses.due_day <= ?) ";
-		      		params = [data.user_id,data.begMnt,data.endMnt,data.begDay,data.endDay];
+		      		query = "SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE year = ? AND expenses.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (expenses.due_day >= ? AND expenses.due_day <= ?) ";
+		      		params = [data.year,data.user_id,data.begMnt,data.endMnt,data.begDay,data.endDay];
 		      	} else {
-		      		query = "SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE expenses.users_id = ? AND months.id >= ? AND months.id <= ?";
-		      		params = [data.user_id,data.begMnt,data.endMnt];
+		      		query = "SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE year = ? AND expenses.users_id = ? AND months.id >= ? AND months.id <= ?";
+		      		params = [data.year, data.user_id,data.begMnt,data.endMnt];
 		      	}
 			    MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
@@ -142,24 +143,27 @@ module.exports = {
 	updateExpensesInQuery : (req,res) => {
 		validateAll(req.body, validation.updateExpensesInQuery_rules, messages)
 			.then((data)=>{
+				console.log(data);
 				let buildQuery = (obj) => {
-					let query = "UPDATE expenses SET ",
+					let query = "UPDATE expenses SET updated_at = '"+new Date().toISOString().slice(0, 19).replace('T', ' ')+"' ",
 						initial = true;
 				    for(let keys = Object.keys(obj), i = 0, end = keys.length; i < end; ++i) {
-				        let key = keys[i], value = obj[key];
-				        if(key != "id" && key != "user_id" && key != "month"){
-							if(initial){
-								query += key+" = '"+ value+"'";
-								initial = false;
-		                    } else {
-								query += ", "+key+" = '"+ value+"'";
-		                    }
-		                }
-		            }
+			        let key = keys[i], value = obj[key];
+			        if(key != "id" && key != "user_id" && key != "month"){
+								if(initial){
+									query += key+" = '"+ value+"'";
+									initial = false;
+			                    } else {
+									query += ", "+key+" = '"+ value+"'";
+			                    }
+	            }
+		        }
 					query += " WHERE users_id = "+obj.user_id+" AND id = "+obj.id;
+					console.log(query);
 					if(obj.month){
 						query += "; UPDATE months_has_expenses SET months_id = "+obj.month+" WHERE expenses_id = '"+obj.id+"'";
 		            }
+		            console.log(query);
 				    return query;
 				};
 			    MySQL.pool.getConnection((err,connection)=>{

@@ -10,7 +10,7 @@ import rootReducer from './reducers/combinedReducer';
 //-------------------------------------------------------------//
 const defaultState = {
   user: {
-    user_id:8,
+    user_id:1,
     first_name:"Allan",
     authenticated: true,
     isRequesting: false

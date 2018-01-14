@@ -50,5 +50,9 @@ module.exports = {
 	"id.required" : "Please contact the administrator for this error",
 	"months_id.required" : "Please contact the administrator for this error",
 	"months_id.integer" : "Please contact the administrator for this error",
-	"months_id.range" : "The {{ field }} must be above {{argument.0}} and under {{argument.1}}."
+	"months_id.range" : "The {{ field }} must be above {{argument.0}} and under {{argument.1}}.",
+	"year.required" : "Please select a year",
+	"year.min" : "Please enter year YYYY format",
+	"year.max" : "Please enter year YYYY format",
+	"year.length": "Please select a year between 2014 and 3016"
 };

@@ -1,6 +1,7 @@
 //--Dependencies--//
 //----------------//
 import React from 'react';
+import {Link} from 'react-router';
 import { connect } from 'react-redux';
 import {required, email,length} from 'redux-form-validators';
 import {
@@ -42,6 +43,7 @@ class Login extends React.Component {
 		return(
 			<div>
 				Login Page!
+				<Link to="/register" >Register!</Link>
 				<form onSubmit={this.props.handleSubmit(this.submitInput)}>
 					<div>
 						<Field

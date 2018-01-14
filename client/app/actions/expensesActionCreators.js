@@ -44,9 +44,10 @@ export function getAllExpenses(id){
 //--- Get All Expenses In Month ---//
 //---------------------------------//
 export function getAllExpensesInMonth(user_id,month){
+    console.log(user_id,month)
     return (dispatch) => {
         dispatch(fetchingExpenses(true));
-        return axios.get("/get_all_expenses_in_month",{params:{user_id,month}})
+        return axios.get("/get_all_expenses_in_month",{params:{user_id:user_id,month:month}})
             .then((response) => {  
                 if (nonValidResponse(response)) {
                      dispatch(fetchingExpensesError(response));
