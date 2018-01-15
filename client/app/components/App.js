@@ -6,6 +6,7 @@ import * as userActionCreators from '../actions/userActionCreators';
 import * as expensesActionCreators from '../actions/expensesActionCreators';
 import * as incomesActionCreators from '../actions/incomesActionCreators';
 import * as errorActionCreators from '../actions/errorActionCreators';
+import * as reportsActionCreators from '../actions/reportsActionCreators';
 
 //--- Components: Everything is in Main - so we import that one ---//
 //-----------------------------------------------------------------//
@@ -22,6 +23,7 @@ function mapStateToProps(state) {
 		user: state.user,
 		expenses: state.expenses,
 		incomes: state.incomes,
+		reports: state.reports,
 		errors: state.errors
 	};
 }
@@ -29,7 +31,7 @@ function mapStateToProps(state) {
 //--- Bind actions to dispatch, and make actions available to props ---//
 //---------------------------------------------------------------------//
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators({...userActionCreators,...expensesActionCreators,...incomesActionCreators, ...errorActionCreators}, dispatch);
+  return bindActionCreators({...userActionCreators,...expensesActionCreators,...incomesActionCreators, ...errorActionCreators,...reportsActionCreators}, dispatch);
 }
 
 //--- Create <App/> to display <Main/> with populated props. connect() it all together ---//

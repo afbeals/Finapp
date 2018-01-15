@@ -1,7 +1,20 @@
+//---  Import axios for ajax calls ---//
+//------------------------------------//
+import axios from 'axios';
+
 //--- Import Constants ---//
 //------------------------//
 import {reportsConstants} from '../constants/reportsConstants';
 import {default as errors} from '../constants/errorConstants';
+
+//--- validate reponse ---//
+let nonValidResponse = (response) => {
+    let status = null
+    if(response.status >= 200 && response.status < 300){
+        return status = false;
+    }
+    return status = true
+};
 
 //--- AJAX Calls ---//
 //--- Retrieve Report ---//
@@ -36,7 +49,7 @@ export function generateReportRequest(bool){
 
 export function generateReportFailure(err){
 	return {
-		type: errorConstants.GENERATE_REPORT_FAILURE,
+		type: errors.GENERATE_REPORT_FAILURE,
 		err
 	}
 }
@@ -46,4 +59,10 @@ export function generateReportSuccess(data){
 		type: reportsConstants.GENERATE_REPORT_SUCCESS,
 		data
 	}
+}
+
+export function clearReport(){
+    return {
+        type: reportsConstants.CLEAR_REPORT
+    }
 }

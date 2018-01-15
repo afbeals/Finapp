@@ -59,6 +59,7 @@ const AddExpense = props => {
           component={renderField}
           type="number"
           placeholder="Amount Paid"
+          validate={[required()]}
         />
         <Field
           name="notes"

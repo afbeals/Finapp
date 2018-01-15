@@ -50,14 +50,14 @@ const GetRangeExpense = props => {
           component={renderField}
           type="number"
           placeholder="Beginning Day"
-          validate={[numericality({'>=':1,'<=':31})]}
+          
         />
         <Field
           name="endDay"
           component={renderField}
           type="number"
           placeholder="Ending Day"
-          validate={[numericality({'>=':1,'<=':31})]}
+          
         />
         <Field
           name="year"

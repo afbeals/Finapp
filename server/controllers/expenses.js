@@ -82,7 +82,7 @@ module.exports = {
 						res.status(500).send({error: {msg:"Whoops, looks like something went wrong!",status:500}});
 					}   
 					console.log('connected as id ' + connection.threadId);   
-					connection.query("SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId, year FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE year = ? AND expenses.users_id = ? AND months.id = ?",[data.year, data.user_id,data.month],(err,rows)=>{
+					connection.query("SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId, year, due_day, notes FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE year = ? AND expenses.users_id = ? AND months.id = ?",[data.year, data.user_id,data.month],(err,rows)=>{
 						connection.release(); 
 						if(!err) {
 					   		res.json(rows);
@@ -107,7 +107,7 @@ module.exports = {
 			.then((data)=>{
 				let query,params;
 		      	if((typeof data.begDay != "undefined") && (typeof data.endDay != "undefined")){
-		      		query = "SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE year = ? AND expenses.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (expenses.due_day >= ? AND expenses.due_day <= ?) ";
+		      		query = "SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId,year, notes, due_day FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE year = ? AND expenses.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (expenses.due_day >= ? AND expenses.due_day <= ?) ";
 		      		params = [data.year,data.user_id,data.begMnt,data.endMnt,data.begDay,data.endDay];
 		      	} else {
 		      		query = "SELECT name, amount_due, months.id AS monthId, expenses.id AS expensesId FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE year = ? AND expenses.users_id = ? AND months.id >= ? AND months.id <= ?";

@@ -8,6 +8,8 @@ export default function errorsReducer(state = [], action){
 			return state;
 		case reportsConstants.GENERATE_REPORT_SUCCESS:
 			return [...action.data];
+		case reportsConstants.CLEAR_REPORT:
+			return [];
 		default:
 			return state;
 	}
