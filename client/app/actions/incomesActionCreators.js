@@ -42,10 +42,10 @@ export function getAllIncomes(id){
 
 //--- Get All Incomes In Month ---//
 //--------------------------------//
-export function getAllIncomesInMonth(user_id,month){
+export function getAllIncomesInMonth(user_id,month,year){
     return (dispatch) => {
         dispatch(fetchingIncomes(true));
-        return axios.get("/get_all_incomes_in_month",{params:{user_id,month}})
+        return axios.get("/get_all_incomes_in_month",{params:{user_id,month,year}})
             .then((response) => {  
                 if (nonValidResponse(response)) {
                      dispatch(fetchingIncomesError(true));

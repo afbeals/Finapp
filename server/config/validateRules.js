@@ -70,7 +70,7 @@ module.exports = {
 	},
 	getAllIncomesInMonth_rules: {
 		user_id : 'required|above:0',
-		month: 'required|range:1,12',
+		month: 'required|range:0,13',
 		year: 'required|min:4|max:4|range:2014,3016'
 	},
 	getAllIncomesInRange_rules : {

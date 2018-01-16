@@ -35,37 +35,36 @@ export default class Incomes extends React.Component{
 
 		this.updateIsEditing = this.updateIsEditing.bind(this);
 	}
-
 	getAllIncomes(){
 		this.props.getAllIncomes(Number(this.props.user.user_id));
+		this.props.clearReport();
 	}
-
 	getAllIncomesInMonth(data){
-		this.props.getAllIncomesInMonth(Number(this.props.user.user_id),Number(data.month));
+		this.props.getAllIncomesInMonth(Number(this.props.user.user_id),Number(data.month),Number(data.year));
+		this.props.clearReport();
 	}
-
 	getAllIncomesInRange(data){
 		this.props.getAllIncomesInRange({
 			...data,
 			user_id: 	Number(this.props.user.user_id)
 		});
+		this.props.clearReport();
 	}
-
 	addIncomesInQuery(data){
 		this.props.addIncomesInQuery({
 			...data,
+			due_day:			Number(data.due_day),
+			amount:				Number(data.amount),
 			user_id: 			Number(this.props.user.user_id),
 			id: 				Number(data.month)
 		});
 	}
-
 	generateReport(data){
 		this.props.generateReport({
 			...data,
-			user_id: Number(this.props.users.user_id)
+			user_id: Number(this.props.user.user_id)
 		})
 	}
-
 	updateIncomesInfo(e,id){
 		let target 	= e.target,
 			value 	= (target.localName == "span") ? target.innerText : target.value,
@@ -98,18 +97,15 @@ export default class Incomes extends React.Component{
 			})	
 		}
 	};
-
 	sendUpdatedIncomes(){
 		this.props.updateIncomesInQuery({
 			user_id: Number(this.props.user.user_id),
 			...this.state.incomesUpdateData
 		})
 	}
-
 	updateIsEditing(){
 		(this.state.isEditing) ? this.setState({...this.state,isEditing: false}) : this.setState({...this.state,isEditing: true});
 	}
-
 	removeIncomesInQuery(inc_id,mnt_id,i){
 		this.props.removeIncomesInQuery({
 			user_id: this.props.user.user_id,
@@ -118,19 +114,16 @@ export default class Incomes extends React.Component{
 			index_in_array: i
 		})
 	}
-
 	displayItemUpdateButtons(e){
 		let target = e.target,
 				next = (target.nodeName == "path") ?  target.parentNode.parentNode.childNodes[2] : target.parentNode.childNodes[2];	
 		(next.classList.contains("active")) ? next.classList.remove("active") : next.classList.add("active");
 	}
-
 	displayItemNotes(e){
 		let target = e.target,
 				next = target.nextSibling;
 		(next.classList.contains("active")) ? next.classList.remove("active") : next.classList.add("active")
 	}
-
 	displayOptions(e){
 		let target= e.target,
 				parent = null,
@@ -138,7 +131,6 @@ export default class Incomes extends React.Component{
 				(target.nodeName == "path") ?  (parent = target.parentNode.parentNode.parentNode,next = parent.childNodes[1]) : (parent = target.parentNode.parentNode, next = parent.childNodes[1]);	
 				(next.classList.contains("active")) ? (parent.childNodes[0].classList.remove("active"),next.classList.remove("active")) : (parent.childNodes[0].classList.add("active"),next.classList.add("active"));
 	}
-
 	displayForm(e){
 		let target = e.target,
 				next = target.dataset.formName,
@@ -152,63 +144,57 @@ export default class Incomes extends React.Component{
 				target.classList.add("active");
 				form.classList.add("active");
 	}
-
 	render(){
 		return(
 			<div className="incomes">
 				<div className="switch">
-  				<Link className="leftSwitch active" activeClassName="active" to="/incomes">
-  					<p>incomes</p>
-  				</Link>
-  				<div className="optionsSwitch">
-  					<div onClick={this.displayOptions} className="optionsActivator"><i className="fas fa-cog"></i></div>
-  					<div className="options">
-
-  							<div className="actionButtons">
-  								<button onClick={this.getAllIncomes}>Get All</button>
-  								<button onClick={this.displayForm} data-form-name="getRange">Range</button>
-  								<button onClick={this.displayForm} data-form-name="getMonth">Month</button>
-  								<button onClick={this.displayForm} data-form-name="add">Add</button>
-  								<button onClick={this.displayForm} data-form-name="report" className="createReport">Create Report</button>
-  							</div>
-  							<div className="actionInfo">
-  								<div className="getRange">
-  									<p>Get All Incomes In Range</p>
+					<Link className="leftSwitch active" activeClassName="active" to="/incomes">
+						<p>incomes</p>
+					</Link>
+					<div className="optionsSwitch">
+						<div onClick={this.displayOptions} className="optionsActivator"><i className="fas fa-cog"></i></div>
+						<div className="options">
+							<div className="actionButtons">
+								<button onClick={this.getAllIncomes}>Get All</button>
+								<button onClick={this.displayForm} data-form-name="getRange">Range</button>
+								<button onClick={this.displayForm} data-form-name="getMonth">Month</button>
+								<button onClick={this.displayForm} data-form-name="add">Add</button>
+								<button onClick={this.displayForm} data-form-name="report" className="createReport">Create Report</button>
+							</div>
+							<div className="actionInfo">
+								<div className="getRange">
+									<p>Get All Incomes In Range</p>
 									<GetRangeIncome onSubmit={(e)=>{this.getAllIncomesInRange(e)}} />
-  								</div>
-  								<div className="getMonth">
-  									<p>Get All Incomes In Month</p>
+								</div>
+								<div className="getMonth">
+									<p>Get All Incomes In Month</p>
 									<GetMonthIncome onSubmit={(e)=>{this.getAllIncomesInMonth(e)}} />
-  								</div>
-  								<div className="add">
-  									<p>Add Income</p>
+								</div>
+								<div className="add">
+									<p>Add Income</p>
 									<AddIncome onSubmit={(e)=>{this.addIncomesInQuery(e)}} />
-  								</div>
-  								<div className="report">
-  									<p> GenerateReport</p>
-  									<GenerateReport onSubmit={(e)=>{this.generateReport(e)}} />
-  								</div>
-  							</div>
-  						</div>
-
-  				</div>
-  				<Link className="rightSwitch" activeClassName="active" to="/expenses">
-  					<p>expenses</p>
-  				</Link>
-  			</div>
-  			<div className="content">
-					<table>
-						<tbody>
-						<tr className="titles">
-							<th>Name:</th>
-							<th>Amount:</th>
-							<th>Month:</th>
-							<th>Due:</th>
-							<th>Notes:</th>
-						</tr>
-						{
-							this.props.incomes.map((c,i)=>{
-								return 	<tr key={i}>
+								</div>
+								<div className="report">
+									<p> GenerateReport</p>
+									<GenerateReport onSubmit={(e)=>{this.generateReport(e)}} />
+								</div>
+							</div>
+						</div>
+					</div>
+					<Link className="rightSwitch" activeClassName="active" to="/expenses">
+						<p>expenses</p>
+					</Link>
+				</div>
+				<div className="content">
+						<table>
+							<tbody>
+							{
+								(this.props.reports.length < 1) ? (<tr className="titles"><th>Name:</th><th>Amount:</th><th>Month:</th><th>Day:</th><th>Notes:</th></tr>) : (<tr className="titles"><th>Name:</th><th>Due:</th><th>Paid:</th><th>Month:</th><th>Notes:</th></tr>)
+							}	
+							{
+								(this.props.reports.length < 1) ? (
+									[...this.props.incomes].sort((a,b)=>{return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();}).map((c,i)=>{
+										return 	<tr key={i}>
 													<td className="name">
 														<div className="updatesWrapper" onClick={this.displayItemUpdateButtons}>
 															<i className="fas fa-pen-square"></i>
@@ -241,17 +227,31 @@ export default class Incomes extends React.Component{
 													<td><span contentEditable="true" suppressContentEditableWarning="true" name="due_day" onInput={(e)=>this.updateIncomesInfo(e,c.incomesId)}>{c.due_day}</span></td>
 													<td className="notes"><button onClick={this.displayItemNotes}>View</button><span contentEditable="true" suppressContentEditableWarning="true" name="notes" onInput={(e)=>this.updateIncomesInfo(e,c.incomesId)}>{c.notes}</span></td>
 												</tr>
-							})
-						}
-						</tbody>
-					</table>
-  			</div>
+									})
+								):(
+									this.props.reports.map((c,i)=>{
+										return 	<tr key={i}>
+													<td className="name">
+														<span>{c.type}: {c.name}</span>
+													</td>
+													<td> 
+														<span>${c.amount}</span>
+													</td>
+													<td> 
+														<span>${c.amount_paid}</span>
+													</td>
+													<td>
+														<span>{c.month}</span>
+													</td>
+													<td className="notes"><button onClick={this.displayItemNotes}>View</button><span>{c.notes}</span></td>
+												</tr>
+									})	
+								)
+							}
+							</tbody>
+						</table>
+				</div>
 			</div>
 		)
 	}
 }
-
-
-//write report function
-//sort by newest
-//

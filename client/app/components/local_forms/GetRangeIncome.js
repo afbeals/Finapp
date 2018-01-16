@@ -35,30 +35,27 @@ const GetRangeIncome = props => {
         <Field
           name="begMnt"
           component={renderSelect}
-          placeholder="Beginning Month"
           validate={[required(),numericality({'>=':1,'<=':12})]}
           option={options}
         />
         <Field
           name="endMnt"
-          component={renderField}
-          type="select"
+          component={renderSelect}
           placeholder="Ending Month"
           validate={[required(),numericality({'>=':1,'<=':12})]}
+      option={options}
         />
         <Field
           name="begDay"
           component={renderField}
           type="number"
           placeholder="Beginning Day"
-          validate={[numericality({'>=':1,'<=':31})]}
         />
         <Field
           name="endDay"
           component={renderField}
           type="number"
           placeholder="Ending Day"
-          validate={[numericality({'>=':1,'<=':31})]}
         />
         <Field
           name="year"

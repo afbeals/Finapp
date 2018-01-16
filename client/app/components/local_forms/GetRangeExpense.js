@@ -41,7 +41,6 @@ const GetRangeExpense = props => {
         <Field
           name="endMnt"
           component={renderSelect}
-          type="select"
           validate={[required(),numericality({'>=':1,'<=':12})]}
           option={options}
         />
