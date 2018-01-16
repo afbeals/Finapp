@@ -28,6 +28,7 @@ ul.header{
 			color: $primary-font;
 			align-self: end;
 			text-shadow: 1px 1px 1px black;
+			text-align:center;
 		}
 		&.headerProfile{
 			grid-area: header-home-profile;

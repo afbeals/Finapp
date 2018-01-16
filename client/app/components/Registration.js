@@ -1,5 +1,6 @@
 //--Dependencies--//
 import React from 'react';
+import {Link} from 'react-router';
 import { connect } from 'react-redux';
 import {required, email,length,format,confirmation} from 'redux-form-validators';
 import {
@@ -40,61 +41,67 @@ class Registration extends React.Component {
 		let {pristine,valid,dirty,invalid} = {...this.props};
 		let errors = Object.keys(this.props.formErrors).length;
 		return(
-			<div>
-				Registration Page!
-				<form onSubmit={this.props.handleSubmit(this.submitInput)}>
-					<div>
-						<Field	
-							name="first_name"
-							component={renderField}
-							type="text"
-							placeholder="Joe..."
-							validate={[required(),length({min:2, max: 11})]}
-							label="First Name"						
-						/>
+			<div className="main">
+				<div className="register">
+					<div className="switch">
+						<Link className="leftSwitch" activeClassName="active" to="/login">
+							<p>Login</p>
+						</Link>
+						<Link className="rightSwitch" activeClassName="active" to="/register">
+							<p>Register</p>
+						</Link>
 					</div>
-					<div>
-						<Field	
-							name="last_name"
-							component={renderField}
-							type="text"
-							placeholder="Shmoe..."
-							validate={[required(),length({min:2, max: 15})]}
-							label="Last Name"						
-						/>
+					<div className="content">
+						<form onSubmit={this.props.handleSubmit(this.submitInput)}>
+							<div>
+								<Field	
+									name="first_name"
+									component={renderField}
+									type="text"
+									placeholder="Joe..."
+									validate={[required(),length({min:2, max: 11})]}				
+								/>
+							</div>
+							<div>
+								<Field	
+									name="last_name"
+									component={renderField}
+									type="text"
+									placeholder="Shmoe..."
+									validate={[required(),length({min:2, max: 15})]}				
+								/>
+							</div>
+							<div>
+								<Field	
+									name="email"
+									component={renderField}
+									type="email"
+									placeholder="test@example.com"
+									validate={[required(),email(),]}					
+								/>
+							</div>
+							<div>
+								<Field	
+									name="password"
+									component={renderField}
+									type="password"
+									placeholder="Secure Password Please"
+									validate={[required(),length({min:7, max: 16}),format({ with: /^\w+$/, message: "No Special Characters" })]}				
+								/>
+							</div>
+							<div>
+								<Field	
+									name="password_confirm"
+									component={renderField}
+									type="password"
+									placeholder="Confirm Password"
+									validate={[required(),confirmation({field: 'password', fieldLabel: 'Password', caseSensitive: true})]}			
+								/>
+							</div>
+							<button type="submit" disabled={errors}> Submit </button>
+						</form>
 					</div>
-					<div>
-						<Field	
-							name="email"
-							component={renderField}
-							type="email"
-							placeholder="test@example.com"
-							validate={[required(),email(),]}
-							label="Email"						
-						/>
-					</div>
-					<div>
-						<Field	
-							name="password"
-							component={renderField}
-							type="password"
-							placeholder="Secure Password Please"
-							validate={[required(),length({min:7, max: 16}),format({ with: /^\w+$/, message: "No Special Characters" })]}
-							label="Password"						
-						/>
-					</div>
-					<div>
-						<Field	
-							name="password_confirm"
-							component={renderField}
-							type="password"
-							placeholder="Confirm Password"
-							validate={[required(),confirmation({field: 'password', fieldLabel: 'Password', caseSensitive: true})]}
-							label="Confirm Password"						
-						/>
-					</div>
-					<button type="submit" disabled={errors}> Submit </button>
-				</form>
+				</div>
 			</div>
 		)
 	}

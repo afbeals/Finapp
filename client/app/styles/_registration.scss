@@ -1,0 +1,57 @@
+div.register{
+	.switch{
+		a{
+			&.leftSwitch{
+				&.active{
+					background: linear-gradient(to right, $primary-blue-darkest , $transparent);
+				}
+			}
+			&.rightSwitch{
+				&.active{
+					color: $primary-font;
+					background: linear-gradient(to right,  $transparent, $primary-blue-darkest);
+				}
+			}
+		}
+	}
+	.content{
+		text-align:center;
+		form{
+			margin: 0 auto;
+	    height: 100%;
+	    padding: 5rem;
+			input{
+				background: $primary-blue-darkest;
+				border: inset 1px $primary-blue-dark;
+				drop-shadow: -2px 2px 1px $color-black;
+				float:left;
+			  display: inline-block;
+		    width: 80%;
+		    margin: .5rem;
+		    padding: .4rem;
+		    text-transform: capitalize;
+		    color: $primary-font;
+		    text-shadow: 2px 1px 1px black;
+		    font-size: 1.1rem;
+		    border-radius: 5px;
+				&::placeholder{
+		    	color: $primary-font;
+		    }
+			}
+			button{
+				float:right;
+		    padding: .5rem;
+		    cursor: pointer;
+		    margin-right: 3rem;
+		    font-size: 1.4rem;
+		    text-transform: capitalize;
+		    background: $primary-blue-darkest;
+		    color: $primary-font;
+		    text-shadow: $main-font-shadow;
+		    border: none;
+		    border-radius: .3rem;
+		    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+			}
+		}
+	}		
+}

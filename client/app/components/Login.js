@@ -41,35 +41,43 @@ class Login extends React.Component {
 		let {pristine, valid,dirty,invalid} = {...this.props};
 		let errors = Object.keys(this.props.formErrors).length;
 		return(
-			<div>
-				Login Page!
-				<Link to="/register" >Register!</Link>
-				<form onSubmit={this.props.handleSubmit(this.submitInput)}>
-					<div>
-						<Field
-							name="email"
-							component={renderField}
-							type="email"
-							placeholder="Email"
-							validate={[email()]}
-							label="Email"
-						/>
+			<div className="main">
+				<div className="login">
+					<div className="switch">
+						<Link className="leftSwitch" activeClassName="active" to="/login">
+							<p>Login</p>
+						</Link>
+						<Link className="rightSwitch" activeClassName="active" to="/register">
+							<p>Register</p>
+						</Link>
 					</div>
-			    	<div>
-						<Field
-							name="password"
-							component={renderField}
-							type="password"
-							placeholder="enter password"
-							validate={[required(),length({min:1})]}
-							label="Password"
-						/>
+					<div className="content">
+						<form onSubmit={this.props.handleSubmit(this.submitInput)}>
+							<div>
+								<Field
+									name="email"
+									component={renderField}
+									type="email"
+									placeholder="Email"
+									validate={[email()]}
+								/>
+							</div>
+					    	<div>
+								<Field
+									name="password"
+									component={renderField}
+									type="password"
+									placeholder="enter password"
+									validate={[required(),length({min:1})]}
+								/>
+							</div>
+							<div>
+								<button type="submit" disabled={errors}> Submit </button>
+							</div>
+					  </form>
 					</div>
-					<div>
-						<button type="submit" disabled={errors}> Submit </button>
-					</div>
-			    </form>
-		    </div>
+			  </div>
+		  </div>
 		)
 	}
 }
