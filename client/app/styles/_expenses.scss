@@ -1,269 +1,328 @@
 div.expenses{
-	.switch{
-		a{
-			&.leftSwitch{
-				&.active{
-					background: linear-gradient(to right, $primary-green , $transparent);
-				}
-			}
-			&.rightSwitch{
-				&.active{
-					color: $primary-font;
-					background: linear-gradient(to right,  $transparent, $primary-red);
-				}
-			}
-		}
-		div.optionsSwitch{
-			.options{
-				left: 0;
-		    right: 0;
-		    margin-left: auto;
-		    margin-right: auto;
-		    background: $primary-blue;
-		    top: 2.8rem;
-		    height: 405px;
-		    border: .5px solid $color-black;
-		    border-radius: 5px;
-		    box-shadow: -3px 5px 10px $color-black;
-		    width: 95%;
-		    cursor: default;
-				.actionButtons{
-					position: relative;
-			    top: 40px;
-			    display: inline-block;
-			    width: 50%;
-			    float: left;
-					button{
-						padding: .7rem;
-						width: 40%;
-						margin: .4rem;
-				    cursor: pointer;
-				    margin: .3rem;
-				    font-size: 1.8rem;
-				    text-transform: capitalize;
-				    background: $primary-blue-darkest;
-				    color: $primary-font;
-				    text-shadow: $main-font-shadow;
-				    border: none;
-				    border-radius: .3rem;
-				    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
-				    &.createReport{
-				    	width: 83%;
-				    }
+	@include for-mobile {
+		.switch{
+			a{
+				&.leftSwitch{
+					&.active{
+						background: linear-gradient(to right, $primary-green , $transparent);
 					}
 				}
-				.actionInfo{
-			    display: inline-block;
-			    width: 50%;
-			    height: 100%;
-					>div{
-						display:none;
-						&.active{
-							display:inline-block;
-							height: 100%;
-							padding: 1rem .5rem;
-							min-width: 255px;
-							p{
-								text-align: left;
-								font-size: 1.8rem;
-    						color: $primary-font;
-    						text-shadow: $main-font-shadow;
-							}
-							label{
-								span.error{
-									text-transform: capitalize;
-									&~div{
-										input,select{
-											border: inset 1px $form-warning;
-										}
-									}
-								}
-								select,input{
-									float:left;
-								  display: inline-block;
-							    width: 80%;
-							    margin: .5rem;
-							    padding: .4rem;
-							    text-transform: capitalize;
-							    background: $primary-blue-lightest;
-							    border: none;
-							    color: $primary-font;
-							    text-shadow: 2px 1px 1px black;
-							    font-size: 1.1rem;
-							    border-radius: 5px;
-							    &::placeholder{
-							    	color: $primary-font;
-							    }
-								}	
-							}
-							
-							button{
-								float:right;
-						    padding: .5rem;
-						    cursor: pointer;
-						    margin-right: 3rem;
-						    font-size: 1.4rem;
-						    text-transform: capitalize;
-						    background: $primary-blue-darkest;
-						    color: $primary-font;
-						    text-shadow: $main-font-shadow;
-						    border: none;
-						    border-radius: .3rem;
-						    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
-							}
-						}		
+				&.rightSwitch{
+					&.active{
+						color: $primary-font;
+						background: linear-gradient(to right,  $transparent, $primary-red);
 					}
 				}
 			}
-		}
-	}
-	table{
-		width: 100%;
-		tr{
-			&.titles{
-				color: $primary-font;
-				font-size: 1.8em;
-				th{
-					padding: .8rem .5rem;
-					text-align:center;
-					position: relative;
-					&:nth-child(1){
-						text-align: left;
-						&:after{
-							left: .5rem;
-							margin-left: initial;
-							margin-right: initial;
-							width: 30%;
+			div.optionsSwitch{
+				.options{
+					left: 0;
+			    right: 0;
+			    margin-left: auto;
+			    margin-right: auto;
+			    background: $primary-blue;
+			    top: 2.8rem;
+			    height: 405px;
+			    border: .5px solid $color-black;
+			    border-radius: 5px;
+			    box-shadow: -3px 5px 10px $color-black;
+			    width: 95%;
+			    cursor: default;
+					.actionButtons{
+						position: relative;
+				    top: 40px;
+				    display: inline-block;
+				    width: 50%;
+				    float: left;
+						button{
+							padding: .7rem;
+							width: 40%;
+							margin: .4rem;
+					    cursor: pointer;
+					    margin: .3rem;
+					    font-size: 1.8rem;
+					    text-transform: capitalize;
+					    background: $primary-blue-darkest;
+					    color: $primary-font;
+					    text-shadow: $main-font-shadow;
+					    border: none;
+					    border-radius: .3rem;
+					    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+					    &.createReport{
+					    	width: 83%;
+					    }
 						}
 					}
-					&:after{
+					.actionInfo{
+				    display: inline-block;
+				    width: 50%;
+				    height: 100%;
+						>div{
+							display:none;
+							&.active{
+								display:inline-block;
+								height: 100%;
+								padding: 1rem .5rem;
+								min-width: 255px;
+								p{
+									text-align: left;
+									font-size: 1.8rem;
+	    						color: $primary-font;
+	    						text-shadow: $main-font-shadow;
+								}
+								label{
+									span.error{
+										text-transform: capitalize;
+										&~div{
+											input,select{
+												border: inset 1px $form-warning;
+											}
+										}
+									}
+									select,input{
+										float:left;
+									  display: inline-block;
+								    width: 80%;
+								    margin: .5rem;
+								    padding: .4rem;
+								    text-transform: capitalize;
+								    background: $primary-blue-lightest;
+								    border: none;
+								    color: $primary-font;
+								    text-shadow: 2px 1px 1px black;
+								    font-size: 1.1rem;
+								    border-radius: 5px;
+								    &::placeholder{
+								    	color: $primary-font;
+								    }
+									}	
+								}
+								
+								button{
+									float:right;
+							    padding: .5rem;
+							    cursor: pointer;
+							    margin-right: 3rem;
+							    font-size: 1.4rem;
+							    text-transform: capitalize;
+							    background: $primary-blue-darkest;
+							    color: $primary-font;
+							    text-shadow: $main-font-shadow;
+							    border: none;
+							    border-radius: .3rem;
+							    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+								}
+							}		
+						}
+					}
+				}
+			}
+		}
+		table{
+			width: 100%;
+			tr{
+				&.titles{
+					color: $primary-font;
+					font-size: 1.8em;
+					th{
+						padding: .8rem .5rem;
+						text-align:center;
+						position: relative;
+						&:nth-child(1){
+							text-align: left;
+							&:after{
+								left: .5rem;
+								margin-left: initial;
+								margin-right: initial;
+								width: 30%;
+							}
+						}
+						&:after{
+							position: absolute;
+					    content: ' ';
+					    bottom: 7px;
+					    border-bottom: 4px solid $primary-red;
+					    width: 55%;
+					    left: 0;
+					    right: 0;
+					    margin-left: auto;
+					    margin-right: auto;
+					    border-radius: 50px;
+						}
+					}
+				}
+				td{
+					padding: .4rem .5rem;
+					text-align: center;
+					color: $primary-font;
+					font-size: 1.2rem;
+					text-transform: capitalize;
+					position:relative;
+					&:not(:last-child):after{
 						position: absolute;
 				    content: ' ';
-				    bottom: 7px;
-				    border-bottom: 4px solid $primary-red;
-				    width: 55%;
+				    bottom: 10px;
+				    border-bottom: 2px solid $primary-font;
+				    width: 35%;
 				    left: 0;
 				    right: 0;
 				    margin-left: auto;
 				    margin-right: auto;
 				    border-radius: 50px;
 					}
-				}
-			}
-			td{
-				padding: .4rem .5rem;
-				text-align: center;
-				color: $primary-font;
-				font-size: 1.2rem;
-				text-transform: capitalize;
-				position:relative;
-				&:not(:last-child):after{
-					position: absolute;
-			    content: ' ';
-			    bottom: 10px;
-			    border-bottom: 2px solid $primary-font;
-			    width: 35%;
-			    left: 0;
-			    right: 0;
-			    margin-left: auto;
-			    margin-right: auto;
-			    border-radius: 50px;
-				}
-				&:not(:first-child){
-					border-left: 2px solid $primary-blue-dark;
-				}
-				&:nth-child(1){
-					width: 60%;
-					text-align:left;
-					border-left: none;
-					&:after{
-						left: .5rem;
-						margin-left: initial;
-						margin-right: initial;
+					&:not(:first-child){
+						border-left: 2px solid $primary-blue-dark;
+					}
+					&:nth-child(1){
 						width: 60%;
-					}
-				}
-				&.notes{
-					button{
-						display: inline-block;
-				    padding: .2rem .5rem;
-				    cursor: pointer;
-				    margin: .5rem;
-				    font-size: 1rem;
-				    text-transform: capitalize;
-				    background: $primary-blue-darkest;
-				    color: $primary-font;
-				    text-shadow: $main-font-shadow;
-				    border: none;
-				    border-radius: 1rem;
-				    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
-					}
-					span{
-						display:none;
-						position: relative;
-						&.active{
-							display:inline-block;
-							position: absolute;
-							right: 100%;
-					    background: $primary-blue;
-					    padding: 1rem;
-					    max-width: 325px;
-					    z-index: 1;
-					    border-radius: 5px;
-					    box-shadow: -4px 5px 6px $color-black;
-					    text-shadow: $main-font-shadow;
+						text-align:left;
+						border-left: none;
+						&:after{
+							left: .5rem;
+							margin-left: initial;
+							margin-right: initial;
+							width: 60%;
 						}
 					}
-				}
-				select,input{
-				  display: inline-block;
-			    width: 90%;
-			    margin: .5rem;
-			    padding: .4rem;
-			    text-transform: capitalize;
-			    background: $primary-blue;
-			    border: none;
-			    color: $primary-font;
-			    text-shadow: 2px 1px 1px black;
-			    font-size: 1.2rem;
-			    border-radius: 5px;
-			    &::placeholder{
-			    	color: $primary-font;
-			    }
-				}	
-				div.updatesWrapper{
-					display:inline-block;
-					color: $primary-blue-dark;
-					cursor: pointer;
-					margin: 0rem .2rem;
-					position:relative;
-					.itemUpdateButtons{
-						display:none;
-						position: absolute;
-						min-width: 325px;
-						border-radius: 5px;
-				    background: $primary-blue;
-				    z-index: 1;
-				    padding: 0.5rem;
-				    box-shadow: -4px 5px 6px $color-black;
-						&.active{
-							display:inline-block;
-							button{
-						    display: inline-block;
+					&.notes{
+						button{
+							display: inline-block;
+					    padding: .2rem .5rem;
+					    cursor: pointer;
+					    margin: .5rem;
+					    font-size: 1rem;
+					    text-transform: capitalize;
+					    background: $primary-blue-darkest;
+					    color: $primary-font;
+					    text-shadow: $main-font-shadow;
+					    border: none;
+					    border-radius: 1rem;
+					    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+						}
+						span{
+							display:none;
+							position: relative;
+							&.active{
+								display:inline-block;
+								position: absolute;
+								right: 100%;
+						    background: $primary-blue;
 						    padding: 1rem;
-						    cursor: pointer;
-						    margin: .5rem;
-						    font-size: 1.2rem;
-						    text-transform: capitalize;
-						    background: $primary-blue-darkest;
-						    color: $primary-font;
+						    max-width: 325px;
+						    z-index: 1;
+						    border-radius: 5px;
+						    box-shadow: -4px 5px 6px $color-black;
 						    text-shadow: $main-font-shadow;
-						    border: none;
-						    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+							}
+						}
+					}
+					select,input{
+					  display: inline-block;
+				    width: 90%;
+				    margin: .5rem;
+				    padding: .4rem;
+				    text-transform: capitalize;
+				    background: $primary-blue;
+				    border: none;
+				    color: $primary-font;
+				    text-shadow: 2px 1px 1px black;
+				    font-size: 1.2rem;
+				    border-radius: 5px;
+				    &::placeholder{
+				    	color: $primary-font;
+				    }
+					}	
+					div.updatesWrapper{
+						display:inline-block;
+						color: $primary-blue-dark;
+						cursor: pointer;
+						margin: 0rem .2rem;
+						position:relative;
+						.itemUpdateButtons{
+							display:none;
+							position: absolute;
+							min-width: 325px;
+							border-radius: 5px;
+					    background: $primary-blue;
+					    z-index: 1;
+					    padding: 0.5rem;
+					    box-shadow: -4px 5px 6px $color-black;
+							&.active{
+								display:inline-block;
+								button{
+							    display: inline-block;
+							    padding: 1rem;
+							    cursor: pointer;
+							    margin: .5rem;
+							    font-size: 1.2rem;
+							    text-transform: capitalize;
+							    background: $primary-blue-darkest;
+							    color: $primary-font;
+							    text-shadow: $main-font-shadow;
+							    border: none;
+							    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+								}
 							}
 						}
 					}
 				}
+			}
+		}
+	}
+	@include for-tablet {
+		display:grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 4fr;
+		grid-template-areas: 	"quickInfo quickInfo quickInfo"
+													"interact interact interact"
+													"mainInfo mainInfo mainInfo";
+		.quickInfo{
+			grid-area: quickInfo;
+			display:grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: 1fr;
+			grid-template-areas: "leftQuickInfo midQuickInfo rightQuickInfo";
+			.leftQuickInfo{
+				grid-area: leftQuickInfo;
+				justify-self: center;
+			}
+			.midQuickInfo{
+				grid-area: midQuickInfo;
+				justify-self: center;
+			}
+			.rightQuickInfo{
+				grid-area: rightQuickInfo;
+				justify-self: center;
+			}
+		}
+		.interact{
+			grid-area: interact;
+			display:grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 1fr;
+			grid-template-areas: "leftInteract rightInteract";
+			.leftInteract{
+				grid-area: leftInteract;
+				justify-self: center;
+			}
+			.rightInteract{
+				grid-area: rightInteract;
+				justify-self: center;
+			}
+		}
+		.mainInfo{
+			grid-area: mainInfo;
+			display:grid;
+			grid-template-columns: 1fr 2fr;
+			grid-template-rows: 1fr;
+			grid-template-areas: "leftMainInfo rightMainInfo";
+			.leftMainInfo{
+				grid-area: leftMainInfo;
+				justify-self: center;
+			}
+			.rightMainInfo{
+				grid-area: rightMainInfo;
+				justify-self: center;
 			}
 		}
 	}

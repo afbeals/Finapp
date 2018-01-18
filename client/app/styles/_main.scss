@@ -2,9 +2,12 @@ div.main{
 	grid-area: main;
 	display:grid;
 	>div{
-		display:grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: .5fr 8fr;
-		grid-template-areas: "switch" "content";
+		
+		@include for-mobile {
+			display:grid;
+			grid-template-columns: 1fr;
+			grid-template-rows: .5fr 8fr;
+			grid-template-areas: "switch" "content";
+		}
 	}
 }

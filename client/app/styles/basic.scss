@@ -11,7 +11,9 @@ html{
 		height: 100%;
 		overflow:hidden;
 		#app{
-			background: $primary-blue-lightest;
+			@include for-mobile {
+				background: $primary-blue-lightest;
+			}
 			>div{
 				display: grid;
 				grid-template-columns: 1fr;

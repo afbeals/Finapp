@@ -18,7 +18,8 @@ export default class Expenses extends React.Component{
 			expenseUpdateData: {
 				month: 'none'
 			},
-			isEditing: false
+			isEditing: false,
+			isMobile: false
 		};
 		this.getAllExpenses = this.getAllExpenses.bind(this);
 		this.getAllExpensesInMonth = this.getAllExpensesInMonth.bind(this);
@@ -145,117 +146,170 @@ export default class Expenses extends React.Component{
 				target.classList.add("active");
 				form.classList.add("active");
 	}
+	componentWillMount() {
+		this.handleWindowSizeChange();
+	  window.addEventListener('resize', this.handleWindowSizeChange);
+	}
+
+	componentWillUnmount() {
+	  window.removeEventListener('resize', this.handleWindowSizeChange);
+	}
+
+	handleWindowSizeChange = () => {
+		(window.innerWidth <= 768) ? 
+	  this.setState({ ...this.state,isMobile:true }) : this.setState({ ...this.state,isMobile:false });
+	};
 	render(){
-		return(
-			<div className="expenses">
-				<div className="switch">
-					<Link className="leftSwitch" activeClassName="active" to="/incomes">
-						<p>incomes</p>
-					</Link>
-					<div className="optionsSwitch">
-						<div onClick={this.displayOptions} className="optionsActivator"><i className="fas fa-cog"></i></div>
-						<div className="options">
-								<div className="actionButtons">
-									<button onClick={this.getAllExpenses}>Get All</button>
-									<button onClick={this.displayForm} data-form-name="getRange">Range</button>
-									<button onClick={this.displayForm} data-form-name="getMonth">Month</button>
-									<button onClick={this.displayForm} data-form-name="add">Add</button>
-									<button onClick={this.displayForm} data-form-name="report" className="createReport">Create Report</button>
+		if(this.state.isMobile){
+			return(
+				<div className="expenses">
+					<div className="switch">
+						<Link className="leftSwitch" activeClassName="active" to="/incomes">
+							<p>incomes</p>
+						</Link>
+						<div className="optionsSwitch">
+							<div onClick={this.displayOptions} className="optionsActivator"><i className="fas fa-cog"></i></div>
+							<div className="options">
+									<div className="actionButtons">
+										<button onClick={this.getAllExpenses}>Get All</button>
+										<button onClick={this.displayForm} data-form-name="getRange">Range</button>
+										<button onClick={this.displayForm} data-form-name="getMonth">Month</button>
+										<button onClick={this.displayForm} data-form-name="add">Add</button>
+										<button onClick={this.displayForm} data-form-name="report" className="createReport">Create Report</button>
+									</div>
+									<div className="actionInfo">
+										<div className="getRange">
+											<p>Get All Expenses In Range</p>
+											<GetRangeExpense onSubmit={(e)=>{this.getAllExpensesInRange(e)}} />
+										</div>
+										<div className="getMonth">
+											<p>Get All Expenses In Month</p>
+											<GetMonthExpense onSubmit={(e)=>{this.getAllExpensesInMonth(e)}} />
+										</div>
+										<div className="add">
+											<p>Add Expense</p>
+											<AddExpense onSubmit={(e)=>{this.addExpensesInQuery(e)}} />
+										</div>
+										<div className="report">
+											<p>GenerateReport</p>
+											<GenerateReport onSubmit={(e)=>{this.generateReport(e)}} />
+										</div>
+									</div>
 								</div>
-								<div className="actionInfo">
-									<div className="getRange">
-										<p>Get All Expenses In Range</p>
-										<GetRangeExpense onSubmit={(e)=>{this.getAllExpensesInRange(e)}} />
-									</div>
-									<div className="getMonth">
-										<p>Get All Expenses In Month</p>
-										<GetMonthExpense onSubmit={(e)=>{this.getAllExpensesInMonth(e)}} />
-									</div>
-									<div className="add">
-										<p>Add Expense</p>
-										<AddExpense onSubmit={(e)=>{this.addExpensesInQuery(e)}} />
-									</div>
-									<div className="report">
-										<p>GenerateReport</p>
-										<GenerateReport onSubmit={(e)=>{this.generateReport(e)}} />
-									</div>
-								</div>
-							</div>
+						</div>
+						<Link className="rightSwitch" activeClassName="active" to="/expenses">
+							<p>expenses</p>
+						</Link>
 					</div>
-					<Link className="rightSwitch" activeClassName="active" to="/expenses">
-						<p>expenses</p>
-					</Link>
-				</div>
-				<div className="content">
-					<table>
-						<tbody>
+					<div className="content">
+						<table>
+							<tbody>
+								{
+									(this.props.reports.length < 1) ? (<tr className="titles"><th>Name:</th><th>Due:</th><th>Paid:</th><th>Month:</th><th>Day:</th><th>Notes:</th></tr>):(<tr className="titles"><th>Name:</th><th>Due:</th><th>Paid:</th><th>Month:</th><th>Notes:</th></tr>)
+								}			
 							{
-								(this.props.reports.length < 1) ? (<tr className="titles"><th>Name:</th><th>Due:</th><th>Paid:</th><th>Month:</th><th>Day:</th><th>Notes:</th></tr>):(<tr className="titles"><th>Name:</th><th>Due:</th><th>Paid:</th><th>Month:</th><th>Notes:</th></tr>)
-							}			
-						{
-							(this.props.reports.length < 1) ? (
-								[...this.props.expenses].sort((a,b)=>{return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();}).map((c,i)=>{
-									return 	<tr key={i}>
-												<td className="name">
-													<div className="updatesWrapper" onClick={this.displayItemUpdateButtons}>
-														<i className="fas fa-pen-square"></i>
-														<div className="itemUpdateButtons">
-															<button onClick={()=>this.removeExpensesInQuery(c.expensesId,c.monthId,i)}>Remove Item</button>
-															<button onClick={()=>this.sendUpdatedExpense()}>Update Item</button>
+								(this.props.reports.length < 1) ? (
+									[...this.props.expenses].sort((a,b)=>{return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();}).map((c,i)=>{
+										return 	<tr key={i}>
+													<td className="name">
+														<div className="updatesWrapper" onClick={this.displayItemUpdateButtons}>
+															<i className="fas fa-pen-square"></i>
+															<div className="itemUpdateButtons">
+																<button onClick={()=>this.removeExpensesInQuery(c.expensesId,c.monthId,i)}>Remove Item</button>
+																<button onClick={()=>this.sendUpdatedExpense()}>Update Item</button>
+															</div>
 														</div>
-													</div>
-													<span contentEditable="true" suppressContentEditableWarning="true" name="name" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.name}</span>
-												</td>
-												<td> 
-													<span contentEditable="true" suppressContentEditableWarning="true" name="amount_due" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>${c.amount_due}</span>
-												</td>
-												<td> 
-													<span contentEditable="true" suppressContentEditableWarning="true" name="amount_paid" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>${c.amount_paid}</span>
-												</td>
-												<td>
-													<select value={(this.state.expenseUpdateSelect['select'+c.expensesId]||c.monthId)} name="month" onChange={(e)=>this.updateExpenseInfo(e,c.expensesId)}>
-														<option value="1">January</option>
-														<option value="2">February</option>
-														<option value="3">March</option>
-														<option value="4">April</option>
-														<option value="5">May</option>
-														<option value="6">June</option>
-														<option value="7">July</option>
-														<option value="8">August</option>
-														<option value="9">September</option>
-														<option value="10">October</option>
-														<option value="11">November</option>
-														<option value="12">December</option>
-													</select>
-												</td>
-												<td><span contentEditable="true" suppressContentEditableWarning="true" name="due_day" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.due_day}</span></td>
-												<td className="notes"><button onClick={this.displayItemNotes}>View</button><span contentEditable="true" suppressContentEditableWarning="true" name="notes" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.notes}</span></td>
-											</tr>
-								})
-							):(
-								this.props.reports.map((c,i)=>{
-									return 	<tr key={i}>
-												<td className="name">
-													<span>{c.type}: {c.name}</span>
-												</td>
-												<td> 
-													<span>${c.amount}</span>
-												</td>
-												<td> 
-													<span>${c.amount_paid}</span>
-												</td>
-												<td>
-													<span>{c.month}</span>
-												</td>
-												<td className="notes"><button onClick={this.displayItemNotes}>View</button><span>{c.notes}</span></td>
-											</tr>
-								})				
-							)
-						}
-						</tbody>
-					</table>
+														<span contentEditable="true" suppressContentEditableWarning="true" name="name" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.name}</span>
+													</td>
+													<td> 
+														<span contentEditable="true" suppressContentEditableWarning="true" name="amount_due" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>${c.amount_due}</span>
+													</td>
+													<td> 
+														<span contentEditable="true" suppressContentEditableWarning="true" name="amount_paid" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>${c.amount_paid}</span>
+													</td>
+													<td>
+														<select value={(this.state.expenseUpdateSelect['select'+c.expensesId]||c.monthId)} name="month" onChange={(e)=>this.updateExpenseInfo(e,c.expensesId)}>
+															<option value="1">January</option>
+															<option value="2">February</option>
+															<option value="3">March</option>
+															<option value="4">April</option>
+															<option value="5">May</option>
+															<option value="6">June</option>
+															<option value="7">July</option>
+															<option value="8">August</option>
+															<option value="9">September</option>
+															<option value="10">October</option>
+															<option value="11">November</option>
+															<option value="12">December</option>
+														</select>
+													</td>
+													<td><span contentEditable="true" suppressContentEditableWarning="true" name="due_day" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.due_day}</span></td>
+													<td className="notes"><button onClick={this.displayItemNotes}>View</button><span contentEditable="true" suppressContentEditableWarning="true" name="notes" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.notes}</span></td>
+												</tr>
+									})
+								):(
+									this.props.reports.map((c,i)=>{
+										return 	<tr key={i}>
+													<td className="name">
+														<span>{c.type}: {c.name}</span>
+													</td>
+													<td> 
+														<span>${c.amount}</span>
+													</td>
+													<td> 
+														<span>${c.amount_paid}</span>
+													</td>
+													<td>
+														<span>{c.month}</span>
+													</td>
+													<td className="notes"><button onClick={this.displayItemNotes}>View</button><span>{c.notes}</span></td>
+												</tr>
+									})				
+								)
+							}
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
-		)
+			)	
+		} else {
+			return(
+				<div className="expenses">
+					<div className="quickInfo">
+						<div className="leftQuickInfo">
+							<h2>Next Expense Date</h2>
+							<div className="nextExpenseData">
+									January 23rd
+							</div>
+						</div>
+						<div className="midQuickInfo">
+							<h1>Expenses</h1>
+						</div>
+						<div className="rightQuickInfo">
+							<h2>Total Expenses</h2>
+							<div className="totalExpenseData">
+									$1200
+							</div>
+						</div>
+					</div>
+					<div className="interact">
+						<div className="leftInteract">
+							Buttons!
+						</div>
+						<div className="righttInteract">
+							Graph (Coming Soon);
+						</div>
+					</div>
+					<div className="mainInfo">
+						<div className="leftMainInfo">
+							From & notes!
+						</div>
+						<div className="rightMainInfo">
+							Expenses!
+						</div>
+					</div>
+				</div>
+			)
+		}
 	}
 }
