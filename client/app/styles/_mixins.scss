@@ -6,18 +6,18 @@
   }
 }
 @mixin for-mobile {
-  @media (max-width: #{$mobile-width}) {
+  @media (min-width: #{$xsmall-width + 1}) and (max-width: #{$mobile-width}) {
     @content;
   }
 }
 
 @mixin for-tablet {
-  @media(max-width: #{$tablet-width}) {
+  @media (min-width: #{$mobile-width + 1}) and (max-width: #{$tablet-width}) {
     @content;
   }
 }
 @mixin for-desktop {
-  @media (max-width: #{$desktop-width}) {
+  @media (min-width: #{$tablet-width + 1}) and (max-width: #{$desktop-width}) {
     @content;
   }
 }

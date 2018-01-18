@@ -276,6 +276,11 @@ div.expenses{
 		grid-template-areas: 	"quickInfo quickInfo quickInfo"
 													"interact interact interact"
 													"mainInfo mainInfo mainInfo";
+		>div{
+			>div{
+				border:1px solid black;
+			}
+		}
 		.quickInfo{
 			grid-area: quickInfo;
 			display:grid;
@@ -284,15 +289,12 @@ div.expenses{
 			grid-template-areas: "leftQuickInfo midQuickInfo rightQuickInfo";
 			.leftQuickInfo{
 				grid-area: leftQuickInfo;
-				justify-self: center;
 			}
 			.midQuickInfo{
 				grid-area: midQuickInfo;
-				justify-self: center;
 			}
 			.rightQuickInfo{
 				grid-area: rightQuickInfo;
-				justify-self: center;
 			}
 		}
 		.interact{
@@ -303,11 +305,9 @@ div.expenses{
 			grid-template-areas: "leftInteract rightInteract";
 			.leftInteract{
 				grid-area: leftInteract;
-				justify-self: center;
 			}
 			.rightInteract{
 				grid-area: rightInteract;
-				justify-self: center;
 			}
 		}
 		.mainInfo{
@@ -318,11 +318,9 @@ div.expenses{
 			grid-template-areas: "leftMainInfo rightMainInfo";
 			.leftMainInfo{
 				grid-area: leftMainInfo;
-				justify-self: center;
 			}
 			.rightMainInfo{
 				grid-area: rightMainInfo;
-				justify-self: center;
 			}
 		}
 	}

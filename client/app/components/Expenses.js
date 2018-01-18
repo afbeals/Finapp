@@ -305,7 +305,48 @@ export default class Expenses extends React.Component{
 							From & notes!
 						</div>
 						<div className="rightMainInfo">
-							Expenses!
+						<table>
+						{
+							[...this.props.expenses].sort((a,b)=>{return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();}).map((c,i)=>{
+										return 	<tr key={i}>
+													<td className="name">
+														<div className="updatesWrapper" onClick={this.displayItemUpdateButtons}>
+															<i className="fas fa-pen-square"></i>
+															<div className="itemUpdateButtons">
+																<button onClick={()=>this.removeExpensesInQuery(c.expensesId,c.monthId,i)}>Remove Item</button>
+																<button onClick={()=>this.sendUpdatedExpense()}>Update Item</button>
+															</div>
+														</div>
+														<span contentEditable="true" suppressContentEditableWarning="true" name="name" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.name}</span>
+													</td>
+													<td> 
+														<span contentEditable="true" suppressContentEditableWarning="true" name="amount_due" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>${c.amount_due}</span>
+													</td>
+													<td> 
+														<span contentEditable="true" suppressContentEditableWarning="true" name="amount_paid" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>${c.amount_paid}</span>
+													</td>
+													<td>
+														<select value={(this.state.expenseUpdateSelect['select'+c.expensesId]||c.monthId)} name="month" onChange={(e)=>this.updateExpenseInfo(e,c.expensesId)}>
+															<option value="1">January</option>
+															<option value="2">February</option>
+															<option value="3">March</option>
+															<option value="4">April</option>
+															<option value="5">May</option>
+															<option value="6">June</option>
+															<option value="7">July</option>
+															<option value="8">August</option>
+															<option value="9">September</option>
+															<option value="10">October</option>
+															<option value="11">November</option>
+															<option value="12">December</option>
+														</select>
+													</td>
+													<td><span contentEditable="true" suppressContentEditableWarning="true" name="due_day" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.due_day}</span></td>
+													<td className="notes"><button onClick={this.displayItemNotes}>View</button><span contentEditable="true" suppressContentEditableWarning="true" name="notes" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.notes}</span></td>
+												</tr>
+									})
+						}
+						</table>
 						</div>
 					</div>
 				</div>
