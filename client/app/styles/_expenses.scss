@@ -278,7 +278,7 @@ div.expenses{
 													"mainInfo mainInfo mainInfo";
 		>div{
 			>div{
-				border:1px solid black;
+				padding: .3rem;
 			}
 		}
 		.quickInfo{
@@ -289,13 +289,101 @@ div.expenses{
 			grid-template-areas: "leftQuickInfo midQuickInfo rightQuickInfo";
 			.leftQuickInfo{
 				grid-area: leftQuickInfo;
+				.innerWrapper{
+					background:$primary-blue-lightest;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					display: grid;
+					grid-template-rows: auto;
+					grid-template-areas: "leftQuickInfoTop" "leftQuickInfoBottom";
+					h2{
+						grid-area: leftQuickInfoTop;
+						justify-self: center;
+						align-self: center;
+						font-size: 2.2rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+				    z-index: 2;
+					}
+					.nextExpenseData{
+						grid-area: leftQuickInfoBottom;
+						justify-self: center;
+						align-self: center;
+				    font-size: 1.8rem;
+				    bottom: 1rem;
+				    color: $primary-green;
+				    position: relative;
+				    text-shadow: $main-font-shadow;
+					}
+				}	
 			}
 			.midQuickInfo{
 				grid-area: midQuickInfo;
+				.innerWrapper{
+					background:$primary-blue-light;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					display:grid;
+					h1{
+					  align-self: center;
+				    justify-self: center;
+				    font-size: 4rem;
+				    bottom: 1rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+				    z-index: 2;
+				    &:after{
+				    	position: absolute;
+					    width: 90%;
+					    border-bottom: 3px solid $primary-font;
+					    content: ' ';
+					    left: 0;
+					    right: 0;
+					    margin-left: auto;
+					    margin-right: auto;
+					    bottom: 2px;
+					    z-index: -1;
+				    }
+					}
+				}	
 			}
 			.rightQuickInfo{
 				grid-area: rightQuickInfo;
+				.innerWrapper{
+					background:$primary-blue-lightest;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					display: grid;
+					grid-template-rows: auto;
+					grid-template-areas: "rightQuickInfoTop" "rightQuickInfoBottom";
+					h2{
+						grid-area: rightQuickInfoTop;
+						justify-self: center;
+						align-self: center;
+						font-size: 2.2rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+				    z-index: 2;
+					}
+					.totalExpenseData{
+						grid-area: rightQuickInfoBottom;
+						justify-self: center;
+						align-self: center;
+				    font-size: 2.5rem;
+				    bottom: 1rem;
+				    color: $primary-font;
+				    position: relative;
+				    text-shadow: $main-font-shadow;
+					}
+				}	
 			}
+			
 		}
 		.interact{
 			grid-area: interact;
@@ -305,22 +393,152 @@ div.expenses{
 			grid-template-areas: "leftInteract rightInteract";
 			.leftInteract{
 				grid-area: leftInteract;
+				.innerWrapper{
+					background:$primary-blue-lightest;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					display:grid;
+					grid-template-rows: 40% 60%;
+					grid-template-columns: 1fr 1fr 1fr 1fr;
+					grid-template-areas: "leftInteractTitle leftInteractTitle leftInteractTitle leftInteractTitle" "leftInteractAll leftInteractRange leftInteractMonth leftInteractAdd" ;
+					justify-items: center;
+    			align-items: center;
+    			div{
+    				grid-area: leftInteractTitle;
+    				font-size: 2.5rem;
+    				justify-self: start;
+    				color: $primary-font;
+    				text-shadow: $main-font-shadow;
+    			}
+					button{
+				    padding: .5rem 1rem;
+				    min-width: 100px;
+				    cursor: pointer;
+				    font-size: 1.4rem;
+				    text-transform: capitalize;
+				    background: $primary-blue-darkest;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+				    border: none;
+				    border-radius: .3rem;
+				    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+						&.leftInteractAll{
+							grid-area: leftInteractAll;
+						}
+						&.leftInteractRange{
+							grid-area: leftInteractRange;
+						}
+						&.leftInteractMonth{
+							grid-area: leftInteractMonth;
+						}
+						&.leftInteractAdd{
+							grid-area: leftInteractAdd;
+						}
+					}
+				}
 			}
 			.rightInteract{
 				grid-area: rightInteract;
+				.innerWrapper{
+					background:gray;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow
+				}
 			}
 		}
 		.mainInfo{
 			grid-area: mainInfo;
 			display:grid;
-			grid-template-columns: 1fr 2fr;
+			grid-template-columns: 2fr 1fr;
 			grid-template-rows: 1fr;
 			grid-template-areas: "leftMainInfo rightMainInfo";
 			.leftMainInfo{
 				grid-area: leftMainInfo;
+				.innerWrapper{
+					background:$primary-blue-lightest;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					h2{
+						font-size: 2.2rem;
+						top:.3rem;
+						left:.3rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+					}
+					table{
+						tr{
+							position: relative;
+							&.titles{
+								th{
+									font-size: 1.4rem;
+									color: $primary-font;
+									text-shadow: $main-font-shadow;
+									font-weight: 700;
+									padding: .8rem .5rem;
+									position: relative;
+									&:nth-child(1){
+										width: 50%;
+										text-align: left;
+									}
+									&:not(:first-child):after{
+										content: ' ';
+								    position: absolute;
+								    border-left: 1px solid $primary-blue-darkest;
+								    height: 48%;
+								    transform: rotateZ(12deg);
+								    left: -2px;
+									}
+								}	
+							}
+							td{
+								padding: .2rem .5rem;
+								color: $primary-font;
+								text-shadow: $main-font-shadow;
+								position: relative;
+								text-transform: capitalize;
+								&:not(:first-child){
+									text-align: center;
+									&:after{
+								    position: absolute;
+								    left: -4px;
+								    content: ' ';
+								    border: .5px solid $primary-blue-darkest;
+								    height: 70%;
+									}
+								}
+								button{
+									display: inline-block;
+							    padding: .2rem .5rem;
+							    cursor: pointer;
+							    margin: 0rem .5rem;
+							    bottom: .2rem;
+							    position: relative;
+							    font-size: 1rem;
+							    text-transform: capitalize;
+							    background: $primary-blue-darkest;
+							    color: $primary-font;
+							    text-shadow: $main-font-shadow;
+							    border: none;
+							    border-radius: 1rem;
+							    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+								}
+							}
+						}
+					}
+				}
 			}
 			.rightMainInfo{
 				grid-area: rightMainInfo;
+				.innerWrapper{
+					background:$primary-blue-dark;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow
+				}
 			}
 		}
 	}

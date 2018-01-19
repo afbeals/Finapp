@@ -1,107 +1,110 @@
 nav.footer{
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: 1fr;
-	grid-template-areas: "nav-home-btn nav-finances-btn nav-logout-btn";
-	grid-area: footer;
-	grid-row-start: 3;
-	background: $primary-blue;
-	align-content: space-evenly;
-	padding: 1.5rem 0rem;
-	box-shadow: 0px -2px 8px $nav-main-shadow;
-	position: relative;
-	transform:translateY(6rem);
-	transition: transform 1.5s;
-	&.active{
-		transform: translateY(0rem);
-		div.activatorWrapper{
-			transform: rotate(0deg);
-		}
-	}
-	&:before{
-		position: absolute;
-    	content: ' ';
+	display:none;
+	@include for-mobile {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr;
+		grid-template-areas: "nav-home-btn nav-finances-btn nav-logout-btn";
+		grid-area: footer;
+		grid-row-start: 3;
 		background: $primary-blue;
-	    width: $activator-height * 2;
-	    height: $activator-height;
+		align-content: space-evenly;
+		padding: 1.5rem 0rem;
+		box-shadow: 0px -2px 8px $nav-main-shadow;
+		position: relative;
+		transform:translateY(6rem);
+		transition: transform 1.5s;
+		&.active{
+			transform: translateY(0rem);
+			div.activatorWrapper{
+				transform: rotate(0deg);
+			}
+		}
+		&:before{
+			position: absolute;
+	    content: ' ';
+			background: $primary-blue;
+		  width: $activator-height * 2;
+		  height: $activator-height;
+		  margin-left: auto;
+		  margin-right: auto;
+		  left: 0;
+		  right: 0;
+		  border-top-left-radius: $activator-height;
+		  border-top-right-radius: $activator-height;
+		  top: -$activator-height + 5;
+		  box-shadow: -1px -2px 3px $nav-main-shadow, 2px -2px 3px $nav-main-shadow;
+		}
+		&:after{
+			position: absolute;
+	    	content: ' ';
+			background: $transparent;
+		    width: ($activator-height - 20)* 2;
+		    height: $activator-height - 20;
+		    margin-left: auto;
+		    margin-right: auto;
+		    left: 0;
+		    right: 0;
+		    border-top-left-radius: $activator-height;
+		    border-top-right-radius: $activator-height;
+		    top: -$activator-height + 20;
+		    box-shadow: 0px -2px 3px #cdcdcd54, inset 0px 3px 3px #0d2c50, inset 0px 1px 1px $primary-blue;    
+		}
+		div.activatorWrapper{
+			position: absolute;
 	    margin-left: auto;
 	    margin-right: auto;
 	    left: 0;
 	    right: 0;
-	    border-top-left-radius: $activator-height;
-	    border-top-right-radius: $activator-height;
-	    top: -$activator-height + 5;
-	    box-shadow: -1px -2px 3px $nav-main-shadow, 2px -2px 3px $nav-main-shadow;
-	}
-	&:after{
-		position: absolute;
-    	content: ' ';
-		background: $transparent;
-	    width: ($activator-height - 20)* 2;
-	    height: $activator-height - 20;
-	    margin-left: auto;
-	    margin-right: auto;
-	    left: 0;
-	    right: 0;
-	    border-top-left-radius: $activator-height;
-	    border-top-right-radius: $activator-height;
-	    top: -$activator-height + 20;
-	    box-shadow: 0px -2px 3px #cdcdcd54, inset 0px 3px 3px #0d2c50, inset 0px 1px 1px $primary-blue;    
-	}
-	div.activatorWrapper{
-		position: absolute;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
-    display: inline-block;
-    text-align: center;
-    top: -7rem;
-    font-size: 10rem;
-    color: $primary-font;
-    filter: drop-shadow(0px 5px 2px $nav-main-shadow);
-    z-index:1;
-    transition: transform 1.5s;
-    transform: rotate(180deg);
-    div#activator{
-    	width: 100px;
-	    height: 100px;
-	    margin-left: auto;
-	    margin-right: auto;
-	    left: 0;
-	    right: 0;
-	    position: absolute;
-	    top: 2rem;
-	    z-index: 2;
-	    cursor: pointer;
-    }
-	}
-	a{
-		justify-self: center;
-    width: 80%;
-		z-index: 2;
-		background: $primary-blue-darkest;
-		font-size: 2rem;
-		padding: 1rem;
-		border: none;
-    border-radius: 10px;
-    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
-    z-index: 1;
-    color: $primary-font;
-	 	text-decoration: none;
-	 	text-align: center;
-	 	text-shadow: 2px 2px 1px black;
-		&.home{
-	 		grid-area: nav-home-btn;
-	 	}
-	 	&.finances{
-	 		grid-area: nav-finances-btn;
-	 	}
-	 	&.logout{
-	 		grid-area: nav-logout-btn;
-	 	}
-	 	&.active{
-	 		color:red;
-	 	}
+	    display: inline-block;
+	    text-align: center;
+	    top: -7rem;
+	    font-size: 10rem;
+	    color: $primary-font;
+	    filter: drop-shadow(0px 5px 2px $nav-main-shadow);
+	    z-index:1;
+	    transition: transform 1.5s;
+	    transform: rotate(180deg);
+	    div#activator{
+	    	width: 100px;
+		    height: 100px;
+		    margin-left: auto;
+		    margin-right: auto;
+		    left: 0;
+		    right: 0;
+		    position: absolute;
+		    top: 2rem;
+		    z-index: 2;
+		    cursor: pointer;
+	    }
+		}
+		a{
+			justify-self: center;
+	    width: 80%;
+			z-index: 2;
+			background: $primary-blue-darkest;
+			font-size: 2rem;
+			padding: 1rem;
+			border: none;
+	    border-radius: 10px;
+	    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+	    z-index: 1;
+	    color: $primary-font;
+		 	text-decoration: none;
+		 	text-align: center;
+		 	text-shadow: 2px 2px 1px black;
+			&.home{
+		 		grid-area: nav-home-btn;
+		 	}
+		 	&.finances{
+		 		grid-area: nav-finances-btn;
+		 	}
+		 	&.logout{
+		 		grid-area: nav-logout-btn;
+		 	}
+		 	&.active{
+		 		color:red;
+		 	}
+		}
 	}
 }

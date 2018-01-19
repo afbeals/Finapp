@@ -14,11 +14,21 @@ html{
 			@include for-mobile {
 				background: $primary-blue-lightest;
 			}
+			@include for-tablet {
+				height: 100%;
+			}
 			>div{
 				display: grid;
 				grid-template-columns: 1fr;
-				grid-template-rows: .5fr 8fr 1fr;
-				grid-template-areas: "header" "main" "footer";
+				@include for-mobile {
+					grid-template-areas: "header" "main" "footer";
+					grid-template-rows: .5fr 8fr 1fr;
+				}
+				@include for-tablet {
+					grid-template-areas: "header" "main" ;
+					grid-template-rows: .5fr 8fr;
+					height: 100%;
+				}
 			}
 		}
 		@include for-xsmall {
