@@ -33,6 +33,8 @@ export default class Expenses extends React.Component{
 		this.displayOptions = this.displayOptions.bind(this);
 		this.displayForm = this.displayForm.bind(this);
 		this.generateReport = this.generateReport.bind(this);
+		this.passToPanel = this.passToPanel.bind(this);
+		this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
 
 		this.updateIsEditing = this.updateIsEditing.bind(this);
 	}
@@ -66,12 +68,12 @@ export default class Expenses extends React.Component{
 			...data,
 			user_id: Number(this.props.user.user_id)
 		})
-	}
+	}	
 	updateExpenseInfo(e,id){
 		let target 	= e.target,
-			value 	= (target.localName == "span") ? target.innerText : target.value,
-			name 	= (target.localName == "span") ? target.attributes[1].value : target.name;
-		if(target.nodeName != "span") {
+			value 	= (target.localName.toLowerCase() == "span") ? target.innerText : target.value,
+			name 	= (target.localName.toLowerCase() == "span") ? target.attributes[1].value : target.name;
+		if(target.nodeName.toLowerCase() != "span") {
 			this.setState({
 				...this.state,
 				expenseUpdateSelect	: {
@@ -146,6 +148,16 @@ export default class Expenses extends React.Component{
 				target.classList.add("active");
 				form.classList.add("active");
 	}
+	passToPanel(item){
+		document.querySelector('.rightMainInfo .innerWrapper .infoSection .notes').classList.add('active');
+		this.setState({
+			...this.state,
+			expenseUpdateData: {
+				...item
+			}
+		})
+		
+	}
 	componentWillMount() {
 		this.handleWindowSizeChange();
 	  window.addEventListener('resize', this.handleWindowSizeChange);
@@ -159,7 +171,17 @@ export default class Expenses extends React.Component{
 		(window.innerWidth <= 768) ? 
 	  this.setState({ ...this.state,isMobile:true }) : this.setState({ ...this.state,isMobile:false });
 	};
+	getOrdinal(num){
+		if(num>3 && num<21) return 'th'; // thanks kennebec
+	  switch (num % 10) {
+	    case 1:  return "st";
+	    case 2:  return "nd";
+	    case 3:  return "rd";
+	    default: return "th";
+	  }
+	}
 	render(){
+		let totalExpense = 0;
 		if(this.state.isMobile){
 			return(
 				<div className="expenses">
@@ -272,15 +294,19 @@ export default class Expenses extends React.Component{
 					</div>
 				</div>
 			)	
-		} else {
+		} else if(!this.state.isMobile) {
 			return(
 				<div className="expenses">
+					<div className="optionsSwitch">
+					</div>
 					<div className="quickInfo">
 						<div className="leftQuickInfo">
 							<div className="innerWrapper">
 								<h2>Next Expense Date</h2>
 								<div className="nextExpenseData">
-										January 23rd
+										{
+											this.props.expenses.sort((a,b)=>{return a.due_day - b.due_day;}).filter((item)=>{return item.due_day <= new Date().getDate() && item.month == new Date().getMonth()+1 }).map((c,i,a)=>{if(i==0){return <div key={i}>{c.monthName} {c.due_day}{this.getOrdinal(c.due_day)}, {c.year}</div>}})
+										}
 								</div>
 							</div>
 						</div>
@@ -293,7 +319,14 @@ export default class Expenses extends React.Component{
 							<div className="innerWrapper">
 								<h2>Total Expenses</h2>
 								<div className="totalExpenseData">
-										$1200
+										${
+											this.props.expenses.map((c,i,a)=>{	
+												if(i==a.length-1){return totalExpense+=c.amount_due }else{
+													totalExpense+=c.amount_due;
+												}
+											})
+										}
+
 								</div>
 							</div>
 						</div>
@@ -304,7 +337,7 @@ export default class Expenses extends React.Component{
 								<div>
 									Generate
 								</div>
-								<button className="leftInteractAll">Get All</button>
+								<button className="leftInteractAll" onClick={this.getAllExpenses}>Get All</button>
 								<button className="leftInteractRange">Range</button>
 								<button className="leftInteractMonth">Month</button>
 								<button className="leftInteractAdd">Add</button>
@@ -319,77 +352,71 @@ export default class Expenses extends React.Component{
 					<div className="mainInfo">
 						<div className="leftMainInfo">
 							<div className="innerWrapper">
-							<h2>Expense List:</h2>
+							<h2>Expense List</h2>
 							<table>
 								<tbody>
 								<tr className="titles"><th>Name</th><th>Due</th><th>Paid</th><th>Month</th><th>Day</th><th>Details</th></tr>
-								<tr><td>first expenses....</td><td>3</td><td>$200</td><td>Jan</td><td>5</td><td><button>view</button></td></tr>
 									{
 										[...this.props.expenses].sort((a,b)=>{return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();}).map((c,i)=>{
 													return 	<tr key={i}>
 																<td className="name">
-																	<div className="updatesWrapper" onClick={this.displayItemUpdateButtons}>
-																		<i className="fas fa-pen-square"></i>
-																		<div className="itemUpdateButtons">
-																			<button onClick={()=>this.removeExpensesInQuery(c.expensesId,c.monthId,i)}>Remove Item</button>
-																			<button onClick={()=>this.sendUpdatedExpense()}>Update Item</button>
-																		</div>
-																	</div>
-																	<span contentEditable="true" suppressContentEditableWarning="true" name="name" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.name}</span>
+																	<span>{c.name}</span>
 																</td>
 																<td> 
-																	<span contentEditable="true" suppressContentEditableWarning="true" name="amount_due" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>${c.amount_due}</span>
+																	<span>${c.amount_due}</span>
 																</td>
 																<td> 
-																	<span contentEditable="true" suppressContentEditableWarning="true" name="amount_paid" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>${c.amount_paid}</span>
+																	<span>${c.amount_paid}</span>
 																</td>
 																<td>
-																	<select value={(this.state.expenseUpdateSelect['select'+c.expensesId]||c.monthId)} name="month" onChange={(e)=>this.updateExpenseInfo(e,c.expensesId)}>
-																		<option value="1">January</option>
-																		<option value="2">February</option>
-																		<option value="3">March</option>
-																		<option value="4">April</option>
-																		<option value="5">May</option>
-																		<option value="6">June</option>
-																		<option value="7">July</option>
-																		<option value="8">August</option>
-																		<option value="9">September</option>
-																		<option value="10">October</option>
-																		<option value="11">November</option>
-																		<option value="12">December</option>
-																	</select>
+																	<span>{c.monthName}</span>
 																</td>
-																<td><span contentEditable="true" suppressContentEditableWarning="true" name="due_day" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.due_day}</span></td>
-																<td className="notes"><button onClick={this.displayItemNotes}>View</button><span contentEditable="true" suppressContentEditableWarning="true" name="notes" onInput={(e)=>this.updateExpenseInfo(e,c.expensesId)}>{c.notes}</span></td>
+																<td><span>{c.due_day}{this.getOrdinal(c.due_day)}</span></td>
+																<td className="notes"><button onClick={()=>{this.passToPanel(c)}}>View</button></td>
 															</tr>
 												})
 									}
 								</tbody>
 							</table>
 							</div>
-						</div>
+						</div> 
 						<div className="rightMainInfo">
 							<div className="innerWrapper">
-								<div className="frontFace">
-									<h2>Notes</h2>
-								</div>
-								<div className="backFace">
+								<h2>Action Panel</h2>
+								<div className="infoSection">
+									<div className="notes">
+										<span contentEditable="true" suppressContentEditableWarning="true" name="name"  className="name" onInput={(e)=>this.updateExpenseInfo(e,this.state.expenseUpdateData.expensesId)}>{this.state.expenseUpdateData.name}</span>
+										<span contentEditable="true" suppressContentEditableWarning="true" name="amount_due" className="amount_due" onInput={(e)=>this.updateExpenseInfo(e,this.state.expenseUpdateData.expensesId)}>${this.state.expenseUpdateData.amount_due}</span>
+										<span contentEditable="true" suppressContentEditableWarning="true" name="amount_paid" className="amount_paid" onInput={(e)=>this.updateExpenseInfo(e,this.state.expenseUpdateData.expensesId)}>${this.state.expenseUpdateData.amount_paid}</span>
+										<select value={(this.state.expenseUpdateSelect['select'+this.state.expenseUpdateData.expensesId]||this.state.expenseUpdateData.monthId)} name="month" className="month" onChange={(e)=>this.updateExpenseInfo(e,this.state.expenseUpdateData.expensesId)}>
+											<option value="1">January</option>
+											<option value="2">February</option>
+											<option value="3">March</option>
+											<option value="4">April</option>
+											<option value="5">May</option>
+											<option value="6">June</option>
+											<option value="7">July</option>
+											<option value="8">August</option>
+											<option value="9">September</option>
+											<option value="10">October</option>
+											<option value="11">November</option>
+											<option value="12">December</option>
+										</select>
+										<span contentEditable="true" suppressContentEditableWarning="true" name="due_day" className="due_day" onInput={(e)=>this.updateExpenseInfo(e,this.state.expenseUpdateData.expensesId)}>{this.state.expenseUpdateData.due_day}</span>
+										<span contentEditable="true" suppressContentEditableWarning="true" name="notes" className="notes" onInput={(e)=>this.updateExpenseInfo(e,this.state.expenseUpdateData.expensesId)}>{this.state.expenseUpdateData.notes}</span>
+									</div>
 									<div className="getRange">
-											<h2>Get All Expenses In Range</h2>
-											<GetRangeExpense onSubmit={(e)=>{this.getAllExpensesInRange(e)}} />
-										</div>
-										<div className="getMonth">
-											<h2>Get All Expenses In Month</h2>
-											<GetMonthExpense onSubmit={(e)=>{this.getAllExpensesInMonth(e)}} />
-										</div>
-										<div className="add">
-											<h2>Add Expense</h2>
-											<AddExpense onSubmit={(e)=>{this.addExpensesInQuery(e)}} />
-										</div>
-										<div className="report">
-											<h2>GenerateReport</h2>
-											<GenerateReport onSubmit={(e)=>{this.generateReport(e)}} />
-										</div>
+										<h3>Get All Expenses In Range</h3>
+										<GetRangeExpense onSubmit={(e)=>{this.getAllExpensesInRange(e)}} />
+									</div>
+									<div className="getMonth">
+										<h3>Get All Expenses In Month</h3>
+										<GetMonthExpense onSubmit={(e)=>{this.getAllExpensesInMonth(e)}} />
+									</div>
+									<div className="add">
+										<h3>Add Expense</h3>
+										<AddExpense onSubmit={(e)=>{this.addExpensesInQuery(e)}} />
+									</div>
 								</div>
 							</div>
 						</div>

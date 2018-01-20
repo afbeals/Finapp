@@ -272,7 +272,7 @@ div.expenses{
 	@include for-tablet {
 		display:grid;
 		grid-template-columns: 1fr 1fr 1fr;
-		grid-template-rows: 1fr 1fr 4fr;
+		grid-template-rows: 1fr .5fr 4fr;
 		grid-template-areas: 	"quickInfo quickInfo quickInfo"
 													"interact interact interact"
 													"mainInfo mainInfo mainInfo";
@@ -301,7 +301,7 @@ div.expenses{
 						grid-area: leftQuickInfoTop;
 						justify-self: center;
 						align-self: center;
-						font-size: 2.2rem;
+						font-size: 1.8rem;
 				    position: relative;
 				    color: $primary-font;
 				    text-shadow: $main-font-shadow;
@@ -311,11 +311,12 @@ div.expenses{
 						grid-area: leftQuickInfoBottom;
 						justify-self: center;
 						align-self: center;
-				    font-size: 1.8rem;
+				    font-size: 1.6rem;
 				    bottom: 1rem;
 				    color: $primary-green;
 				    position: relative;
 				    text-shadow: $main-font-shadow;
+				    text-transform: capitalize;
 					}
 				}	
 			}
@@ -330,7 +331,7 @@ div.expenses{
 					h1{
 					  align-self: center;
 				    justify-self: center;
-				    font-size: 4rem;
+				    font-size: 3.8rem;
 				    bottom: 1rem;
 				    position: relative;
 				    color: $primary-font;
@@ -365,7 +366,7 @@ div.expenses{
 						grid-area: rightQuickInfoTop;
 						justify-self: center;
 						align-self: center;
-						font-size: 2.2rem;
+						font-size: 1.8rem;
 				    position: relative;
 				    color: $primary-font;
 				    text-shadow: $main-font-shadow;
@@ -375,9 +376,9 @@ div.expenses{
 						grid-area: rightQuickInfoBottom;
 						justify-self: center;
 						align-self: center;
-				    font-size: 2.5rem;
+				    font-size: 2.3rem;
 				    bottom: 1rem;
-				    color: $primary-font;
+				    color: $primary-green;
 				    position: relative;
 				    text-shadow: $main-font-shadow;
 					}
@@ -500,13 +501,21 @@ div.expenses{
 								text-shadow: $main-font-shadow;
 								position: relative;
 								text-transform: capitalize;
+								&:after{
+									position: absolute;
+							    left: -4px;
+							    content: ' ';
+							    border-bottom: 1px solid $primary-blue-darkest;
+							    bottom: 0;
+							    width: 100%;
+								}
 								&:not(:first-child){
 									text-align: center;
 									&:after{
 								    position: absolute;
 								    left: -4px;
 								    content: ' ';
-								    border: .5px solid $primary-blue-darkest;
+								    border-left: .5px solid $primary-blue-darkest;
 								    height: 70%;
 									}
 								}
@@ -514,8 +523,9 @@ div.expenses{
 									display: inline-block;
 							    padding: .2rem .5rem;
 							    cursor: pointer;
-							    margin: 0rem .5rem;
-							    bottom: .2rem;
+							    margin: .4rem .5rem;
+							    bottom: .1rem;
+							    z-index: 1;
 							    position: relative;
 							    font-size: 1rem;
 							    text-transform: capitalize;
@@ -537,7 +547,27 @@ div.expenses{
 					background:$primary-blue-dark;
 					height: 100%;
 					width: 100%;
-					box-shadow: $main-box-shadow
+					box-shadow: $main-box-shadow;
+					h2{
+						font-size: 2.2rem;
+						top:.3rem;
+						left:.3rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+					}
+					.infoSection{
+						>div{
+							display:none;
+							&.active{
+								display:block;
+							}
+							span{
+								display:block;
+								font-size: 2rem;
+							}
+						}
+					}
 				}
 			}
 		}

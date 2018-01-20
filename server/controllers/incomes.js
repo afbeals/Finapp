@@ -51,7 +51,7 @@ module.exports = {
 						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
-					connection.query("SELECT name, amount, notes, due_day, months.id AS monthId, incomes.id AS incomesId, months.id as month, year, incomes.created_at FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ?",[data.user_id],(err,rows)=>{
+					connection.query("SELECT name, amount, notes, due_day, months.id AS monthId, incomes.id AS incomesId, months.id as month, year, incomes.created_at, month as monthName FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE incomes.users_id = ?",[data.user_id],(err,rows)=>{
 						connection.release(); 
 						if(!err) {
 							res.json(rows);
@@ -81,7 +81,7 @@ module.exports = {
 						console.error({"code" : err.code, "status" : "Error in connection database","err":err});
 					}   
 					console.log('connected as id ' + connection.threadId);   
-					connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId,month,due_day, incomes.created_at FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE year = ? AND incomes.users_id = ? AND months.id = ?",[data.year,data.user_id,data.month],(err,rows)=>{
+					connection.query("SELECT name, amount, months.id AS monthId, incomes.id AS incomesId,month,due_day, incomes.created_at FROM incomes, month as monthName LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE year = ? AND incomes.users_id = ? AND months.id = ?",[data.year,data.user_id,data.month],(err,rows)=>{
 						connection.release(); 
 						if(!err) {
 					   		res.json(rows);
@@ -107,7 +107,7 @@ module.exports = {
 			.then((data)=>{
 				let query,params;
 		      	if((typeof data.begDay != "undefined") && (typeof data.endDay != "undefined")){
-		      		query = "SELECT name, amount, months.id AS monthId, incomes.id AS incomesId, due_day, notes, incomes.created_at FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE year = ? AND incomes.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (incomes.due_day >= ? AND incomes.due_day <= ?) ";
+		      		query = "SELECT name, amount, months.id AS monthId, incomes.id AS incomesId, due_day, notes, incomes.created_at, month as monthName FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE year = ? AND incomes.users_id = ? AND (months.id >= ? AND months.id <= ?) AND (incomes.due_day >= ? AND incomes.due_day <= ?) ";
 		      		params = [data.year,data.user_id,data.begMnt,data.endMnt,data.begDay,data.endDay];
 		      	} else {
 		      		query = "SELECT name, amount, months.id AS monthId, incomes.id AS incomesId, due_day, notes, incomes.created_at FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE year = ? incomes.users_id = ? AND months.id >= ? AND months.id <= ?";
