@@ -57,7 +57,8 @@ export function getAllExpensesInMonth(user_id,month,year){
                 dispatch(fetchingExpenses(false));
                 return response;
             })
-            .then((response)=>{ 
+            .then((response)=>{
+                console.log(response.data);
                 dispatch(fetchingExpensesSuccess(true));
                 dispatch(getAllExpensesInMonthSuccess(response.data));
             })

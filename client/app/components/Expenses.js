@@ -16,7 +16,7 @@ export default class Expenses extends React.Component{
 		super(props);
 		this.state = {
 			expenseUpdateSelect: '',
-			UpdateExpenseData: {},
+			updateExpenseData: {},
 			expenseUpdateData: {
 				month: 'none'
 			},
@@ -157,11 +157,11 @@ export default class Expenses extends React.Component{
 		document.querySelector('.rightMainInfo .innerWrapper .infoSection .notes').classList.add('active');
 		this.setState({
 			...this.state,
-			UpdateExpenseData: {
+			updateExpenseData: {
 				...item
 			}
 		})
-		console.log(this.state.UpdateExpenseData);
+		console.log(this.state.updateExpenseData);
 	}
 	displayActionPanel(e){
 		let target = e.target,
@@ -181,11 +181,11 @@ export default class Expenses extends React.Component{
 	}
 
 	handleWindowSizeChange = () => {
-		(window.innerWidth <= 768) ? 
+		(window.innerWidth < 768) ? 
 	  this.setState({ ...this.state,isMobile:true }) : this.setState({ ...this.state,isMobile:false });
 	};
 	getOrdinal(num){
-		if(num>3 && num<21) return 'th'; // thanks kennebec
+		if(num>3 && num<21) return 'th';
 	  switch (num % 10) {
 	    case 1:  return "st";
 	    case 2:  return "nd";
@@ -318,7 +318,7 @@ export default class Expenses extends React.Component{
 								<h2>Next Expense Date</h2>
 								<div className="nextExpenseData">
 										{
-											this.props.expenses.sort((a,b)=>{return a.due_day - b.due_day;}).filter((item)=>{return item.due_day <= new Date().getDate() && item.month == new Date().getMonth()+1 }).map((c,i,a)=>{if(i==0){return <div key={i}>{c.monthName} {c.due_day}{this.getOrdinal(c.due_day)}, {c.year}</div>}})
+											this.props.expenses.sort((a,b)=>{return a.due_day - b.due_day;}).filter((item)=>{return item.due_day >= new Date().getDate() && item.monthId == new Date().getMonth()+1 }).map((c,i,a)=>{if(i==0){return <div key={i}>{c.monthName} {c.due_day}{this.getOrdinal(c.due_day)}, {c.year}</div>}})
 										}
 								</div>
 							</div>
@@ -399,7 +399,7 @@ export default class Expenses extends React.Component{
 								<div className="infoSection">
 									<div className="notes">
 										<h3>Update Expense</h3>
-										{this.state.UpdateExpenseData && <UpdateExpenseData  onSubmit={(e)=>{this.sendUpdatedExpense(e)}} {...this.state.UpdateExpenseData} />}
+										{this.state.updateExpenseData && <UpdateExpenseData  onSubmit={(e)=>{this.sendUpdatedExpense(e)}} {...this.state.updateExpenseData} />}
 									</div>
 									<div className="getRange">
 										<h3>Get All Expenses In Range</h3>
