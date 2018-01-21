@@ -1,0 +1,134 @@
+div.home{
+	.switch{
+		a{
+			&.leftSwitch{
+				&.active{
+					background: linear-gradient(to right, $primary-blue-darkest , $transparent);
+				}
+			}
+			&.rightSwitch{
+				&.active{
+					color: $primary-font;
+					background: linear-gradient(to right,  $transparent, $primary-blue-darkest);
+				}
+			}
+		}
+	}
+	.content{
+		grid-area: content;
+		display:grid;
+		table{
+			justify-self: center;
+			align-self:center;
+			width: 100%;
+			tbody{
+				tr{
+					text-align: center;
+					th{
+						font-size: 3rem;
+						color: $primary-font;
+						text-shadow: $main-font-shadow;	
+					}
+					td{
+						padding: .5rem;
+						font-size: 3rem;
+						color: $primary-font;
+						text-shadow: $main-font-shadow;
+						position:relative;
+						&:first-child{
+							width: 60%;
+							text-align: left;
+						}
+					}
+					&.expenseTotals{
+						td{
+							&:before{
+								position: absolute;
+								content: ' ';
+								bottom: 0;
+								border: 1px solid $primary-font;
+								width: 55%;
+							}
+							&:not(:first-child){
+								&:before{
+									margin-left: auto;
+									margin-right: auto;
+									left:0;
+									right:0;
+								}
+							}
+							&:last-child{
+								color: $primary-red;
+								&:after{
+								 	content: ' ';
+							    border-left: 1px solid $primary-blue-darkest;
+							    left: 10px;
+							    position: absolute;
+							    height: 55%;
+							    top: 25%;
+								}
+							}
+						}
+					}
+					&.incomeTotals{
+						td{
+							&:before{
+								position: absolute;
+								content: ' ';
+								bottom: 0;
+								border: 1px solid $primary-font;
+								width: 55%;
+							}
+							&:not(:first-child){
+								&:before{
+									margin-left: auto;
+									margin-right: auto;
+									left:0;
+									right:0;
+								}
+							}
+							&:last-child{
+								color: $color-black;
+								text-shadow:none;
+								&:after{
+								 	content: ' ';
+							    border-left: 1px solid $primary-blue-darkest;
+							    left: 10px;
+							    position: absolute;
+							    height: 55%;
+							    top: 25%;
+								}
+							}
+						}
+					}
+					&.net{
+						td{
+							&:before{
+								position: absolute;
+								content: ' ';
+								bottom: 0;
+								border: 1px solid $primary-font;
+								width: 55%;
+							}
+							&:not(:first-child){
+								&:before{
+									margin-left: auto;
+									margin-right: auto;
+									left:0;
+									right:0;
+									width: 20%;
+								}
+							}
+							.pos{
+								color: $primary-green;
+							}
+							.neg{
+								color: $primary-red;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

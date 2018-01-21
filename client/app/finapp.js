@@ -29,13 +29,14 @@ render(
 	<Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={Incomes} />
+        <IndexRoute component={HOC_Auth(Home)} />
         <Route path="/expenses" component={HOC_Auth(Expenses)} />
         <Route path="/incomes" component={HOC_Auth(Incomes)} />
         <Route path="/profile" component={HOC_Auth(Profile)} />
-        <Route path="/finances" component={Finances} />
+        <Route path="/finances" component={HOC_Auth(Finances)} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Registration} />
+        <Route path="/home" component={HOC_Auth(Home)} />
       </Route>
     </Router>
   </Provider>,

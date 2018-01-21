@@ -97,7 +97,6 @@ div.incomes{
 								    }
 									}	
 								}
-								
 								button{
 									float:right;
 							    padding: .5rem;
@@ -594,10 +593,11 @@ div.incomes{
 								}	
 							}
 							button{
-								float:right;
+								float:left;
 						    padding: .5rem;
 						    cursor: pointer;
-						    margin-right: 2rem;
+						    margin-left: .5rem;
+    						margin-right: 1.8rem;
 						    font-size: 1.1rem;
 						    text-transform: capitalize;
 						    background: $primary-blue-darkest;
@@ -606,8 +606,10 @@ div.incomes{
 						    border: none;
 						    border-radius: .3rem;
 						    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
-						    &:first-child{
-						    	float:left;
+						    &:first-of-type{
+						    	float:right;
+						    	margin-right:2rem;
+						    	margin-left:initial;
 						    }
 							}
 							h3{
