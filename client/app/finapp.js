@@ -29,7 +29,7 @@ render(
 	<Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={Expenses} />
+        <IndexRoute component={Incomes} />
         <Route path="/expenses" component={HOC_Auth(Expenses)} />
         <Route path="/incomes" component={HOC_Auth(Incomes)} />
         <Route path="/profile" component={HOC_Auth(Profile)} />

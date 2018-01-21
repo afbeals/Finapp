@@ -20,7 +20,7 @@ export default function incomesReducer(state = [], action){
 				...state.slice(action.data.index_in_array + 1)
 			];
 		case incomesConstants.ADD_INCOME:
-			return [...state,action.data];
+			return [action.data,...state];
 		case incomesConstants.REQUESTING_INCOME:
 			return state;
 		case incomesConstants.REQUESTING_INCOME_SUCCESS:

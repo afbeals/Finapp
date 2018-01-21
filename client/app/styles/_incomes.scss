@@ -1,45 +1,422 @@
 div.incomes{
-	.switch{
-		a{
-			&.leftSwitch{
-				&.active{
-					background: linear-gradient(to right, $primary-green , $transparent);
+	@include for-mobile {
+		.switch{
+			a{
+				&.leftSwitch{
+					&.active{
+						background: linear-gradient(to right, $primary-green , $transparent);
+					}
+				}
+				&.rightSwitch{
+					&.active{
+						color: $primary-font;
+						background: linear-gradient(to right,  $transparent, $primary-red);
+					}
 				}
 			}
-			&.rightSwitch{
-				&.active{
-					color: $primary-font;
-					background: linear-gradient(to right,  $transparent, $primary-red);
+			div.optionsSwitch{
+				.options{
+					left: 0;
+			    right: 0;
+			    margin-left: auto;
+			    margin-right: auto;
+			    background: $primary-blue;
+			    top: 2.8rem;
+			    height: 405px;
+			    border: .5px solid $color-black;
+			    border-radius: 5px;
+			    box-shadow: -3px 5px 10px $color-black;
+			    width: 95%;
+			    cursor: default;
+					.actionButtons{
+						position: relative;
+				    top: 40px;
+				    display: inline-block;
+				    width: 50%;
+				    float: left;
+						button{
+							padding: .7rem;
+							width: 40%;
+							margin: .4rem;
+					    cursor: pointer;
+					    margin: .3rem;
+					    font-size: 1.8rem;
+					    text-transform: capitalize;
+					    background: $primary-blue-darkest;
+					    color: $primary-font;
+					    text-shadow: $main-font-shadow;
+					    border: none;
+					    border-radius: .3rem;
+					    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+					    &.createReport{
+					    	width: 83%;
+					    }
+						}
+					}
+					.actionInfo{
+				    display: inline-block;
+				    width: 50%;
+				    height: 100%;
+						>div{
+							display:none;
+							&.active{
+								display:inline-block;
+								height: 100%;
+								padding: 1rem .5rem;
+								min-width: 255px;
+								p{
+									text-align: left;
+									font-size: 1.8rem;
+	    						color: $primary-font;
+	    						text-shadow: $main-font-shadow;
+								}
+								label{
+									span.error{
+										text-transform: capitalize;
+										&~div{
+											input,select{
+												border: inset 1px $form-warning;
+											}
+										}
+									}
+									select,input{
+										float:left;
+									  display: inline-block;
+								    width: 80%;
+								    margin: .5rem;
+								    padding: .4rem;
+								    text-transform: capitalize;
+								    background: $primary-blue-lightest;
+								    border: none;
+								    color: $primary-font;
+								    text-shadow: 2px 1px 1px black;
+								    font-size: 1.1rem;
+								    border-radius: 5px;
+								    &::placeholder{
+								    	color: $primary-font;
+								    }
+									}	
+								}
+								
+								button{
+									float:right;
+							    padding: .5rem;
+							    cursor: pointer;
+							    margin-right: 3rem;
+							    font-size: 1.4rem;
+							    text-transform: capitalize;
+							    background: $primary-blue-darkest;
+							    color: $primary-font;
+							    text-shadow: $main-font-shadow;
+							    border: none;
+							    border-radius: .3rem;
+							    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+								}
+							}		
+						}
+					}
 				}
 			}
 		}
-		div.optionsSwitch{
-			.options{
-				left: 0;
-		    right: 0;
-		    margin-left: auto;
-		    margin-right: auto;
-		    background: $primary-blue;
-		    top: 2.8rem;
-		    height: 405px;
-		    border: .5px solid $color-black;
-		    border-radius: 5px;
-		    box-shadow: -3px 5px 10px $color-black;
-		    width: 95%;
-		    cursor: default;
-				.actionButtons{
-					position: relative;
-			    top: 40px;
-			    display: inline-block;
-			    width: 50%;
-			    float: left;
+		table{
+			width: 100%;
+			tr{
+				&.titles{
+					color: $primary-font;
+					font-size: 1.8em;
+					th{
+						padding: .8rem .5rem;
+						text-align:center;
+						position: relative;
+						&:nth-child(1){
+							text-align: left;
+							&:after{
+								left: .5rem;
+								margin-left: initial;
+								margin-right: initial;
+								width: 30%;
+							}
+						}
+						&:after{
+							position: absolute;
+					    content: ' ';
+					    bottom: 7px;
+					    border-bottom: 4px solid $primary-green;
+					    width: 55%;
+					    left: 0;
+					    right: 0;
+					    margin-left: auto;
+					    margin-right: auto;
+					    border-radius: 50px;
+						}
+					}
+				}
+				td{
+					padding: .4rem .5rem;
+					text-align: center;
+					color: $primary-font;
+					font-size: 1.2rem;
+					text-transform: capitalize;
+					position:relative;
+					&:not(:last-child):after{
+						position: absolute;
+				    content: ' ';
+				    bottom: 10px;
+				    border-bottom: 2px solid $primary-font;
+				    width: 35%;
+				    left: 0;
+				    right: 0;
+				    margin-left: auto;
+				    margin-right: auto;
+				    border-radius: 50px;
+					}
+					&:not(:first-child){
+						border-left: 2px solid $primary-blue-dark;
+					}
+					&:nth-child(1){
+						width: 60%;
+						text-align:left;
+						border-left: none;
+						&:after{
+							left: .5rem;
+							margin-left: initial;
+							margin-right: initial;
+							width: 60%;
+						}
+					}
+					&.notes{
+						button{
+							display: inline-block;
+					    padding: .2rem .5rem;
+					    cursor: pointer;
+					    margin: .5rem;
+					    font-size: 1rem;
+					    text-transform: capitalize;
+					    background: $primary-blue-darkest;
+					    color: $primary-font;
+					    text-shadow: $main-font-shadow;
+					    border: none;
+					    border-radius: 1rem;
+					    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+						}
+						span{
+							display:none;
+							position: relative;
+							&.active{
+								display:inline-block;
+								position: absolute;
+								right: 100%;
+						    background: $primary-blue;
+						    padding: 1rem;
+						    max-width: 325px;
+						    z-index: 1;
+						    border-radius: 5px;
+						    box-shadow: -4px 5px 6px $color-black;
+						    text-shadow: $main-font-shadow;
+							}
+						}
+					}
+					select,input{
+					  display: inline-block;
+				    width: 90%;
+				    margin: .5rem;
+				    padding: .4rem;
+				    text-transform: capitalize;
+				    background: $primary-blue;
+				    border: none;
+				    color: $primary-font;
+				    text-shadow: 2px 1px 1px black;
+				    font-size: 1.2rem;
+				    border-radius: 5px;
+				    &::placeholder{
+				    	color: $primary-font;
+				    }
+					}
+					div.updatesWrapper{
+						display:inline-block;
+						color: $primary-blue-dark;
+						cursor: pointer;
+						margin: 0rem .2rem;
+						position:relative;
+						.itemUpdateButtons{
+							display:none;
+							position: absolute;
+							min-width: 325px;
+							border-radius: 5px;
+					    background: $primary-blue;
+					    z-index: 1;
+					    padding: 0.5rem;
+					    box-shadow: -4px 5px 6px $color-black;
+							&.active{
+								display:inline-block;
+								button{
+							    display: inline-block;
+							    padding: 1rem;
+							    cursor: pointer;
+							    margin: .5rem;
+							    font-size: 1.2rem;
+							    text-transform: capitalize;
+							    background: $primary-blue-darkest;
+							    color: $primary-font;
+							    text-shadow: $main-font-shadow;
+							    border: none;
+							    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	@include for-tablet {
+		display:grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr .5fr 4fr;
+		grid-template-areas: 	"quickInfo quickInfo quickInfo"
+													"interact interact interact"
+													"mainInfo mainInfo mainInfo";
+		>div{
+			>div{
+				padding: .3rem;
+			}
+		}
+		.quickInfo{
+			grid-area: quickInfo;
+			display:grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: 1fr;
+			grid-template-areas: "leftQuickInfo midQuickInfo rightQuickInfo";
+			.leftQuickInfo{
+				grid-area: leftQuickInfo;
+				.innerWrapper{
+					background:$primary-blue-lightest;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					display: grid;
+					grid-template-rows: auto;
+					grid-template-areas: "leftQuickInfoTop" "leftQuickInfoBottom";
+					h2{
+						grid-area: leftQuickInfoTop;
+						justify-self: center;
+						align-self: center;
+						font-size: 1.8rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+				    z-index: 2;
+					}
+					.nextIncomeData{
+						grid-area: leftQuickInfoBottom;
+						justify-self: center;
+						align-self: center;
+				    font-size: 1.6rem;
+				    bottom: 1rem;
+				    color: $primary-green;
+				    position: relative;
+				    text-shadow: $main-font-shadow;
+				    text-transform: capitalize;
+					}
+				}	
+			}
+			.midQuickInfo{
+				grid-area: midQuickInfo;
+				.innerWrapper{
+					background:$primary-blue-light;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					display:grid;
+					h1{
+					  align-self: center;
+				    justify-self: center;
+				    font-size: 3.8rem;
+				    bottom: 1rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+				    z-index: 2;
+				    &:after{
+				    	position: absolute;
+					    width: 90%;
+					    border-bottom: 3px solid $primary-font;
+					    content: ' ';
+					    left: 0;
+					    right: 0;
+					    margin-left: auto;
+					    margin-right: auto;
+					    bottom: 2px;
+					    z-index: -1;
+				    }
+					}
+				}	
+			}
+			.rightQuickInfo{
+				grid-area: rightQuickInfo;
+				.innerWrapper{
+					background:$primary-blue-lightest;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					display: grid;
+					grid-template-rows: auto;
+					grid-template-areas: "rightQuickInfoTop" "rightQuickInfoBottom";
+					h2{
+						grid-area: rightQuickInfoTop;
+						justify-self: center;
+						align-self: center;
+						font-size: 1.8rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+				    z-index: 2;
+					}
+					.totalIncomesData{
+						grid-area: rightQuickInfoBottom;
+						justify-self: center;
+						align-self: center;
+				    font-size: 2.3rem;
+				    bottom: 1rem;
+				    color: $primary-green;
+				    position: relative;
+				    text-shadow: $main-font-shadow;
+					}
+				}	
+			}
+			
+		}
+		.interact{
+			grid-area: interact;
+			display:grid;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 1fr;
+			grid-template-areas: "leftInteract rightInteract";
+			.leftInteract{
+				grid-area: leftInteract;
+				.innerWrapper{
+					background:$primary-blue-lightest;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					display:grid;
+					grid-template-rows: 40% 60%;
+					grid-template-columns: 1fr 1fr 1fr 1fr;
+					grid-template-areas: "leftInteractTitle leftInteractTitle leftInteractTitle leftInteractTitle" "leftInteractAll leftInteractRange leftInteractMonth leftInteractAdd" ;
+					justify-items: center;
+    			align-items: center;
+    			div{
+    				grid-area: leftInteractTitle;
+    				font-size: 2.5rem;
+    				justify-self: start;
+    				color: $primary-font;
+    				text-shadow: $main-font-shadow;
+    			}
 					button{
-						padding: .7rem;
-						width: 40%;
-						margin: .4rem;
+				    padding: .5rem 1rem;
+				    min-width: 100px;
 				    cursor: pointer;
-				    margin: .3rem;
-				    font-size: 1.8rem;
+				    font-size: 1.4rem;
 				    text-transform: capitalize;
 				    background: $primary-blue-darkest;
 				    color: $primary-font;
@@ -47,27 +424,147 @@ div.incomes{
 				    border: none;
 				    border-radius: .3rem;
 				    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
-				    &.createReport{
-				    	width: 83%;
-				    }
+						&.leftInteractAll{
+							grid-area: leftInteractAll;
+						}
+						&.leftInteractRange{
+							grid-area: leftInteractRange;
+						}
+						&.leftInteractMonth{
+							grid-area: leftInteractMonth;
+						}
+						&.leftInteractAdd{
+							grid-area: leftInteractAdd;
+						}
 					}
 				}
-				.actionInfo{
-			    display: inline-block;
-			    width: 50%;
-			    height: 100%;
-					>div{
-						display:none;
-						&.active{
-							display:inline-block;
-							height: 100%;
-							padding: 1rem .5rem;
-							min-width: 255px;
-							p{
-								text-align: left;
-								font-size: 1.8rem;
-    						color: $primary-font;
-    						text-shadow: $main-font-shadow;
+			}
+			.rightInteract{
+				grid-area: rightInteract;
+				.innerWrapper{
+					background:gray;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow
+				}
+			}
+		}
+		.mainInfo{
+			grid-area: mainInfo;
+			display:grid;
+			grid-template-columns: 2fr 1fr;
+			grid-template-rows: 1fr;
+			grid-template-areas: "leftMainInfo rightMainInfo";
+			.leftMainInfo{
+				grid-area: leftMainInfo;
+				.innerWrapper{
+					background:$primary-blue-lightest;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					h2{
+						font-size: 2.2rem;
+						top:.3rem;
+						left:.3rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+					}
+					table{
+						tr{
+							position: relative;
+							&.titles{
+								th{
+									font-size: 1.4rem;
+									color: $primary-font;
+									text-shadow: $main-font-shadow;
+									font-weight: 700;
+									padding: .8rem .5rem;
+									position: relative;
+									&:nth-child(1){
+										width: 50%;
+										text-align: left;
+									}
+									&:not(:first-child):after{
+										content: ' ';
+								    position: absolute;
+								    border-left: 1px solid $primary-blue-darkest;
+								    height: 48%;
+								    transform: rotateZ(12deg);
+								    left: -2px;
+									}
+								}	
+							}
+							td{
+								padding: .2rem .5rem;
+								color: $primary-font;
+								text-shadow: $main-font-shadow;
+								position: relative;
+								text-transform: capitalize;
+								&:after{
+									position: absolute;
+							    left: -4px;
+							    content: ' ';
+							    border-bottom: 1px solid $primary-blue-darkest;
+							    bottom: 0;
+							    width: 100%;
+								}
+								&:not(:first-child){
+									text-align: center;
+									&:after{
+								    position: absolute;
+								    left: -4px;
+								    content: ' ';
+								    border-left: .5px solid $primary-blue-darkest;
+								    height: 70%;
+									}
+								}
+								button{
+									display: inline-block;
+							    padding: .2rem .5rem;
+							    cursor: pointer;
+							    margin: .4rem .5rem;
+							    bottom: .1rem;
+							    z-index: 1;
+							    position: relative;
+							    font-size: 1rem;
+							    text-transform: capitalize;
+							    background: $primary-blue-darkest;
+							    color: $primary-font;
+							    text-shadow: $main-font-shadow;
+							    border: none;
+							    border-radius: 1rem;
+							    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+								}
+							}
+						}
+					}
+				}
+			}
+			.rightMainInfo{
+				grid-area: rightMainInfo;
+				.innerWrapper{
+					background:$primary-blue-dark;
+					height: 100%;
+					width: 100%;
+					box-shadow: $main-box-shadow;
+					h2{
+						font-size: 2.2rem;
+						top:.3rem;
+						left:.3rem;
+				    position: relative;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+					}
+					.infoSection{
+						>div{
+							display:none;
+							&.active{
+								display:block;
+							}
+							span{
+								display:block;
+								font-size: 2rem;
 							}
 							label{
 								span.error{
@@ -96,13 +593,12 @@ div.incomes{
 							    }
 								}	
 							}
-							
 							button{
 								float:right;
 						    padding: .5rem;
 						    cursor: pointer;
-						    margin-right: 3rem;
-						    font-size: 1.4rem;
+						    margin-right: 2rem;
+						    font-size: 1.1rem;
 						    text-transform: capitalize;
 						    background: $primary-blue-darkest;
 						    color: $primary-font;
@@ -110,156 +606,15 @@ div.incomes{
 						    border: none;
 						    border-radius: .3rem;
 						    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+						    &:first-child{
+						    	float:left;
+						    }
 							}
-						}		
-					}
-				}
-			}
-		}
-	}
-	table{
-		width: 100%;
-		tr{
-			&.titles{
-				color: $primary-font;
-				font-size: 1.8em;
-				th{
-					padding: .8rem .5rem;
-					text-align:center;
-					position: relative;
-					&:nth-child(1){
-						text-align: left;
-						&:after{
-							left: .5rem;
-							margin-left: initial;
-							margin-right: initial;
-							width: 30%;
-						}
-					}
-					&:after{
-						position: absolute;
-				    content: ' ';
-				    bottom: 7px;
-				    border-bottom: 4px solid $primary-green;
-				    width: 55%;
-				    left: 0;
-				    right: 0;
-				    margin-left: auto;
-				    margin-right: auto;
-				    border-radius: 50px;
-					}
-				}
-			}
-			td{
-				padding: .4rem .5rem;
-				text-align: center;
-				color: $primary-font;
-				font-size: 1.2rem;
-				text-transform: capitalize;
-				position:relative;
-				&:not(:last-child):after{
-					position: absolute;
-			    content: ' ';
-			    bottom: 10px;
-			    border-bottom: 2px solid $primary-font;
-			    width: 35%;
-			    left: 0;
-			    right: 0;
-			    margin-left: auto;
-			    margin-right: auto;
-			    border-radius: 50px;
-				}
-				&:not(:first-child){
-					border-left: 2px solid $primary-blue-dark;
-				}
-				&:nth-child(1){
-					width: 60%;
-					text-align:left;
-					border-left: none;
-					&:after{
-						left: .5rem;
-						margin-left: initial;
-						margin-right: initial;
-						width: 60%;
-					}
-				}
-				&.notes{
-					button{
-						display: inline-block;
-				    padding: .2rem .5rem;
-				    cursor: pointer;
-				    margin: .5rem;
-				    font-size: 1rem;
-				    text-transform: capitalize;
-				    background: $primary-blue-darkest;
-				    color: $primary-font;
-				    text-shadow: $main-font-shadow;
-				    border: none;
-				    border-radius: 1rem;
-				    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
-					}
-					span{
-						display:none;
-						position: relative;
-						&.active{
-							display:inline-block;
-							position: absolute;
-							right: 100%;
-					    background: $primary-blue;
-					    padding: 1rem;
-					    max-width: 325px;
-					    z-index: 1;
-					    border-radius: 5px;
-					    box-shadow: -4px 5px 6px $color-black;
-					    text-shadow: $main-font-shadow;
-						}
-					}
-				}
-				select,input{
-				  display: inline-block;
-			    width: 90%;
-			    margin: .5rem;
-			    padding: .4rem;
-			    text-transform: capitalize;
-			    background: $primary-blue;
-			    border: none;
-			    color: $primary-font;
-			    text-shadow: 2px 1px 1px black;
-			    font-size: 1.2rem;
-			    border-radius: 5px;
-			    &::placeholder{
-			    	color: $primary-font;
-			    }
-				}
-				div.updatesWrapper{
-					display:inline-block;
-					color: $primary-blue-dark;
-					cursor: pointer;
-					margin: 0rem .2rem;
-					position:relative;
-					.itemUpdateButtons{
-						display:none;
-						position: absolute;
-						min-width: 325px;
-						border-radius: 5px;
-				    background: $primary-blue;
-				    z-index: 1;
-				    padding: 0.5rem;
-				    box-shadow: -4px 5px 6px $color-black;
-						&.active{
-							display:inline-block;
-							button{
-						    display: inline-block;
-						    padding: 1rem;
-						    cursor: pointer;
-						    margin: .5rem;
-						    font-size: 1.2rem;
-						    text-transform: capitalize;
-						    background: $primary-blue-darkest;
-						    color: $primary-font;
-						    text-shadow: $main-font-shadow;
-						    border: none;
-						    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+							h3{
+								margin: .3rem 0rem;
+								color: $primary-font;
+								font-size:1.2rem;
+								text-shadow: $main-font-shadow;
 							}
 						}
 					}

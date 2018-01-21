@@ -20,7 +20,7 @@ export default function expensesReducer(state = [], action){
 				...state.slice(action.data.index_in_array + 1)
 			];
 		case expensesConstants.ADD_EXPENSE:
-			return [...state,action.data];
+			return [action.data,...state];
 		case expensesConstants.REQUESTING_EXPENSE:
 			return state;
 		case expensesConstants.REQUESTING_EXPENSE_SUCCESS:

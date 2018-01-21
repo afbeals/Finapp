@@ -161,7 +161,6 @@ export default class Expenses extends React.Component{
 				...item
 			}
 		})
-		console.log(this.state.updateExpenseData);
 	}
 	displayActionPanel(e){
 		let target = e.target,
@@ -244,7 +243,7 @@ export default class Expenses extends React.Component{
 								}			
 							{
 								(this.props.reports.length < 1) ? (
-									[...this.props.expenses].sort((a,b)=>{return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();}).map((c,i)=>{
+									[...this.props.expenses].sort((a,b)=>{return new Date(b.year, b.monthId - 1, b.due_day) - new Date(a.year, a.monthId - 1, a.due_day);}).map((c,i)=>{
 										return 	<tr key={i}>
 													<td className="name">
 														<div className="updatesWrapper" onClick={this.displayItemUpdateButtons}>
@@ -318,7 +317,7 @@ export default class Expenses extends React.Component{
 								<h2>Next Expense Date</h2>
 								<div className="nextExpenseData">
 										{
-											this.props.expenses.sort((a,b)=>{return a.due_day - b.due_day;}).filter((item)=>{return item.due_day >= new Date().getDate() && item.monthId == new Date().getMonth()+1 }).map((c,i,a)=>{if(i==0){return <div key={i}>{c.monthName} {c.due_day}{this.getOrdinal(c.due_day)}, {c.year}</div>}})
+											this.props.expenses.sort((a,b)=>{return new Date(b.year, b.monthId - 1, b.due_day) - new Date(a.year, a.monthId - 1, a.due_day);}).filter((item)=>{return item.due_day >= new Date().getDate() && item.monthId >= new Date().getMonth()+1 }).map((c,i,a)=>{if(i==a.length-1){return <div key={i}>{c.monthName} {c.due_day}{this.getOrdinal(c.due_day)}, {c.year}</div>}})
 										}
 								</div>
 							</div>
@@ -370,7 +369,7 @@ export default class Expenses extends React.Component{
 								<tbody>
 								<tr className="titles"><th>Name</th><th>Due</th><th>Paid</th><th>Month</th><th>Day</th><th>Details</th></tr>
 									{
-										[...this.props.expenses].sort((a,b)=>{return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();}).map((c,i)=>{
+										[...this.props.expenses].sort((a,b)=>{return new Date(b.year, b.monthId - 1, b.due_day) - new Date(a.year, a.monthId - 1, a.due_day);}).map((c,i)=>{
 													return 	<tr key={i}>
 																<td className="name">
 																	<span>{c.name}</span>
