@@ -23,6 +23,8 @@ export default function expensesReducer(state = [], action){
 			return [action.data,...state];
 		case expensesConstants.REQUESTING_EXPENSE:
 			return state;
+		case expensesConstants.CLEAR_EXPENSE:
+			return [];
 		case expensesConstants.REQUESTING_EXPENSE_SUCCESS:
 			return state;
 		default:

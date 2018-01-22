@@ -228,3 +228,9 @@ export function addExpensesSuccess(query){
         data: query
     }
 }
+
+export function clearExpenses(){
+    return{
+        type: expensesConstants.CLEAR_EXPENSE
+    }
+}

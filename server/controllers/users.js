@@ -107,5 +107,157 @@ module.exports = {
 		  		console.error(errors);
 		  		res.status(500).send({errors,status:500});
 		 	});
+	},
+
+	getUserInfo : (req,res) => {
+		validateAll(req.query, validation.getUserInfo_rules, messages)
+			.then((data) => {
+				MySQL.pool.getConnection((err,connection)=>{
+					if (err) {
+						connection.release();
+						console.error({"code" : 100, "status" : "Error in connection database","err":err});
+						res.status(500).send({error:err,status:500});
+					}   
+					console.log('connected as id ' + connection.threadId);
+					connection.query("SELECT first_name,last_name,email FROM users WHERE id = ? ",[data.user_id],(err,user)=>{
+						connection.release(); 
+						if(!err) {
+							if(!user.length){
+								res.status(400).send({error:{msg:"There was an error retreiving your data, please contact admin",status: 400}});
+								return;
+							} else {
+								console.log(user);
+								res.json({user});
+							}
+						} else {
+							res.status(500).send({error: {msg:'Something broke!'}});
+							console.error(err);
+						}
+					});		
+					connection.on('error', (err)=>{      
+						console.error(({"code" : 100, "status" : "Error in connection database", "err":err}));
+					});
+			    });
+			})
+			.catch((errors) => {
+		  		console.error(errors);
+		  		res.status(500).send({errors,status:500});
+		 	});
+	},
+
+	updateUserInfo : (req,res) => {
+		console.log(4,req.body);
+		validateAll(req.body, validation.updateUserInfo_rules, messages)
+			.then((data) => {
+				MySQL.pool.getConnection((err,connection)=>{
+					if (err) {
+						connection.release();
+						console.error({"code" : 100, "status" : "Error in connection database","err":err});
+						res.status(500).send({error:err,status:500});
+					}   
+					console.log('connected as id ' + connection.threadId);
+					connection.query("SELECT password FROM users WHERE id = ?",[data.user_id],(err,user)=>{
+						if(!err) {
+							if(!user.length){
+								res.status(400).send({error:{msg:"There was an error retreiving your data, please contact admin",status: 400}});
+								return;
+							} else {
+								bcrypt.compare(data.password_previous,user[0].password,(err,hash)=>{
+									if(err){
+										res.send(500).send({error: {msg:err}});
+										console.error(err);
+										return;
+									} else {
+										if(hash){
+											let buildQuery = (obj)=>{
+												return new Promise((resolve,reject)=>{
+													if(obj.password != "undefined"){
+														bcrypt.hash(obj.password, cfg.salt, (err,hash) => {
+											  			if(err){
+											  				connection.release();
+											  				console.error(err);
+											  				reject(err);
+											  			}
+											  			hashPassword = hash;
+											  			resolve(hashPassword);
+														})	
+													} else {
+														resolve();
+													}
+												}).then((hash)=>{
+													if(hash != "undefined"){
+														let query = "UPDATE users SET updated_at = '"+new Date().toISOString().slice(0, 19).replace('T', ' ')+"', password = '"+hash+"', ",
+																initial = true;
+												    for(let keys = Object.keys(obj), i = 0, end = keys.length; i < end; ++i) {
+											        let key = keys[i], value = obj[key];
+											        console.log(key,value);
+											        if(key != "id" && key != "user_id" && key != "password_previous" && key != "password_confirm" && key != "password") {
+																if(initial){
+																	query += key+" = '"+ value+"'";
+																	initial = false;
+											          } else {
+																	query += ", "+key+" = '"+ value+"'";
+											          }
+									            }
+										        }
+														query += " WHERE id = "+obj.user_id;
+														console.log(query);
+													  return query;
+													} else {
+														let query = "UPDATE users SET updated_at = '"+new Date().toISOString().slice(0, 19).replace('T', ' ')+"', ",
+																	initial = true;
+												    for(let keys = Object.keys(obj), i = 0, end = keys.length; i < end; ++i) {
+											        let key = keys[i], value = obj[key];
+											        console.log(key,value);
+											        if(key != "id" && key != "user_id" && key != "password_previous" && key != "password_confirm" && key != "password") {
+																if(initial){
+																	query += key+" = '"+ value+"'";
+																	initial = false;
+											          } else {
+																	query += ", "+key+" = '"+ value+"'";
+											          }
+									            }
+										        }
+														query += " WHERE id = "+obj.user_id;
+														console.log(query);
+													  return query;
+													}
+												}).then((query)=>{
+													connection.query(query,(err,user2)=>{
+														connection.release();
+														if(!err) {
+															console.log(user2);
+													  	var payload = {
+																user_id:data.user_id,
+																first_name: data.first_name
+															};
+															var token = jwt.encode(payload, cfg.jwtSecret);
+															res.json({payload,token});
+														} else {
+															res.status(400).send({error: {msg:"Error while trying to update user",status:400}});
+															console.error({"code" : err.code, "status" : "Error in connection database", "err":err});
+														}
+													})	
+												}).catch((err)=>{console.log(err)});
+											};
+											buildQuery(data);
+										}
+									}
+								});
+							}
+						} else {
+							res.status(500).send({error: {msg:'Something broke!'}});
+							console.error(err);
+						}
+					});		
+					connection.on('error', (err)=>{      
+						console.error(({"code" : 100, "status" : "Error in connection database", "err":err}));
+					});
+			    });
+			})
+			.catch((errors) => {
+		  		console.error(errors);
+		  		res.status(500).send({errors,status:500});
+		 	});
 	}
 };

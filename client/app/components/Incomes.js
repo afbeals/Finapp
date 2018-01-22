@@ -38,6 +38,11 @@ export default class Incomes extends React.Component{
 		this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
 
 		this.updateIsEditing = this.updateIsEditing.bind(this);
+
+		this.clearIncomes();
+	}
+	clearIncomes(){
+		this.props.clearIncomes();
 	}
 	getAllIncomes(){
 		this.props.getAllIncomes(Number(this.props.user.user_id));

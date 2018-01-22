@@ -8,21 +8,21 @@ import {
 		reduxForm,
 		getFormValues,
 		isDirty,
-  		isPristine,
+  	isPristine,
 		isValid,
 		isInvalid,
 		getFormSyncErrors
 	} from 'redux-form';
 
 const renderField = (field) => (
-	<label>
-		{field.label}
-	    <div className="input-row">
-	    	<input {...field.input} type={field.type} placeholder={field.placeholder}/>
-			{field.meta.touched && field.meta.error && 
-			<span className="error">{field.meta.error}</span>}
-	    </div>
-    </label>
+  <label>
+  {field.label}
+  {field.meta.touched && field.meta.error && 
+    <span className="error">{field.meta.active && field.meta.error}</span>}
+    <div className="input-row">
+      <input {...field.input} type={field.type} placeholder={field.placeholder}/>
+    </div>
+  </label>
 )
 
 class Registration extends React.Component {

@@ -1,0 +1,145 @@
+div.profile{
+	.switch{
+		a{
+			&.leftSwitch{
+				&.active{
+					background: linear-gradient(to right, $primary-blue-darkest , $transparent);
+				}
+			}
+			&.rightSwitch{
+				&.active{
+					color: $primary-font;
+					background: linear-gradient(to right,  $transparent, $primary-blue-darkest);
+				}
+			}
+		}
+	}
+	.content{
+		grid-area: content;
+		display:grid;
+		>div{
+			justify-self: center;
+			align-self: center;
+			display:grid;
+			grid-template-columns: auto;
+			grid-template-areas: "profilePic profileInfo";
+			background: $primary-blue;
+			padding: 3rem;
+			box-shadow: $main-box-shadow;
+			border-radius:5px;
+			.profilePic{
+				grid-are: profilePic;
+				.icon{
+					display: inline-block;
+			    margin: 0rem .3rem;
+			    padding: 0.3rem 0.3rem 0rem 0.3rem;
+			    border-radius: 100px 100px 100px 100px;
+			    background: $primary-font;
+			    color: $primary-blue-lightest;
+			    overflow: hidden;
+			    position: relative;
+			    top: 3px;
+			    font-size: 6rem;
+				}
+			}
+			.profileInfo{
+				grid-are: profileInfo;
+				label{
+					position: relative;
+					display: inline-block;
+					width: 100%;
+					span.error{
+						text-transform: capitalize;
+				    color: $primary-font;
+				    text-shadow: $main-font-shadow;
+				    position: absolute;
+				    width: 75%;
+				    text-align: center;
+				    background: $form-warning;
+				    border: 1px solid #cc6205;
+				    top: -2rem;
+				    z-index: 3;
+				    left: .8rem;
+				    right: 0;
+				    padding: .5rem;
+				    font-size: 1.1rem;
+				    border-radius: 5px;
+				    transform: translateY(0rem);
+				    transition: all 1s;
+				    opacity: 1;
+						&~div{
+							input,select{
+								background: $primary-orange;
+								transition: background 1s;
+							}
+						}
+						&:empty{
+							transform: translateY(2rem);
+							transition: all 1s;
+							opacity:0;
+						}
+						&:after{
+							position: absolute;
+					    content: ' ';
+					    right: .5rem;
+					    border-bottom: 0px solid transparent;
+					    bottom: -1rem;
+					    z-index: -1;
+					    border-top: 21px solid $color-black;
+					    border-right: 8px solid transparent;
+					    border-left: 8px solid transparent;
+						}
+						&:before{
+							position: absolute;
+					    content: ' ';
+					    right: .5rem;
+					    border-bottom: 0px solid transparent;
+					    bottom: -1rem;
+					    z-index: 1;
+					    border-top: 21px solid $form-warning;
+					    border-right: 8px solid transparent;
+					    border-left: 8px solid transparent;
+						}
+					}
+					select,input{
+						float:left;
+					  display: inline-block;
+				    width: 80%;
+				    margin: .5rem;
+				    padding: .4rem;
+				    text-transform: capitalize;
+				    background: $primary-blue-lightest;
+				    border: none;
+				    color: $primary-font;
+				    text-shadow: 2px 1px 1px black;
+				    font-size: 1.1rem;
+				    border-radius: 5px;
+				    &::placeholder{
+				    	color: $primary-font;
+				    }
+					}	
+				}
+				button{
+					float:left;
+			    padding: .5rem;
+			    cursor: pointer;
+			    margin-left: .5rem;
+					margin-right: 1.8rem;
+			    font-size: 1.1rem;
+			    text-transform: capitalize;
+			    background: $primary-blue-darkest;
+			    color: $primary-font;
+			    text-shadow: $main-font-shadow;
+			    border: none;
+			    border-radius: .3rem;
+			    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+			    &:first-of-type{
+			    	float:right;
+			    	margin-right:2rem;
+			    	margin-left:initial;
+			    }
+				}
+			}
+		}
+	}
+}

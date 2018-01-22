@@ -39,7 +39,14 @@ export default class Expenses extends React.Component{
 		this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
 
 		this.updateIsEditing = this.updateIsEditing.bind(this);
+
+		this.clearExpenses();
 	}
+
+	clearExpenses(){
+		this.props.clearExpenses();
+	}
+
 	getAllExpenses(){
 		this.props.getAllExpenses(Number(this.props.user.user_id));
 		this.props.clearReport();

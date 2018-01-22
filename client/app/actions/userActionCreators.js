@@ -1,6 +1,7 @@
 //---  Import axios for ajax calls ---//
 //------------------------------------//
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 //--- Import Constants ---//
 //------------------------//
@@ -31,9 +32,32 @@ export function registerUser(user){
                 dispatch(userHasRegistered(response.data.payload));
                 localStorage.setItem('finapp_user',response.data.token);
                 axios.defaults.headers.common['Authorization'] = "Bearer "+response.data.token;
+                browserHistory.push('/');
             })
             .catch((err) => {console.log(err);dispatch(userRegisteringError(err.response.data.error))});
     };
+}
+
+export function updateUserInfo(user){
+    console.log(2);
+    return (dispatch) => {
+        dispatch(userIsUpdating(true));
+        return axios.post('/update_user_info',user)
+            .then((response)=>{
+                if (nonValidResponse(response)) {
+                    userUpdatingError(true);
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then((response)=>{
+                dispatch(userIsUpdating(false));
+                dispatch(userUpdated(response.data.payload));
+                localStorage.setItem('finapp_user',response.data.token);
+                axios.defaults.headers.common['Authorization'] = "Bearer "+response.data.token;
+            })
+            .catch((err) => {console.log('test');dispatch(userUpdatingError(err.response.data.error))});
+    }
 }
 
 export function loginUser(user){
@@ -52,6 +76,7 @@ export function loginUser(user){
                 dispatch(userHasLoggedIn(response.data.payload));
                 localStorage.setItem('finapp_user',response.data.token);
                 axios.defaults.headers.common['Authorization'] = "Bearer "+response.data.token;
+                browserHistory.push('/');
             })
             .catch((err) => dispatch(userLogginError(err.response.data.error)));
     }
@@ -63,12 +88,15 @@ export function logOutUser(user){
             axios.defaults.headers.common['Authorization'] = '';
             localStorage.removeItem('finapp_user','');
             dispatch(userHasLoggedOut());
+            browserHistory.push('/');
         }
         catch (err){
             console.log(err);
         }
     }
 }
+
+
 
 export function userHasLoggedOut(){
     return {
@@ -139,5 +167,26 @@ export function userIsNotAuthenticated(){
         type: errors.AUTHENTICATED_FAILURE,
         authenticated: false,
         err: {msg: "could not authenticate, please try logging in"}
+    }
+}
+
+export function userIsUpdating(bool){
+    return {
+        type: userConstants.UPDATING_USER,
+        isRequesting: bool
+    }
+}
+
+export function userUpdatingError(err){
+    return {
+        type: errors.UPDATING_USER_FAILURE,
+        err
+    }
+}
+
+export function userUpdated(user){
+    return {
+        type: userConstants.UPDATING_SUCCESS,
+        user
     }
 }

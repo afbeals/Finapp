@@ -12,7 +12,7 @@ nav.footer{
 		padding: 1.5rem 0rem;
 		box-shadow: 0px -2px 8px $nav-main-shadow;
 		position: relative;
-		transform:translateY(6rem);
+		transform:translateY(6.7rem);
 		transition: transform 1.5s;
 		&.active{
 			transform: translateY(0rem);
@@ -101,6 +101,9 @@ nav.footer{
 		 	}
 		 	&.logout{
 		 		grid-area: nav-logout-btn;
+		 	}
+		 	&.login{
+		 		grid-area: nav-finances-btn;
 		 	}
 		 	&.active{
 		 		color:red;

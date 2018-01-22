@@ -71,12 +71,60 @@ div.incomes{
 	    						text-shadow: $main-font-shadow;
 								}
 								label{
+									position: relative;
+									display: inline-block;
+    							width: 100%;
 									span.error{
 										text-transform: capitalize;
+								    color: $primary-font;
+								    text-shadow: $main-font-shadow;
+								    position: absolute;
+								    width: 75%;
+								    text-align: center;
+								    background: $form-warning;
+								    border: 1px solid #cc6205;
+								    top: -2rem;
+								    z-index: 3;
+								    left: .8rem;
+								    right: 0;
+								    padding: .5rem;
+								    font-size: 1.1rem;
+								    border-radius: 5px;
+								    transform: translateY(0rem);
+								    transition: all 1s;
+								    opacity: 1;
 										&~div{
 											input,select{
-												border: inset 1px $form-warning;
+												background: $primary-orange;
+												transition: background 1s;
 											}
+										}
+										&:empty{
+											transform: translateY(2rem);
+											transition: all 1s;
+											opacity:0;
+										}
+										&:after{
+											position: absolute;
+									    content: ' ';
+									    right: .5rem;
+									    border-bottom: 0px solid transparent;
+									    bottom: -1rem;
+									    z-index: -1;
+									    border-top: 21px solid $color-black;
+									    border-right: 8px solid transparent;
+									    border-left: 8px solid transparent;
+										}
+										&:before{
+											position: absolute;
+									    content: ' ';
+									    right: .5rem;
+									    border-bottom: 0px solid transparent;
+									    bottom: -1rem;
+									    z-index: 1;
+									    border-top: 21px solid $form-warning;
+									    border-right: 8px solid transparent;
+									    border-left: 8px solid transparent;
 										}
 									}
 									select,input{

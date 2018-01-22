@@ -18,10 +18,23 @@ export default class MobileFooter extends React.Component{
 	render(){
 		return (
 			<nav className="footer">
-				<div className="activatorWrapper "><div id="activator" onClick={this.switchActivator}></div><i className="fas fa-caret-down"></i></div>
-				<IndexLink className="home" activeClassName="active" to="/">Home</IndexLink>
-				<Link activeClassName="active" className="finances" to="/finances">Finances</Link>
-				<Link to="/" className="logout" onClick={this.props.logOutUser}>Logout</Link>
+				<div className="activatorWrapper ">
+					<div id="activator" onClick={this.switchActivator}></div>
+					<i className="fas fa-caret-down"></i>
+				</div>
+				{console.log(this.props)}
+				{
+					this.props.user.authenticated && <IndexLink className="home" activeClassName="active" to="/">Home</IndexLink>
+				}
+				{
+					this.props.user.authenticated && <Link activeClassName="active" className="finances" to="/finances">Finances</Link>
+				}
+				{
+					this.props.user.authenticated && <Link to="/" className="logout" onClick={this.props.logOutUser}>Logout</Link>
+				}
+				{
+					!this.props.user.authenticated && <Link to="/login" className="login">Login</Link>
+				}
 			</nav>
 		)
 	}

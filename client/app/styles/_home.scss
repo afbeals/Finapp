@@ -88,8 +88,7 @@ div.home{
 								}
 							}
 							&:last-child{
-								color: $color-black;
-								text-shadow:none;
+								color: $primary-green;
 								&:after{
 								 	content: ' ';
 							    border-left: 1px solid $primary-blue-darkest;

@@ -21,6 +21,8 @@ export default function incomesReducer(state = [], action){
 			];
 		case incomesConstants.ADD_INCOME:
 			return [action.data,...state];
+		case incomesConstants.CLEAR_INCOME:
+			return [];
 		case incomesConstants.REQUESTING_INCOME:
 			return state;
 		case incomesConstants.REQUESTING_INCOME_SUCCESS:

@@ -14,6 +14,8 @@ export default function (Component) {
 				//run function to check user and create local storage
 				console.log('user, but we need to authenticate it and store it');
 				//this.props.testHeaders(user);
+			} else {
+				console.log('asera');
 			}
 
 		}

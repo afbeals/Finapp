@@ -22,7 +22,7 @@ export default function Finances(props) {
 
   return (
   		<ul className="header">
-  			<li className="headerLogo"><Link to="/login" >FinApp</Link></li>
+  			<li className="headerLogo"><Link to="/" >FinApp</Link></li>
   			<li className="headerDate">{formatDate()}</li>
 				<li className="headerProfile">
 					<Link to="/Profile" >

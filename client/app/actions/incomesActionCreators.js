@@ -224,3 +224,9 @@ export function addIncomesSuccess(query){
         data: query
     }
 }
+
+export function clearIncomes(){
+    return{
+        type: incomesConstants.CLEAR_INCOME
+    }
+}

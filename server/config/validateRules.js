@@ -12,6 +12,18 @@ module.exports = {
 		email: 'required|email',
 		password: 'required'
 	},
+	getUserInfo_rules : {
+		user_id: 'required|above:0'
+	},
+	updateUserInfo_rules : {
+		user_id : 'required|above:0',
+		first_name: 'min:1|max:11',
+		last_name: 'min:1|max:15',
+		email: 'email',
+		password_previous: 'min:7|max:16|alpha_numeric',
+		password: 'min:7|max:16|alpha_numeric',
+		password_confirm: 'same:password'
+	},
 	//--- expenses validation ---//
 	//---------------------------//
 	addExpensesInQuery_rules : {

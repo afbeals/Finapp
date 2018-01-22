@@ -36,7 +36,6 @@ render(
         <Route path="/finances" component={HOC_Auth(Finances)} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Registration} />
-        <Route path="/home" component={HOC_Auth(Home)} />
       </Route>
     </Router>
   </Provider>,

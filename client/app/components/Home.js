@@ -61,73 +61,73 @@ export default class Home extends React.Component {
 						<Link className="leftSwitch" activeClassName="active" to="/">
 							<p>Home</p>
 						</Link>
-						<Link className="rightSwitch" activeClassName="active" to="/Profile">
+						<Link className="rightSwitch" activeClassName="active" to="/profile">
 							<p>Profile</p>
 						</Link>
 					</div>
 					<div className="content">
-							<table>
-								<tbody>
-									<tr><th></th><th>Total</th><th>Remain</th></tr>
-									<tr className="expenseTotals">
-										<td>Expenses</td>
-										<td>
-											${
-												this.props.expenses && 
-													this.props.expenses.map((c,i,a)=>{	
-														if(i==a.length-1){return totalExpense+=c.amount_due }else{
-															totalExpense+=c.amount_due;
-														}
-													})
-											}
-										</td>
-										<td>
-											${
-												this.props.expenses && 
-													this.props.expenses.map((c,i,a)=>{	
-														if(i==a.length-1 && c.due_day > new Date().getDate()){return totalExpenseRemaining+=c.amount_due }else if(c.due_day > new Date().getDate()){
-															totalExpenseRemaining+=c.amount_due;
-														}
-													})
-											}
-										</td>
-									</tr>
-									<tr className="incomeTotals">
-										<td>Incomes</td>
-										<td>
-											${
-												this.props.incomes && 
-													this.props.incomes.map((c,i,a)=>{	
-														if(i==a.length-1){return totalIncome+=c.amount }else{
-															totalIncome+=c.amount;
-														}
-													})
-											}
-										</td>
-										<td>
-											${
-												this.props.incomes && 
-													this.props.incomes.map((c,i,a)=>{	
-														if(i==a.length-1 && c.due_day > new Date().getDate()){return totalIncomeRemaining+=c.amount }else if(c.due_day > new Date().getDate()){
-															totalIncomeRemaining+=c.amount;
-														}
-													})
-											}
-										</td>
-									</tr>
-									<tr className="net">
-										<td>
-											<div>Net</div>
-										</td>
-										<td colSpan="2">
-											{
-												this.props.incomes && this.props.expenses &&
-													<div>{((totalIncome+(totalExpense * -1)) < 0) ? <span className="neg">${totalIncome+(totalExpense * -1)}</span> : <span className="pos">${totalIncome+(totalExpense * -1)}</span>}</div>
-											}
-										</td>
-									</tr>
-								</tbody>
-							</table>
+						<table>
+							<tbody>
+								<tr><th></th><th>Total</th><th>Remain</th></tr>
+								<tr className="expenseTotals">
+									<td>Expenses</td>
+									<td>
+										${
+											this.props.expenses && 
+												this.props.expenses.map((c,i,a)=>{	
+													if(i==a.length-1){return totalExpense+=c.amount_due }else{
+														totalExpense+=c.amount_due;
+													}
+												})
+										}
+									</td>
+									<td>
+										${
+											this.props.expenses && 
+												this.props.expenses.map((c,i,a)=>{	
+													if(i==a.length-1 && c.due_day > new Date().getDate()){return totalExpenseRemaining+=c.amount_due }else if(c.due_day > new Date().getDate()){
+														totalExpenseRemaining+=c.amount_due;
+													}
+												})
+										}
+									</td>
+								</tr>
+								<tr className="incomeTotals">
+									<td>Incomes</td>
+									<td>
+										${
+											this.props.incomes && 
+												this.props.incomes.map((c,i,a)=>{	
+													if(i==a.length-1){return totalIncome+=c.amount }else{
+														totalIncome+=c.amount;
+													}
+												})
+										}
+									</td>
+									<td>
+										${
+											this.props.incomes && 
+												this.props.incomes.map((c,i,a)=>{	
+													if(i==a.length-1 && c.due_day > new Date().getDate()){return totalIncomeRemaining+=c.amount }else if(c.due_day > new Date().getDate()){
+														totalIncomeRemaining+=c.amount;
+													}
+												})
+										}
+									</td>
+								</tr>
+								<tr className="net">
+									<td>
+										<div>Net</div>
+									</td>
+									<td colSpan="2">
+										{
+											this.props.incomes && this.props.expenses &&
+												<div>{((totalIncome+(totalExpense * -1)) < 0) ? <span className="neg">${totalIncome+(totalExpense * -1)}</span> : <span className="pos">${totalIncome+(totalExpense * -1)}</span>}</div>
+										}
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			)	

@@ -71,6 +71,15 @@ module.exports = function(app){
 	  users.loginUser(req,res);
 	});
 
+	app.get('/getUserInfo',function(req,res){
+		users.getUserInfo(req,res);
+	});
+
+	app.post('/update_user_info',function(req,res){
+		console.log(3,req.body);
+		users.updateUserInfo(req,res);
+	});
+
 	//--- Reports Route ---//
 	//---------------------//
 	app.get('/generate_report',function(req,res){
