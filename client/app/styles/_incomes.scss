@@ -40,7 +40,7 @@ div.incomes{
 							margin: .4rem;
 					    cursor: pointer;
 					    margin: .3rem;
-					    font-size: 1.8rem;
+					    font-size: 1.5rem;
 					    text-transform: capitalize;
 					    background: $primary-blue-darkest;
 					    color: $primary-font;
@@ -66,7 +66,7 @@ div.incomes{
 								min-width: 255px;
 								p{
 									text-align: left;
-									font-size: 1.8rem;
+									font-size: 1.3rem;
 	    						color: $primary-font;
 	    						text-shadow: $main-font-shadow;
 								}
@@ -146,10 +146,10 @@ div.incomes{
 									}	
 								}
 								button{
-									float:right;
+									float:left;
 							    padding: .5rem;
 							    cursor: pointer;
-							    margin-right: 3rem;
+							    margin-right: 1rem;
 							    font-size: 1.4rem;
 							    text-transform: capitalize;
 							    background: $primary-blue-darkest;
@@ -158,6 +158,8 @@ div.incomes{
 							    border: none;
 							    border-radius: .3rem;
 							    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+							    &:first-of-type{
+							    }
 								}
 							}		
 						}
@@ -208,7 +210,7 @@ div.incomes{
 					&:not(:last-child):after{
 						position: absolute;
 				    content: ' ';
-				    bottom: 10px;
+				    bottom: 3px;
 				    border-bottom: 2px solid $primary-font;
 				    width: 35%;
 				    left: 0;
@@ -224,6 +226,7 @@ div.incomes{
 						width: 60%;
 						text-align:left;
 						border-left: none;
+				    text-overflow: ellipsis;
 						&:after{
 							left: .5rem;
 							margin-left: initial;
