@@ -99,8 +99,19 @@ export default class Profile extends React.Component {
 			)	
 		} else if(!this.state.isMobile) {
 			return(
-				<div className="home">
-					Profile Desk!
+				<div className="profile">
+					<div className="content">
+						<div>
+							<div className="profilePic">
+								<div className='icon'>
+									<i className="fas fa-user"></i>
+								</div>
+							</div>
+							<div className="profileInfo">
+								<UpdateUser {...this.state.user} onSubmit={(e)=>{this.updateUserInfo(e)}}/>
+							</div>
+						</div>
+					</div>
 				</div>
 			)
 		}

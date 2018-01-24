@@ -5,7 +5,7 @@ import axios from 'axios';
 //--- Import Constants ---//
 //------------------------//
 import {reportsConstants} from '../constants/reportsConstants';
-import {default as errors} from '../constants/errorConstants';
+import {errorConstants} from '../constants/errorConstants';
 
 //--- validate reponse ---//
 let nonValidResponse = (response) => {
@@ -49,7 +49,7 @@ export function generateReportRequest(bool){
 
 export function generateReportFailure(err){
 	return {
-		type: errors.GENERATE_REPORT_FAILURE,
+		type: errorConstants.GENERATE_REPORT_FAILURE,
 		err
 	}
 }

@@ -1,133 +1,225 @@
 div.home{
-	.switch{
-		a{
-			&.leftSwitch{
-				&.active{
-					background: linear-gradient(to right, $primary-blue-darkest , $transparent);
+	@include for-mobile {
+		display:none;
+		.switch{
+			a{
+				&.leftSwitch{
+					&.active{
+						background: linear-gradient(to right, $primary-blue-darkest , $transparent);
+					}
+				}
+				&.rightSwitch{
+					&.active{
+						color: $primary-font;
+						background: linear-gradient(to right,  $transparent, $primary-blue-darkest);
+					}
 				}
 			}
-			&.rightSwitch{
-				&.active{
-					color: $primary-font;
-					background: linear-gradient(to right,  $transparent, $primary-blue-darkest);
+		}
+		.content{
+			grid-area: content;
+			display:grid;
+			table{
+				justify-self: center;
+				align-self:center;
+				width: 100%;
+				tbody{
+					tr{
+						text-align: center;
+						th{
+							font-size: 3rem;
+							color: $primary-font;
+							text-shadow: $main-font-shadow;	
+						}
+						td{
+							padding: .5rem;
+							font-size: 3rem;
+							color: $primary-font;
+							text-shadow: $main-font-shadow;
+							position:relative;
+							&:first-child{
+								width: 60%;
+								text-align: left;
+							}
+						}
+						&.expenseTotals{
+							td{
+								&:before{
+									position: absolute;
+									content: ' ';
+									bottom: 0;
+									border: 1px solid $primary-font;
+									width: 55%;
+								}
+								&:not(:first-child){
+									&:before{
+										margin-left: auto;
+										margin-right: auto;
+										left:0;
+										right:0;
+									}
+								}
+								&:last-child{
+									color: $primary-red;
+									&:after{
+									 	content: ' ';
+								    border-left: 1px solid $primary-blue-darkest;
+								    left: 10px;
+								    position: absolute;
+								    height: 55%;
+								    top: 25%;
+									}
+								}
+							}
+						}
+						&.incomeTotals{
+							td{
+								&:before{
+									position: absolute;
+									content: ' ';
+									bottom: 0;
+									border: 1px solid $primary-font;
+									width: 55%;
+								}
+								&:not(:first-child){
+									&:before{
+										margin-left: auto;
+										margin-right: auto;
+										left:0;
+										right:0;
+									}
+								}
+								&:last-child{
+									color: $primary-green;
+									&:after{
+									 	content: ' ';
+								    border-left: 1px solid $primary-blue-darkest;
+								    left: 10px;
+								    position: absolute;
+								    height: 55%;
+								    top: 25%;
+									}
+								}
+							}
+						}
+						&.net{
+							td{
+								&:before{
+									position: absolute;
+									content: ' ';
+									bottom: 0;
+									border: 1px solid $primary-font;
+									width: 55%;
+								}
+								&:not(:first-child){
+									&:before{
+										margin-left: auto;
+										margin-right: auto;
+										left:0;
+										right:0;
+										width: 20%;
+									}
+								}
+								.pos{
+									color: $primary-green;
+								}
+								.neg{
+									color: $primary-red;
+								}
+							}
+						}
+					}
 				}
 			}
 		}
 	}
-	.content{
-		grid-area: content;
-		display:grid;
-		table{
-			justify-self: center;
-			align-self:center;
-			width: 100%;
-			tbody{
-				tr{
-					text-align: center;
-					th{
-						font-size: 3rem;
-						color: $primary-font;
-						text-shadow: $main-font-shadow;	
-					}
-					td{
-						padding: .5rem;
-						font-size: 3rem;
-						color: $primary-font;
-						text-shadow: $main-font-shadow;
-						position:relative;
-						&:first-child{
-							width: 60%;
-							text-align: left;
-						}
-					}
-					&.expenseTotals{
-						td{
-							&:before{
-								position: absolute;
-								content: ' ';
-								bottom: 0;
-								border: 1px solid $primary-font;
-								width: 55%;
-							}
-							&:not(:first-child){
-								&:before{
-									margin-left: auto;
-									margin-right: auto;
-									left:0;
-									right:0;
-								}
-							}
-							&:last-child{
-								color: $primary-red;
-								&:after{
-								 	content: ' ';
-							    border-left: 1px solid $primary-blue-darkest;
-							    left: 10px;
-							    position: absolute;
-							    height: 55%;
-							    top: 25%;
-								}
-							}
-						}
-					}
-					&.incomeTotals{
-						td{
-							&:before{
-								position: absolute;
-								content: ' ';
-								bottom: 0;
-								border: 1px solid $primary-font;
-								width: 55%;
-							}
-							&:not(:first-child){
-								&:before{
-									margin-left: auto;
-									margin-right: auto;
-									left:0;
-									right:0;
-								}
-							}
-							&:last-child{
-								color: $primary-green;
-								&:after{
-								 	content: ' ';
-							    border-left: 1px solid $primary-blue-darkest;
-							    left: 10px;
-							    position: absolute;
-							    height: 55%;
-							    top: 25%;
-								}
-							}
-						}
-					}
-					&.net{
-						td{
-							&:before{
-								position: absolute;
-								content: ' ';
-								bottom: 0;
-								border: 1px solid $primary-font;
-								width: 55%;
-							}
-							&:not(:first-child){
-								&:before{
-									margin-left: auto;
-									margin-right: auto;
-									left:0;
-									right:0;
-									width: 20%;
-								}
-							}
-							.pos{
-								color: $primary-green;
-							}
-							.neg{
-								color: $primary-red;
-							}
-						}
-					}
-				}
+	@include for-tablet {
+		.content{
+			display:grid;
+			grid-area: content;
+			grid-template-columns: 1fr 1fr 1fr 1fr;
+			grid-template-rows: 2fr 2fr 2fr 2fr;
+			grid-template-areas: 
+			"emptyHeading emptyHeading  leftHeading rightHeading"
+			"expenseTitle expenseTitle expenseTotal expenseRemain"
+			"incomeTitle incomeTitle incomeTotal incomeRemain" 
+			"netTitle netTitle netTotal netTotal";
+			padding: 3rem;
+			.homeTitle{
+				grid-area: homeTitle;
+				text-align:center;
+				font-size: 2.2rem;
+				color:$primary-font;
+				text-shadow: $main-font-shadow;
+				background: $primary-blue-darkest;
+				grid-column-start: 2; 
+  			grid-column-end: 4; 
 			}
-		}
+			div{
+				font-size: 2rem;
+				color: $primary-font;
+				text-shadow: $main-font-shadow;
+				padding: 2rem .3rem;
+				text-transform: capitalize;
+				background: $primary-blue-lightest;
+				margin: .2rem;
+				box-shadow: $main-box-shadow;
+				&.emptyHeading{
+					grid-area: emptyHeading;
+					background:$primary-blue-darkest;;
+				}
+				&.leftHeading{
+					grid-area: leftHeading;
+					text-align: center;
+				}
+				&.rightHeading{
+					grid-area: rightHeading;
+					text-align: center;
+				}
+				&.expenseTitle{
+					grid-area: expenseTitle;
+				}
+				&.expenseTotal{
+					grid-area: expenseTotal;
+					text-align: center;
+					color: $primary-red;
+				}
+				&.expenseRemain{
+					grid-area: expenseRemain;
+					text-align: center;
+					color: $primary-red;
+				}
+				&.incomeTitle{
+					grid-area: incomeTitle;
+				}
+				&.incomeTotal{
+					grid-area: incomeTotal;
+					text-align: center;
+					color: $color-black;
+					text-shadow:-1px 1px 1px #656565;
+				}
+				&.incomeRemain{
+					grid-area: incomeRemain;
+					text-align: center;
+					color: $color-black;
+					text-shadow:-1px 1px 1px #656565;
+				}
+				&.netTitle{
+					grid-area: netTitle;
+
+				}
+				&.netTotal{
+					grid-area: netTotal;
+					text-align: center;
+					.neg{
+						color: $primary-red;
+					}
+					.pos{
+						color: $primary-green;
+					}
+				}	
+			}
+			
+		}	
 	}
 }

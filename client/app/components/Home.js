@@ -134,7 +134,70 @@ export default class Home extends React.Component {
 		} else if(!this.state.isMobile) {
 			return(
 				<div className="home">
-					Home Desk!
+					<div className="content">
+						<div className="emptyHeading">
+							<h1 className="homeTitle">Quick Monthly View</h1>
+						</div>
+						<div className="leftHeading">
+							Total
+						</div>
+						<div className="rightHeading">
+							Remaining
+						</div>
+						{this.props.expenses && <div className="expenseTitle">{this.props.expenses.map((c,i,a)=>{	
+													if(i==0){return c.monthName }
+												})} Expenses</div>}
+						<div className="expenseTotal">
+							$-{
+									this.props.expenses && 
+										this.props.expenses.map((c,i,a)=>{	
+											if(i==a.length-1){return totalExpense+=c.amount_due }else{
+												totalExpense+=c.amount_due;
+											}
+										})
+								}
+						</div>
+						<div className="expenseRemain">
+							$-{
+											this.props.expenses && 
+												this.props.expenses.map((c,i,a)=>{	
+													if(i==a.length-1 && c.due_day > new Date().getDate()){return totalExpenseRemaining+=c.amount_due }else if(c.due_day > new Date().getDate()){
+														totalExpenseRemaining+=c.amount_due;
+													}
+												})
+										}
+						</div>
+						{this.props.expenses && <div className="incomeTitle">{this.props.expenses.map((c,i,a)=>{	
+													if(i==0){return c.monthName }
+												})} Incomes</div>}
+						<div className="incomeTotal">
+							${
+											this.props.incomes && 
+												this.props.incomes.map((c,i,a)=>{	
+													if(i==a.length-1){return totalIncome+=c.amount }else{
+														totalIncome+=c.amount;
+													}
+												})
+										}
+						</div>
+						<div className="incomeRemain">
+							${
+											this.props.incomes && 
+												this.props.incomes.map((c,i,a)=>{	
+													if(i==a.length-1 && c.due_day > new Date().getDate()){return totalIncomeRemaining+=c.amount }else if(c.due_day > new Date().getDate()){
+														totalIncomeRemaining+=c.amount;
+													}
+												})
+										}
+						</div>
+						<div className="netTitle">
+							Net
+						</div>
+							{
+											this.props.incomes && this.props.expenses &&
+												<div className="netTotal">{((totalIncome+(totalExpense * -1)) < 0) ? <span className="neg">${totalIncome+(totalExpense * -1)}</span> : <span className="pos">${totalIncome+(totalExpense * -1)}</span>}</div>
+										}
+					</div>
 				</div>
 			)
 		}

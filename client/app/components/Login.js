@@ -68,12 +68,13 @@ class Login extends React.Component {
 									name="password"
 									component={renderField}
 									type="password"
-									placeholder="enter password"
+									placeholder="Enter Password"
 									validate={[required(),length({min:1})]}
 								/>
 							</div>
 							<div>
 								<button type="submit" disabled={errors}> Submit </button>
+								<Link to="/register">Register</Link>
 							</div>
 					  </form>
 					</div>

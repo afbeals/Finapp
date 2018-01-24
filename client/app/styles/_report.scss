@@ -1,0 +1,49 @@
+div.report{
+	@include for-tablet {
+		.content{
+			display:grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: 1fr 1fr 3fr 2fr;
+			grid-template-areas: 	
+				"title formInteract formInteract"
+				"totalExpense totalIncome net"
+				"reportDisplay reportDisplay reportDisplay"
+				"details details graph";
+			padding:1rem;
+			div{
+				font-size: 2rem;
+				color: $primary-font;
+				text-shadow: $main-font-shadow;
+				padding: .1rem .2rem;
+				text-transform: capitalize;
+				background: $primary-blue-lightest;
+				margin: .2rem;
+				box-shadow: $main-box-shadow;
+				&.title{
+					grid-area:title;
+				}
+				&.formInteract{
+					grid-area:formInteract;
+				}
+				&.totalExpense{
+					grid-area:totalExpense;
+				}
+				&.totalIncome{
+					grid-area:totalIncome;
+				}
+				&.net{
+					grid-area:net;
+				}
+				&.reportDisplay{
+					grid-area:reportDisplay;
+				}
+				&.details{
+					grid-area:details;
+				}
+				&.graph{
+					grid-area:graph;
+				}
+			}	
+		}
+	}
+}

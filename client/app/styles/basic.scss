@@ -19,6 +19,15 @@ html{
 			@include for-mobile {
 				background: $primary-blue-lightest;
 			}
+			@include for-tablet {
+				background: #fff;
+			}
+			@include for-desktop {
+				background: $primary-orange;
+			}
+			@include for-large {
+				background: $primary-green;
+			}
 			>div{
 				height: 100%;
 				display: grid;

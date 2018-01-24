@@ -99,6 +99,7 @@ class Registration extends React.Component {
 								/>
 							</div>
 							<button type="submit" disabled={errors}> Submit </button>
+							<Link to="/login">Login</Link>
 						</form>
 					</div>
 				</div>
