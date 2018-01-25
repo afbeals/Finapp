@@ -15,7 +15,7 @@ module.exports = {
 						res.status(500).send({error: {msg:"Whoops, looks like something went wrong!",status:500}});
 					}   
 					console.log('connected as id ' + connection.threadId);
-					connection.query("SELECT name,'Inc' as type, amount, '0' as amount_paid, month, notes, year, months_id as monthId, due_day FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE users_id = ? AND months.id = ? AND incomes.year = ? Union SELECT name,'Exp' as type, amount_due as amount, amount_paid, month, notes, year, months_id as monthId, due_day FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE users_id = ? AND months.id = ? AND expenses.year = ?",[data.user_id,data.month,data.year,data.user_id,data.month,data.year],(err,rows)=>{
+					connection.query("SELECT name,'inc' as type, amount, '0' as amount_paid, month, notes, year, months_id as monthId, due_day FROM incomes LEFT JOIN months_has_incomes ON incomes.id = months_has_incomes.incomes_id LEFT JOIN months ON months_has_incomes.months_id = months.id WHERE users_id = ? AND months.id = ? AND incomes.year = ? Union SELECT name,'exp' as type, amount_due as amount, amount_paid, month, notes, year, months_id as monthId, due_day FROM expenses LEFT JOIN months_has_expenses ON expenses.id = months_has_expenses.expenses_id LEFT JOIN months ON months_has_expenses.months_id = months.id WHERE users_id = ? AND months.id = ? AND expenses.year = ?",[data.user_id,data.month,data.year,data.user_id,data.month,data.year],(err,rows)=>{
 							connection.release();
 							if(!err) {
 						  	res.json(rows);

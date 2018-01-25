@@ -48,17 +48,17 @@ const UpdateIncome = props => {
           validate={[required(),numericality({'>=':1,'<=':31})]}
         />
 		<Field
-          name="amount_due"
+          name="amount"
           component={renderField}
           type="number"
-          placeholder={props.amount_due}
+          placeholder={props.amount}
           validate={[required()]}
         />
 		  <Field
           name="amount_paid"
           component={renderField}
           type="number"
-          placeholder={props.amount_paid}
+          placeholder={props.amount_paid || "amount paid"}
           validate={[required()]}
         />
         <Field

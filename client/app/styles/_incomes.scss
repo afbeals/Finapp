@@ -319,7 +319,7 @@ div.incomes{
 			}
 		}
 	}
-	@include for-tablet {
+	@include for-tablet-and-up {
 		display:grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		grid-template-rows: 1fr .5fr 4fr;
@@ -521,6 +521,7 @@ div.incomes{
 				    text-shadow: $main-font-shadow;
 					}
 					table{
+						width: 100%;
 						tr{
 							position: relative;
 							&.titles{

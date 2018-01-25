@@ -19,14 +19,8 @@ html{
 			@include for-mobile {
 				background: $primary-blue-lightest;
 			}
-			@include for-tablet {
+			@include for-tablet-and-up {
 				background: #fff;
-			}
-			@include for-desktop {
-				background: $primary-orange;
-			}
-			@include for-large {
-				background: $primary-green;
 			}
 			>div{
 				height: 100%;
@@ -36,7 +30,7 @@ html{
 					grid-template-areas: "header" "main" "footer";
 					grid-template-rows: .5fr 8fr 1fr;
 				}
-				@include for-tablet {
+				@include for-tablet-and-up {
 					grid-template-areas: "header" "main" ;
 					grid-template-rows: .5fr 8fr;
 					height: 100%;

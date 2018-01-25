@@ -145,7 +145,7 @@ div.profile{
 			}
 		}
 	}
-	@include for-tablet{
+	@include for-tablet-and-up {
 		.content{
 			grid-area: content;
 			display:grid;

@@ -116,7 +116,7 @@ div.register{
 			}
 		}		
 	}
-	@include for-tablet{
+	@include for-tablet-and-up {
 		.switch{
 			display:none;
 		}

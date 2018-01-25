@@ -133,7 +133,7 @@ div.home{
 			}
 		}
 	}
-	@include for-tablet {
+	@include for-tablet-and-up {
 		.content{
 			display:grid;
 			grid-area: content;

@@ -10,7 +10,10 @@ export default class Report extends React.Component{
 	constructor(props){
 		super(props);
 		this.state = {
-			isMobile: false
+			isMobile: false,
+			itemData: {
+				
+			}
 		};
 		this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
 		this.generateReport = this.generateReport.bind(this);
@@ -23,17 +26,14 @@ export default class Report extends React.Component{
 		})
 	}
 	passToPanel(item){
-		document.querySelectorAll('.rightMainInfo .innerWrapper .infoSection >div').forEach((c,i,a)=>{
-			c.classList.remove('active');
-		})
-		document.querySelector('.rightMainInfo .innerWrapper .infoSection .notes').classList.add('active');
 		this.setState({
 			...this.state,
-			updateExpenseData: {
+			itemData: {
 				...item
 			}
 		})
 	}
+	
 	componentWillMount() {
 		this.handleWindowSizeChange();
 	  window.addEventListener('resize', this.handleWindowSizeChange);
@@ -59,6 +59,7 @@ export default class Report extends React.Component{
 	render(){
 		let totalExpense = 0,
 				totalIncome = 0;
+				console.log(this.updateValues);
 		if(this.state.isMobile){
 			return(
 				null
@@ -68,22 +69,45 @@ export default class Report extends React.Component{
 				<div className="report">
 					<div className="content">
 						<div className="title">
-							Reports
+							<h1>Reports</h1>
 						</div>
 						<div className="formInteract">
 							<GetReport onSubmit={(e)=>{this.generateReport(e)}}/>
 						</div>
 						<div className="totalExpense">
 							<h2>Expense</h2>
-							$-100
+							<span>
+								${
+									this.props.reports && 
+										this.props.reports.map((c,i,a)=>{	
+											if(i==a.length-1){if(c.type == "exp"){return totalExpense+=c.amount}else{return totalExpense} }else{
+												if(c.type == "exp"){totalExpense+=c.amount}
+											}
+										})
+								}
+							</span>
 						</div>
 						<div className="totalIncome">
 							<h2>Income</h2>
-							$200
+							<span>
+								${
+									this.props.reports && 
+										this.props.reports.map((c,i,a)=>{	
+											if(i==a.length-1){if(c.type == "inc"){return totalIncome+=c.amount}else{return totalIncome} }else{
+												if(c.type == "inc"){totalIncome+=c.amount}
+											}
+										})
+								}
+							</span>
 						</div>
 						<div className="net">
 							<h2>Net</h2>
-							$100
+							<span>
+								{
+									this.props.reports &&
+										<div>{((totalIncome+(totalExpense * -1)) < 0) ? <span className="neg">${totalIncome+(totalExpense * -1)}</span> : <span className="pos">${totalIncome+(totalExpense * -1)}</span>}</div>
+								}
+							</span>
 						</div>
 						<div className="reportDisplay">
 							<table>
@@ -91,7 +115,7 @@ export default class Report extends React.Component{
 								<tr className="titles"><th>Name:</th><th>Due:</th><th>Paid:</th><th>Month:</th><th>Day:</th><th>Details:</th></tr>
 										{
 											[...this.props.reports].sort((a,b)=>{return new Date(b.year, b.monthId - 1, b.due_day) - new Date(a.year, a.monthId - 1, a.due_day);}).map((c,i)=>{
-														return 	<tr key={i}>
+														return 	<tr key={i} className={c.type}>
 																	<td className="name">
 																		<span>{c.name}</span>
 																	</td>
@@ -113,7 +137,60 @@ export default class Report extends React.Component{
 							</table>
 						</div>
 						<div className="details">
-							Details/Notes
+							<h3>Details/Notes</h3>
+								{	
+									(this.state.itemData.type == "exp") &&
+										<div> 
+											<div className="leftHand">
+												<div className="name">
+													Name:
+													<span>{this.state.itemData.name}</span>
+												</div>
+												<div className="date">
+													Date
+													<span>{this.state.itemData.month} {this.state.itemData.due_day}, {this.state.itemData.year}</span>
+												</div>
+											</div>
+											<div className="rightHand">
+												<div className="amountDue">
+													Amount Due
+													<span>{'$'+this.state.itemData.amount}</span>
+												</div>
+												<div className="amountPaid">
+													Amount Paid
+													<span>{'$'+this.state.itemData.amount_paid}</span>
+												</div>
+											</div>
+											<div className="notes">
+												{this.state.itemData.notes}
+											</div>
+										</div>
+								}
+								{
+									(this.state.itemData.type == "inc") &&
+										<div>
+											<div className="leftHand">
+												<div className="name">
+													Name:
+													<span>{this.state.itemData.name}</span>
+												</div>
+												<div className="date">
+													Date
+													<span>{this.state.itemData.month} {this.state.itemData.due_day}, {this.state.itemData.year}</span>
+												</div>
+											</div>
+											<div className="rightHand">
+												<div className="amount">
+													Amount
+													<span>{'$'+this.state.itemData.amount}</span>
+												</div>	
+											</div>
+											<div className="notes">
+												{this.state.itemData.notes}
+											</div>
+										</div>
+										
+							}
 						</div>
 						<div className="graph">
 							Graph

@@ -27,3 +27,9 @@
     @content;
   }
 }
+
+@mixin for-tablet-and-up {
+  @media (min-width: #{$mobile-width + 1}){
+    @content;
+  }
+}
