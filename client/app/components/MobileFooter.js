@@ -22,7 +22,6 @@ export default class MobileFooter extends React.Component{
 					<div id="activator" onClick={this.switchActivator}></div>
 					<i className="fas fa-caret-down"></i>
 				</div>
-				{console.log(this.props)}
 				{
 					this.props.user.authenticated && <IndexLink className="home" activeClassName="active" to="/">Home</IndexLink>
 				}

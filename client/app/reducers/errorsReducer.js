@@ -11,7 +11,6 @@ export default function errorsReducer(state = [], action){
 		case errorConstants.GENERATE_REPORT_FAILURE:
 			return [...action.err];
 		case errorConstants.AUTHENTICATED_FAILURE:
-			console.log(action.err);
 			return [...action.err];
 		case errorConstants.LOGIN_FAILURE:
 			return [...action.err];

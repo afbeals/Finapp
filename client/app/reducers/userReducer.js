@@ -10,7 +10,7 @@ export default function userReducer(state = {}, action){
 		case userConstants.REGISTER_SUCCESS:
 			return Object.assign({},state, action.user,{isRequesting:action.isRequesting,authenticated:action.authenticated});
 		case userConstants.AUTHENTICATED_SUCCESS:
-			return Object.assign({},state, {authenticated:action.authenticated});
+			return Object.assign({},state, {authenticated:action.authenticated,user_id:action.user.user_id,first_name:action.user.first_name});
 		case userConstants.LOGIN_REQUEST:
 			return Object.assign({},state, {isRequesting:action.isRequesting});
 		case userConstants.LOGIN_SUCCESS:

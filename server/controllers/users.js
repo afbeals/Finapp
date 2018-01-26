@@ -9,6 +9,13 @@ var bcrypt = require('bcrypt');
 var messages = require('../config/validateMessages');
 
 module.exports = {
+
+	decodeUser : (req,res)=>{
+		var token = req.body.token;
+		var decoded = jwt.decode(token,cfg.jwtSecret);
+		res.json(decoded);
+	},
+
 	registerUser : (req,res)=>{
 		validateAll(req.body, validation.registerUser_rules, messages)
 			.then((data) => {

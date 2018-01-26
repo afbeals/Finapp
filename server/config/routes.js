@@ -63,11 +63,11 @@ module.exports = function(app){
 
 	//--- User Routes ---//
 	//-------------------//
-	app.post('/register_user',auth.authenticateHeader(),function(req,res){
+	app.post('/register_user',function(req,res){
 	  users.registerUser(req,res);
 	});
 
-	app.post('/login_user',auth.authenticateHeader(),function(req,res){
+	app.post('/login_user',function(req,res){
 	  users.loginUser(req,res);
 	});
 
@@ -76,9 +76,12 @@ module.exports = function(app){
 	});
 
 	app.post('/update_user_info',auth.authenticateHeader(),function(req,res){
-		console.log(3,req.body);
 		users.updateUserInfo(req,res);
 	});
+
+	app.post('/auth_user',auth.authenticateLocal(),function(req,res){
+		users.decodeUser(req,res);
+	})
 
 	//--- Reports Route ---//
 	//---------------------//

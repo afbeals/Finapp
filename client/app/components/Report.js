@@ -60,7 +60,6 @@ export default class Report extends React.Component{
 	render(){
 		let totalExpense = 0,
 				totalIncome = 0;
-				console.log(this.updateValues);
 		if(this.state.isMobile){
 			return(
 				<div className="report">

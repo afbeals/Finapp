@@ -8,8 +8,8 @@ var ExtractJwt = passportJWT.ExtractJwt;
 var Strategy = passportJWT.Strategy;
 var StrategyLocal = function(req){
 	var token = null;
-	if(req && req.query) {
-		token = req.query.token;
+	if(req && req.body) {
+		token = req.body.token;
 	}
 	return token;
 };

@@ -22,9 +22,9 @@ const defaultState = {
 //// const enhancers = compose(
 ////   window.devToolsExtension ? window.devToolsExtension() : f => f
 //// );
-//const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-//const store = createStore(rootReducer, defaultState, enhancers(applyMiddleware(thunk)));
-const store = createStore(rootReducer, defaultState, applyMiddleware(thunk));
+const enhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, defaultState, enhancers(applyMiddleware(thunk)));
+//const store = createStore(rootReducer, defaultState, applyMiddleware(thunk));
 export const history = syncHistoryWithStore( browserHistory, store);
 
 //--- Enable Hot Reloading for the reducers ---//

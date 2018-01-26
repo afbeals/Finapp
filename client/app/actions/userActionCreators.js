@@ -39,7 +39,6 @@ export function registerUser(user){
 }
 
 export function updateUserInfo(user){
-    console.log(2);
     return (dispatch) => {
         dispatch(userIsUpdating(true));
         return axios.post('/update_user_info',user)
@@ -78,7 +77,7 @@ export function loginUser(user){
                 axios.defaults.headers.common['Authorization'] = "Bearer "+response.data.token;
                 browserHistory.push('/');
             })
-            .catch((err) => dispatch(userLogginError(err.response.data.error)));
+            .catch((err) =>  {console.log(err.response);dispatch(userLogginError(err.response.data.error))});
     }
 }
 
@@ -88,11 +87,31 @@ export function logOutUser(user){
             axios.defaults.headers.common['Authorization'] = '';
             localStorage.removeItem('finapp_user','');
             dispatch(userHasLoggedOut());
-            browserHistory.push('/');
+            browserHistory.push('/login');
+            console.log('test')
         }
         catch (err){
             console.log(err);
         }
+    }
+}
+
+export function authUser(token){
+    return (dispatch) =>{
+        return axios.post('/auth_user',{token})
+            .then((response)=>{
+                if (nonValidResponse(response)) {
+                    userLogginError(true);
+                    throw Error(response.statusText);
+                }
+                return response;
+            })
+            .then((response)=>{
+                dispatch(userIsAuthenticated(response.data));
+                axios.defaults.headers.common['Authorization'] = "Bearer "+token;
+                browserHistory.push('/expenses');
+            })
+            .catch((err) => {console.log(err.response);dispatch(userLogginError(err.response.data.error))});
     }
 }
 
@@ -155,10 +174,11 @@ export function userHasRegistered(user){
 	}
 }
 
-export function userIsAuthenticated(){
+export function userIsAuthenticated(user){
     return {
         type: userConstants.AUTHENTICATED_SUCCESS,
-        authenticated: true
+        authenticated: true,
+        user
     }
 }
 

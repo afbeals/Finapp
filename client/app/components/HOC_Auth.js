@@ -7,25 +7,29 @@ export default function (Component) {
 		constructor(props){
 			super(props);
 			let user = localStorage.getItem('finapp_user');
+			let auth = false;
 			if(!user || user === '') {
-				//redirect to login
 				browserHistory.push('/login');
 			} else if ( user && !this.props.user.authenticated){
-				//run function to check user and create local storage
-				console.log('user, but we need to authenticate it and store it');
-				//this.props.testHeaders(user);
+				this.props.authUser(user);
 			} else {
-				console.log('asera');
+				this.auth = true;
 			}
-
 		}
 
 		render(){
-			return(
-				<div className="main">
-					<Component {...this.props} />
-				</div>
-			)
+			if(this.auth){
+				return(
+					<div className="main">
+						<Component {...this.props} />
+					</div>
+				)	
+			} else {
+				return(
+					null
+				)
+			}
+			
 		}
 	}
 }
