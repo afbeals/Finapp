@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 //--- Import Constants ---//
 //------------------------//
 import {userConstants} from '../constants/userConstants';
-import {default as errors} from '../constants/errorConstants';
+import {errorConstants} from '../constants/errorConstants';
 
 let nonValidResponse = (response) => {
     let status = null
@@ -126,7 +126,7 @@ export function userHasLoggedIn(user){
 
 export function userLogginError(err){
     return {
-        type: errors.LOGIN_FAILURE,
+        type: errorConstants.LOGIN_FAILURE,
         err
     }
 }
@@ -141,7 +141,7 @@ export function userIsRegistering(bool){
 
 export function userRegisteringError(err){
 	return {
-		type: errors.REGISTER_FAILURE,
+		type: errorConstants.REGISTER_FAILURE,
         err
 	}
 }
@@ -164,7 +164,7 @@ export function userIsAuthenticated(){
 
 export function userIsNotAuthenticated(){
     return {
-        type: errors.AUTHENTICATED_FAILURE,
+        type: errorConstants.AUTHENTICATED_FAILURE,
         authenticated: false,
         err: {msg: "could not authenticate, please try logging in"}
     }
@@ -179,7 +179,7 @@ export function userIsUpdating(bool){
 
 export function userUpdatingError(err){
     return {
-        type: errors.UPDATING_USER_FAILURE,
+        type: errorConstants.UPDATING_USER_FAILURE,
         err
     }
 }

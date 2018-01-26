@@ -1,5 +1,7 @@
 import {default as reducer} from '../client/app/reducers/userReducer';
+import {default as errorReducer} from '../client/app/reducers/errorsReducer';
 import {userConstants} from '../client/app/constants/userConstants';
+import {errorConstants} from '../client/app/constants/errorConstants';
 import {assert,expect} from 'chai';
 
 //--- Reducer Testing ---//
@@ -23,8 +25,8 @@ describe('User Reducers',()=>{
 	});
 
 	it('should return new state with user when REGISTER_FAILURE',()=>{
-		let returnedData = {isRequesting: false,hasErrored: [{msg: 'msg',error: 'error'}]};
-		expect(reducer(initialState,{type: "REGISTER_FAILURE",isRequesting: false,hasErrored: [{msg: 'msg',error: 'error'}]})).to.deep.equal(returnedData);
+		let returnedData = [{msg: 'msg',error: 'error'}];
+		expect(errorReducer([],{type: errorConstants.REGISTER_FAILURE,err:returnedData})).to.deep.equal(returnedData);
 	});
 
 	it('should return new state with user when AUTHENTICATED_SUCCESS',()=>{
@@ -33,13 +35,13 @@ describe('User Reducers',()=>{
 	});
 
 	it('should return new state with user when AUTHENTICATED_FAILURE',()=>{
-		let returnedData = {authenticated: true,hasErrored: [{msg: 'msg',error: 'error'}]};
-		expect(reducer(initialState,{type: "AUTHENTICATED_FAILURE",authenticated: true,hasErrored: [{msg: 'msg',error: 'error'}]})).to.deep.equal(returnedData);
+		let returnedData = [{msg: 'msg',code: 400}];
+		expect(errorReducer(initialState,{type: errorConstants.AUTHENTICATED_FAILURE,err: returnedData})).to.deep.equal(returnedData);
 	});
 
 	it('should return new state with user when LOGIN_REQUEST',()=>{
 		let returnedData = {isRequesting: false};
-		expect(reducer(initialState,{type: "LOGIN_REQUEST",isRequesting: false})).to.deep.equal(returnedData);
+		expect(reducer([],{type: "LOGIN_REQUEST",isRequesting: false})).to.deep.equal(returnedData);
 	});
 
 	it('should return new state with user when LOGIN_SUCCESS',()=>{
@@ -48,8 +50,8 @@ describe('User Reducers',()=>{
 	});
 
 	it('should return new state with user when LOGIN_FAILURE',()=>{
-		let returnedData = {isRequesting: false};
-		expect(reducer(initialState,{type: "LOGIN_FAILURE",isRequesting: false})).to.deep.equal(returnedData);
+		let returnedData = [{msg: 'msg',code: 400}];
+		expect(errorReducer([],{type: errorConstants.LOGIN_FAILURE,err: returnedData})).to.deep.equal(returnedData);
 	});
 
 	it('should return new state with user when LOGOUT',()=>{

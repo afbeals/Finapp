@@ -5,7 +5,7 @@ import axios from 'axios';
 //--- Import Constants ---//
 //------------------------//
 import {incomesConstants} from '../constants/incomesConstants';
-import {default as errors} from '../constants/errorConstants';
+import {errorConstants} from '../constants/errorConstants';
 
 //--- validate reponse ---//
 let nonValidResponse = (response) => {
@@ -169,7 +169,7 @@ export function fetchingIncomes(bool){
 //--- Request Failures ---//
 export function fetchingIncomesError(err){
 	return {
-		type: errors.REQUESTING_INCOME_FAILURE,
+		type: errorConstants.REQUESTING_INCOME_FAILURE,
 		err
 
 	}

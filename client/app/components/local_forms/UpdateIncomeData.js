@@ -47,7 +47,7 @@ const UpdateIncome = props => {
           placeholder={props.due_day}
           validate={[required(),numericality({'>=':1,'<=':31})]}
         />
-		<Field
+		    <Field
           name="amount"
           component={renderField}
           type="number"

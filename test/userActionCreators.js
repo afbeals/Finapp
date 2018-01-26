@@ -2,6 +2,7 @@
 //------------------//
 import * as userAC from '../client/app/actions/userActionCreators';
 import {userConstants} from '../client/app/constants/userConstants';
+import {errorConstants} from '../client/app/constants/errorConstants';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import axios from 'axios';
@@ -45,7 +46,7 @@ describe('User Action Creators', () =>{
 	    	});
 	  	});
 
-	  	it(`should return LOGIN_SUCCESS when logining in user has been completed`, () => {
+	  	it(`should return LOGIN_SUCCESS when loging in user has been completed`, () => {
 		    moxios.wait(() => {
 		    	const request = moxios.requests.mostRecent();
 		    	request.respondWith({
@@ -104,31 +105,28 @@ describe('User Action Creators', () =>{
 	//--------------------------------------//
 	describe('Failures', () => {
 	  it('should return action REGISTER_FAILURE and bool', () => {
-		    let hasErrored = true;
+		    let err = true;
 		    let expectedAction = {
-		    	type: userConstants.REGISTER_FAILURE,
-		    	isRequesting: false,
-		    	authenticated: false,
-		    	hasErrored
+		    	type: errorConstants.REGISTER_FAILURE,
+		    	err
 		    }
-	    	expect(userAC.userRegisteringError(hasErrored)).to.deep.equal(expectedAction);
+	    	expect(userAC.userRegisteringError(err)).to.deep.equal(expectedAction);
 		});
 
 	  it('should return action LOGIN_FAILURE and error', () => {
-		    let hasErrored = [{error: "error", msg: "the message"}];
+		    let err = [{error: "error", msg: "the message"}];
 		    let expectedAction = {
-		    	type: userConstants.LOGIN_FAILURE,
-		    	isRequesting: false,
-		    	authenticated: false,
-		    	hasErrored
+		    	type: errorConstants.LOGIN_FAILURE,
+		    	err
 		    }
-	    	expect(userAC.userLogginError(hasErrored)).to.deep.equal(expectedAction);
+	    	expect(userAC.userLogginError(err)).to.deep.equal(expectedAction);
 		});
 
 	  it('should return action AUTHENTICATED_FAILURE and authentication', () => {
 		    let expectedAction = {
-		    	type: userConstants.AUTHENTICATED_FAILURE,
-		    	authenticated: false
+		    	type: errorConstants.AUTHENTICATED_FAILURE,
+		    	authenticated: false,
+		    	err: {msg: "could not authenticate, please try logging in"}
 		    }
 	    	expect(userAC.userIsNotAuthenticated()).to.deep.equal(expectedAction);
 		});

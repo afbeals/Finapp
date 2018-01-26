@@ -80,7 +80,7 @@ describe('Income Reducers',()=>{
 
 		let addedData = {users_id: 1,name: "test name5323",id:7,due_day: 9,amount_due: 100.31,amount_paid: 50,notes: "!eafea!!!",month: "jan"};
 
-		let returnData = [...preloadedState,addedData];
+		let returnData = [addedData,...preloadedState];
 		expect(reducer(preloadedState,{type: "ADD_INCOME",data: addedData})).to.deep.equal(returnData);
 	});
 

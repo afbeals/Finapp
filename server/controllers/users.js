@@ -126,7 +126,6 @@ module.exports = {
 								res.status(400).send({error:{msg:"There was an error retreiving your data, please contact admin",status: 400}});
 								return;
 							} else {
-								console.log(user);
 								res.json({user});
 							}
 						} else {
@@ -146,7 +145,6 @@ module.exports = {
 	},
 
 	updateUserInfo : (req,res) => {
-		console.log(4,req.body);
 		validateAll(req.body, validation.updateUserInfo_rules, messages)
 			.then((data) => {
 				MySQL.pool.getConnection((err,connection)=>{
@@ -190,7 +188,6 @@ module.exports = {
 																initial = true;
 												    for(let keys = Object.keys(obj), i = 0, end = keys.length; i < end; ++i) {
 											        let key = keys[i], value = obj[key];
-											        console.log(key,value);
 											        if(key != "id" && key != "user_id" && key != "password_previous" && key != "password_confirm" && key != "password") {
 																if(initial){
 																	query += key+" = '"+ value+"'";
@@ -201,14 +198,12 @@ module.exports = {
 									            }
 										        }
 														query += " WHERE id = "+obj.user_id;
-														console.log(query);
 													  return query;
 													} else {
 														let query = "UPDATE users SET updated_at = '"+new Date().toISOString().slice(0, 19).replace('T', ' ')+"', ",
 																	initial = true;
 												    for(let keys = Object.keys(obj), i = 0, end = keys.length; i < end; ++i) {
 											        let key = keys[i], value = obj[key];
-											        console.log(key,value);
 											        if(key != "id" && key != "user_id" && key != "password_previous" && key != "password_confirm" && key != "password") {
 																if(initial){
 																	query += key+" = '"+ value+"'";
@@ -219,14 +214,12 @@ module.exports = {
 									            }
 										        }
 														query += " WHERE id = "+obj.user_id;
-														console.log(query);
 													  return query;
 													}
 												}).then((query)=>{
 													connection.query(query,(err,user2)=>{
 														connection.release();
 														if(!err) {
-															console.log(user2);
 													  	var payload = {
 																user_id:data.user_id,
 																first_name: data.first_name

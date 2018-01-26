@@ -1,5 +1,6 @@
 import * as expenseAC from '../client/app/actions/expensesActionCreators';
 import {expensesConstants} from '../client/app/constants/expensesConstants';
+import {errorConstants} from '../client/app/constants/errorConstants';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import axios from 'axios';
@@ -178,13 +179,13 @@ describe('Expenses Action Creators', () =>{
 	//--- expenseActionCreators Failures ---//
 	//--------------------------------------//
 	describe('Failures', () => {
-	  it('should return action REQUESTING_EXPENSE_FAILURE and bool', () => {
-		    let hasErrored = false;
+	  it('should return action REQUESTING_EXPENSE_FAILURE and err', () => {
+		    let err = false;
 		    let expectedAction = {
-		    	type: expensesConstants.REQUESTING_EXPENSE_FAILURE,
-		    	hasErrored
+		    	type: errorConstants.REQUESTING_EXPENSE_FAILURE,
+		    	err
 		    }
-	    	expect(expenseAC.fetchingExpensesError(hasErrored)).to.deep.equal(expectedAction);
+	    	expect(expenseAC.fetchingExpensesError(err)).to.deep.equal(expectedAction);
 		});
 	});
 

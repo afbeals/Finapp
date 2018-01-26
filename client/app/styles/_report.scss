@@ -1,4 +1,25 @@
 div.report{
+	@include for-mobile {
+		.content{
+			grid-area:content;
+			display:grid;
+			a{
+				justify-self:center;
+				align-self: center;
+		    padding: .8rem 1.3rem;
+		    cursor: pointer;
+		    font-size: 2rem;
+		    margin:1rem;
+		    text-transform: capitalize;
+		    background: $primary-blue-darkest;
+		    color: $primary-font;
+		    text-shadow: $main-font-shadow;
+		    border: none;
+		    border-radius: .3rem;
+		    box-shadow: inset 0px 2px 0px $primary-blue-light, inset 2px 0px 0px $color-black, inset -2px -2px 0px $color-black, -1px 1px 1px $primary-blue-darkest, 1px 1px 1px $primary-blue-darkest;
+			}	
+		}
+	}
 	@include for-tablet-and-up {
 		.content{
 			display:grid;
@@ -50,13 +71,16 @@ div.report{
 				&.formInteract{
 					grid-area:formInteract;
 					form{
-						padding: 2rem 0rem;
+						display:grid;
+						grid-template-rows: 2fr 1fr;
+						grid-template-columns: 1fr 1fr;
+						grid-template-areas: "label1 label2" "button button";
 						label{
 							position: relative;
 							display: inline-block;
-							width: 27%;
+							grid-area: label2;
 							&:first-of-type{
-								width: 50%;
+								grid-area: label1
 							}
 							span.error{
 								text-transform: capitalize;
@@ -114,14 +138,14 @@ div.report{
 							select,input{
 							  display: inline-block;
 						    width: 80%;
-						    margin: .5rem;
+						    margin: 1rem .5rem;
 						    padding: .4rem;
 						    text-transform: capitalize;
 						    background: $primary-blue-lightest;
 						    border: none;
 						    color: $primary-font;
 						    text-shadow: 2px 1px 1px black;
-						    font-size: 1.5rem;
+						    font-size: 2.5rem;
 						    border-radius: 5px;
 						    &::placeholder{
 						    	color: $primary-font;
@@ -129,6 +153,7 @@ div.report{
 							}	
 						}
 						button{
+							grid-area: button;
 					    padding: .5rem;
 					    cursor: pointer;
 					    margin: 0 auto;
@@ -175,7 +200,7 @@ div.report{
 				}
 				&.reportDisplay{
 					grid-area:reportDisplay;
-					max-height: 495px;
+					max-height: 520px;
    				overflow-x: hidden;
 					table{
 						width: 100%;
@@ -318,7 +343,7 @@ div.report{
 				&.graph{
 					grid-area:graph;
 					background: gray;
-					color: $color-black;
+					color: #919191;
 				}
 			}	
 		}

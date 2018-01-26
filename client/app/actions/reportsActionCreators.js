@@ -35,7 +35,7 @@ export function generateReport(query){
             .then((response)=>{
                 dispatch(generateReportSuccess(response.data));
             })
-            .catch((err) => dispatch(generateReportFailure(err.response.data.errors)));
+            .catch((err) =>{console.log(err.response); dispatch(generateReportFailure(err.response.data.errors))} );
     };
 }
 

@@ -148,7 +148,7 @@ export default class Home extends React.Component {
 													if(i==0){return c.monthName }
 												})} Expenses</div>}
 						<div className="expenseTotal">
-							$-{
+							${
 									this.props.expenses && 
 										this.props.expenses.map((c,i,a)=>{	
 											if(i==a.length-1){return totalExpense+=c.amount_due }else{
@@ -158,7 +158,7 @@ export default class Home extends React.Component {
 								}
 						</div>
 						<div className="expenseRemain">
-							$-{
+							${
 											this.props.expenses && 
 												this.props.expenses.map((c,i,a)=>{	
 													if(i==a.length-1 && c.due_day > new Date().getDate()){return totalExpenseRemaining+=c.amount_due }else if(c.due_day > new Date().getDate()){

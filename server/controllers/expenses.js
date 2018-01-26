@@ -121,7 +121,6 @@ module.exports = {
 					connection.query(query,params,(err,rows)=>{
 						connection.release(); 
 						if(!err) {
-							console.log(rows);
 					   		res.json(rows);
 						}else {
 							res.status(400).send({error: {msg:"Error while trying to remove expense",status:400}});
@@ -142,9 +141,8 @@ module.exports = {
 	updateExpensesInQuery : (req,res) => {
 		validateAll(req.body, validation.updateExpensesInQuery_rules, messages)
 			.then((data)=>{
-				console.log(data);
 				let buildQuery = (obj) => {
-					let query = "UPDATE expenses SET updated_at = '"+new Date().toISOString().slice(0, 19).replace('T', ' ')+"' ",
+					let query = "UPDATE expenses SET updated_at = '"+new Date().toISOString().slice(0, 19).replace('T', ' ')+"', ",
 						initial = true;
 				    for(let keys = Object.keys(obj), i = 0, end = keys.length; i < end; ++i) {
 			        let key = keys[i], value = obj[key];
@@ -158,11 +156,9 @@ module.exports = {
 	            }
 		        }
 					query += " WHERE users_id = "+obj.user_id+" AND id = "+obj.id;
-					console.log(query);
 					if(obj.month){
 						query += "; UPDATE months_has_expenses SET months_id = "+obj.month+" WHERE expenses_id = '"+obj.id+"'";
 		            }
-		            console.log(query);
 				    return query;
 				};
 			    MySQL.pool.getConnection((err,connection)=>{

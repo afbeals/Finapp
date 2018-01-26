@@ -44,7 +44,6 @@ module.exports = {
 	getAllIncomes : (req,res) => {
 		validateAll(req.query, validation.getAllIncomes_rules, messages)
 			.then((data)=>{
-				console.log(data);
 				MySQL.pool.getConnection((err,connection)=>{
 					if (err) {
 						connection.release();
@@ -144,7 +143,7 @@ module.exports = {
 		validateAll(req.body, validation.updateIncomesInQuery_rules, messages)
 			.then((data)=>{
 				let buildQuery = (obj) => {
-					let query = "UPDATE incomes SET updated_at = '"+new Date().toISOString().slice(0, 19).replace('T', ' ')+"' ",
+					let query = "UPDATE incomes SET updated_at = '"+new Date().toISOString().slice(0, 19).replace('T', ' ')+"', ",
 						initial = true;
 				    for(let keys = Object.keys(obj), i = 0, end = keys.length; i < end; ++i) {
 				        let key = keys[i], value = obj[key];

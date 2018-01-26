@@ -1,6 +1,7 @@
 //--- Dependencies ---//
 //--------------------//
 import React from 'react';
+import {Link} from 'react-router';
 
 //--- Local Forms ---//
 //-------------------//
@@ -62,7 +63,11 @@ export default class Report extends React.Component{
 				console.log(this.updateValues);
 		if(this.state.isMobile){
 			return(
-				null
+				<div className="report">
+					<div className="content">
+						<Link to="/">Home</Link>
+					</div>
+				</div>
 			)	
 		} else if(!this.state.isMobile) {
 			return(
@@ -193,7 +198,7 @@ export default class Report extends React.Component{
 							}
 						</div>
 						<div className="graph">
-							Graph
+							Graph (coming soon)
 						</div>
 					</div>
 				</div>

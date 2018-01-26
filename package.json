@@ -8,7 +8,6 @@
     "old-build": "rm -r dist/* && webpack -d && webpack-dev-server --content-base src/ --inline --hot --history-api-fallback --port 3000",
     "build:prod": "webpack -p && cross-env NODE_ENV=production node appServer.js",
     "build:dev": "cross-env NODE_ENV=development node appServer.js",
-    "etaeta": "webpack",
     "test": "mocha --compilers js:babel-core/register"
   },
   "keywords": [

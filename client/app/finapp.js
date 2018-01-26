@@ -2,7 +2,7 @@
 //--------------------//
 import React from 'react';
 import { render } from 'react-dom';
-import { Provider }	 from 'react-redux';
+import { Provider }  from 'react-redux';
 import {Router, Route, IndexRoute } from 'react-router';
 
 //--- Components for routing ---//
@@ -27,7 +27,7 @@ const css = require('./styles/basic.scss');
 let rootElement = document.getElementById('app');
 
 render(
-	<Provider store={store}>
+  <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={HOC_Auth(Home)} />
@@ -35,11 +35,11 @@ render(
         <Route path="/incomes" component={HOC_Auth(Incomes)} />
         <Route path="/profile" component={HOC_Auth(Profile)} />
         <Route path="/finances" component={HOC_Auth(Finances)} />
+    <Route path="/report" component={HOC_Auth(Report)} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Registration} />
-        <Route path="/report" component={Report} />
       </Route>
     </Router>
   </Provider>,
-	rootElement
+  rootElement
 );

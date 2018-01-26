@@ -1,5 +1,6 @@
 import * as incomesAC from '../client/app/actions/incomesACtionCreators';
 import {incomesConstants} from '../client/app/constants/incomesConstants';
+import {errorConstants} from '../client/app/constants/errorConstants';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import axios from 'axios';
@@ -182,13 +183,13 @@ describe('Incomes Action Creators', () =>{
 	//--- incomeActionCreators Failures ---//
 	//--------------------------------------//
 	describe('Failures', () => {
-	  it('should return action REQUESTING_INCOMES_FAILURE and bool', () => {
-		    let hasErrored = false;
+	  it('should return action REQUESTING_INCOMES_FAILURE and the err', () => {
+		    let err = [{msg: "error message",code:404}];
 		    let expectedAction = {
-		    	type: incomesConstants.REQUESTING_INCOME_FAILURE,
-		    	hasErrored
+		    	type: errorConstants.REQUESTING_INCOME_FAILURE,
+		    	err
 		    }
-	    	expect(incomesAC.fetchingIncomesError(hasErrored)).to.deep.equal(expectedAction);
+	    	expect(incomesAC.fetchingIncomesError(err)).to.deep.equal(expectedAction);
 		});
 	});
 
