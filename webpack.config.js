@@ -6,7 +6,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HTMLWebpackPlugin = require('html-webpack-plugin');
 
 var config = {
-	entry: ['webpack-hot-middleware/client',SRC_DIR + "/app/finapp"],
+	//entry: ['webpack-hot-middleware/client',SRC_DIR + "/app/finapp"],
+	entry: [SRC_DIR + "/app/finapp"],
 	output: {
 		path: DIST_DIR + "/app",
 		filename: "bundle.js"

@@ -16,7 +16,8 @@ export default class Home extends React.Component {
 		this.handleWindowSizeChange = this.handleWindowSizeChange.bind(this);
 		this.getMonthlies = this.getMonthlies.bind(this);
 
-		this.getMonthlies();
+		setTimeout(()=>{this.getMonthlies()},250)
+		
 	}
 
 	getMonthlies(){
@@ -37,7 +38,7 @@ export default class Home extends React.Component {
 	}
 
 	handleWindowSizeChange = () => {
-		(window.innerWidth < 768) ? 
+		(window.innerWidth < 991) ? 
 	  this.setState({ ...this.state,isMobile:true }) : this.setState({ ...this.state,isMobile:false });
 	};
 	getOrdinal(num){

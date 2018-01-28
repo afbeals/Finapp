@@ -57,9 +57,9 @@ export default class SidePanel extends React.Component{
 						</li>
 					</ul>
 					<div className="footing">
-						<Link to="/" onClick={this.props.logOutUser}>
-							<i className="fas fa-sign-out-alt"></i>
-							<span>Logout</span>
+						<Link onClick={this.props.logOutUser}>
+							<i  className="fas fa-sign-out-alt"></i>
+							<span >Logout</span>
 						</Link>
 					</div>
 					<div className="open" onClick={this.togglePanel}>

@@ -187,7 +187,7 @@ export default class Expenses extends React.Component{
 	}
 
 	handleWindowSizeChange = () => {
-		(window.innerWidth < 768) ? 
+		(window.innerWidth < 991) ? 
 	  this.setState({ ...this.state,isMobile:true }) : this.setState({ ...this.state,isMobile:false });
 	};
 	getOrdinal(num){

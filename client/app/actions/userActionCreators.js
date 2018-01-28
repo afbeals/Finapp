@@ -88,7 +88,6 @@ export function logOutUser(user){
             localStorage.removeItem('finapp_user','');
             dispatch(userHasLoggedOut());
             browserHistory.push('/login');
-            console.log('test')
         }
         catch (err){
             console.log(err);
@@ -109,9 +108,9 @@ export function authUser(token){
             .then((response)=>{
                 dispatch(userIsAuthenticated(response.data));
                 axios.defaults.headers.common['Authorization'] = "Bearer "+token;
-                browserHistory.push('/expenses');
+                browserHistory.push('/');
             })
-            .catch((err) => {console.log(err.response);dispatch(userLogginError(err.response.data.error))});
+            .catch((err) => {console.log(err,err.response);dispatch(userLogginError(err.response))});
     }
 }
 
